@@ -1,0 +1,18 @@
+.btn {
+   -webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+   border-radius: 20px;
+}
+
+.btn-success{
+	color: yellow;
+
+}
+
+.btn-success:hover{
+	color:yellow;
+}
+
+.active{
+	color:yellow;
+}

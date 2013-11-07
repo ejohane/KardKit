@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CardKit Lobby</title>
+    <meta charset="utf-8">
+    <!-- Bootstrap -->
+    <!--<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+
+    <script src="socket.io/socket.io.js"></script>
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script> 
+    <script type="text/javascript" src="js/lobbyClient.js"></script>
+  </head>
+  <body>
+
+    <div class="modal fade" id="myModal" data-backdrop="static">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <center></center><h4 class="modal-title">Create User</h4></center>
+          </div>
+          <div class="modal-body">
+            <div class="input-group input-group-lg" id="joinForm">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span> <!-- <i class="icon-user"></i> -->
+              <input type="text" class="form-control input-lg" placeholder="Username" id="username">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="createUser" data-toggle="popover" data-placement="top" data-content="Invalid Username" data-trigger="focus">Go </button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+     
+    <div class="LobbyPage">
+      <!-- Header -->
+      <center>
+      <h1>Card Kit Game Lobby</h1>
+      <hr>
+      </center>
+
+      <!-- Player Info -->
+      <div class="well well-lg" style="margin:25px 50px 50px 50px;">
+        <table class="myTable" style="width:100%">
+            <tr>
+              <th id="usernameTitle"></th>
+              <th>
+                <div class="btn-group test" style="float:right" id="statusToggle">
+                  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" style="width:100px">
+                  Ready<span class="caret"></span></button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Busy</a></li>
+                    <li><a href="#">Ready</a></li>
+                  </ul>
+                </div>
+              </th>
+              <th>
+                <button type="button" class="btn btn-primary createBtn"  style="float:right" id="createGame">Create Game</button>
+              </th>
+            </tr>
+        </table>
+      </div>
+
+      
+      <ul class="nav nav-tabs" id="myTab" style="margin:25px 50px 50px 50px;">
+        <li class="active"><a href="#playerList">Players</a></li>
+        <li><a href="#gamesList">Games</a></li>
+      </ul>
+
+      <div class="tab-content" style="margin:25px 50px 50px 50px;">
+              <!-- Player List -->
+          <div class="tab-pane active" id="playerList">
+            <table class="table table-striped" id="playerListTable"></table>
+          </div>
+
+        <!-- Games List -->
+         <div class="tab-pane" id="gamesList">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th> Room </th>
+                <th> Players </th>
+                <th> Status </th>
+                <th> Join</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>Erik's Game</td>
+              <td> 1/4 </td>
+              <td><font color='green'>Open</font></td>
+              <td> <button type="button" class="btn btn-primary createBtn">Join</button></td>
+            </tr>
+            <tr>
+              <td>Joe</td>
+              <td><font color='green'>Ready</font></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+
+      <div class="modal fade" id="createGameModal" data-backdrop="static">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" id="test">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <center></center><h4 class="modal-title">Create Game</h4></center>
+            </div>
+            <div class="modal-body">
+
+              <form role="form">
+                <div class="form-group">
+                  <label for="gameName">Game Name</label>
+                  <input type="text" class="form-control" id="gameName" placeholder="Game Name">
+                </div>
+                <div class="form-group">
+                  <label for="password">Password (Optional)</label>
+                  <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+              </form>
+
+              <table class="table table-striped" id="creatingGamePList"></table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="launchGame">Launch Game</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div>
+
+
+
+      <!-- PLAYER INVITED ALERT -->
+      <div class="modal fade" id="playerInvited" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Game Invite</h4>
+            </div>
+            <div class="modal-body">
+              <p id="playerInvitedMsg"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="joinGameBtn">Join</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+    </div>
+  </body>
+</html>
