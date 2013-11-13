@@ -1,0 +1,7 @@
+/*chat window */
+#chat{float:left; width:280px; height:270px; background-color:#aaa; padding: 5px 5px 5px 5px; position:fixed; bottom:0px;right:0;}
+#inbox{width:277px;height:235px;background-color:#fff;margin: 0 0 5px 0;padding: 0 0 0 3px;}
+    #inbox > .message{color:green;}
+    #inbox > .privateMessage{color:red;}
+    #inbox > .confirmation{color:gray;}
+#outbox{ width:275px;height:30px;background-color:#fff;}
