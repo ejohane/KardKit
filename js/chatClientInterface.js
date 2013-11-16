@@ -7,13 +7,12 @@
 /////////////////////////////////////////
 
 
-    var chatInterface  = function () {
+    var chatClientInterface  = function () {
         var _public = {};
     
         //things are going out from our client, Ben handles this!
         _public.sendOutboxMessage = function(outboxMessage){
-            alert('Ben takes it from here, sending to client interface which calls server');
-            alert('got here with message : ' + outboxMessage);
+            clientInterface.chatSendMessage(outboxMessage);
         };
     
         //things are coming in to our client, Craig handles this!

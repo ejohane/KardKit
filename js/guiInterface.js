@@ -42,7 +42,7 @@
     
         _public.sendOutboxMessage = function () {
             var outboxMessage = $("#outbox").val();
-            chatInterface.sendOutboxMessage(outboxMessage);
+            chatClientInterface.sendOutboxMessage(outboxMessage);
             $("#outbox").val("");
             $("#outbox").blur(); 
         };
