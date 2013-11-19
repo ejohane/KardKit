@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="/gameUI/css/game.css">
+<script type="text/javascript" src="/gameUI/js/jquery-2-0-3.min.js"></script>
+</head>
+	<body>
+	<div id="actionbar"></div>
+	<div id="chat">
+		<div id="inbox"></div>
+		<input type="text" id="outbox" />
+	</div>
+	<div id="players"></div>
+	<script type="text/javascript" src="js/global.js"></script>
+	<script type="text/javascript" src="js/actionbar.js"></script>
+	<script type="text/javascript" src="js/actionRouter.js"></script>
+	<script type="text/javascript" src="js/chatInterface.js"></script>
+	<script type="text/javascript" src="js/hand.js"></script>
+	<script type="text/javascript" src="js/player.js"></script>
+	<script type="text/javascript" src="js/guiInterface.js"></script>
+	<script type="text/javascript" src="js/cardSelection.js"></script>
+	<script type="text/javascript" src="js/clientInterface.js"></script>
+	<script type="text/javascript" src="js/click_events.js"></script>
+	<script type="text/javascript" src="js/key_events.js"></script>
+	<script type="text/javascript">
+	var playerCount = 4;    
+var playerNames = ["P1","P2","P3","P4"];
+var playerPoints = ["10","20","30","40"];
+var hand_0 = [["4","spades","black"],[null,null,null],["A","diamonds","red"],["7","hearts","red"]];
+var hand_1 = [["5","spades","black"],[null,null,null],["A","hearts","red"],["6","clubs","black"]];
+var hand_2 = [["3","spades","black"],[null,null,null],["3","diamonds","red"],["10","hearts","red"]];
+var hand_3 = [["2","spades","black"],[null,null,null],["6","diamonds","red"],["4","hearts","red"]];
+var hands = [hand_0,hand_1,hand_2,hand_3];
+var completeActionlistNames = ["play","slap","draw","takeCard"];
+var completeActionlistLabels = ["PLAY","SLAP","DRAW","TAKE CARD"];
+var completeActionlistKeyCodes = [112,32,100,116];
+var completeActionlistKeyLabels = ["Key: P","Spacebar","Key: D","Key: D"];
+
+clientInterface.setUIFramework(playerCount, playerNames, playerPoints, hands, completeActionlistNames,completeActionlistLabels,completeActionlistKeyCodes,completeActionlistKeyLabels);
+var actionsToGive = [1,1,1,1];
+clientInterface.setActionbar(actionsToGive);
+
+
+	</script>
+	</body>
+</html>

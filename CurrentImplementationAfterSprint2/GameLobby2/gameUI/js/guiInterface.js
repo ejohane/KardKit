@@ -1,0 +1,142 @@
+////////////////////////////////////////////////////////
+
+//         
+
+//                   gui Interface .js
+
+//
+
+//////////////////////////////////////////////////////
+
+    var guiInterface = function () {
+        var _public = {};
+        
+        /*private
+        -------------------------------------------------*/
+        function setPlayerCount(playerCount){
+            for(var i = 0; i < playerCount; i++){
+                 PLAYERS[i] = i;  
+            }
+        }        
+        function setName(playerId,playerName){
+            generateName.generate(playerId,playerName);
+        }
+        function setPoints(playerId,playerPoints){
+            generatePoints.generate(playerId,playerPoints);
+        }
+        function setHand(playerId,hand){
+            generateHand.generate(playerId,hand);
+        }
+        
+        function addInboxMessage(message, type){  
+            switch(type){
+                case "confirmation" :
+                case "message":
+                case "privateMessage":
+                    var spanElement = document.createElement("span");
+                    spanElement.innerHTML = message;
+                    spanElement.className = type;
+                    var parent = document.getElementById("inbox");
+                    parent.appendChild(spanElement);
+                    parent.appendChild(document.createElement("br"));
+                    break;            
+                default:
+                    alert('Not a type of message!');
+            }
+        }
+        
+        //chat UI   
+        _public.receiveInboxMessage = function (inboxMessage){
+             addInboxMessage(inboxMessage,"message");
+        };
+        
+        _public.receivePrivateMessage = function (privateInboxMessage){
+              addInboxMessage(privateInboxMessage,"privateMessage");
+        };
+    
+        _public.receiveOutboxConfirmation = function (yourMessage){
+            addInboxMessage(yourMessage, "confirmation");
+        };
+    
+        _public.sendOutboxMessage = function () {
+            var outboxMessage = $("#outbox").val();
+            chatInterface.sendOutboxMessage(outboxMessage);
+            $("#outbox").val("");
+            $("#outbox").blur(); 
+        };
+        
+        //global initialization
+        _public.initPlayerFramework = function(playerCount){
+            //set global variable for player count
+            setPlayerCount(playerCount);
+            //set Html for each player object            
+            for(var i = 0; i < PLAYERS.length; i++){
+               var playerHtml = "<div id=\"playerSpot_" + i + "\"><div class=\"hand\"></div><div class=\"playerName\"></div><div class=\"playerPoints\"></div></div>";
+               $("#players").append(playerHtml);                
+            }
+            //set global variable for selecting cards
+            for(var i = 0; i < PLAYERS.length; i++){
+                SELECTED_CARDS.push([]);
+            }
+        };
+        _public.initActionbarFramework = function(completeActionlistNames,completeActionlistLabels,completeActionlistKeyCodes,completeActionlistKeyLabels){
+            for(var i = 0; i < completeActionlistNames.length; i++){
+                ACTION_NAMES.push(completeActionlistNames[i]);
+                ACTION_LABELS.push(completeActionlistLabels[i]);
+                ACTION_KEY_CODES.push(completeActionlistKeyCodes[i]);
+                ACTION_KEY_LABELS.push(completeActionlistKeyLabels[i]);  
+            }
+        };
+        _public.initPlayers = function(playerNames, playerPoints, hands){
+            for(var i = 0; i < PLAYERS.length; i++){
+                setName(i,playerNames[i]);
+                setPoints(i,playerPoints[i]);            
+                setHand(i,hands[i]);
+            }  
+        };
+        
+        //set this player's game content
+        _public.setActionbar = function(actionsToGive){
+              createActionbar.create(actionsToGive);  
+        };
+        
+        //set any player's game content
+        _public.setHand = function (playerId, cardArray){
+             setHand(playerId, cardArray);   
+        };
+        _public.setName = function (playerId, playerName){
+             setName(playerId, playerName);   
+        };
+        _public.setPoints = function (playerId, playerPoints){
+             setPoints(playerId, playerPoints);   
+        };
+        _public.removeCard = function(playerId, cardIndex){
+             generateHand.removeCard(playerId,cardIndex);  
+        };
+        _public.addCard = function(playerId,card){
+            generateHand.addCard(playerId,card);    
+        };
+        
+        //action implementation, outgoing to server
+        _public.action_play = function () {
+            var playerName = $("#playerSpot_0 .playerName").text();
+            var cardIndex = SELECTED_CARDS[0][0];
+            clientInterface.out_playCard(playerName, cardIndex);
+        };
+        _public.action_slap = function () {
+            var playerName = $("#playerSpot_0 .playerName").text();
+            clientInterface.out_slap(playerName);
+        };
+        _public.action_draw = function () {
+            var playerName = $("#playerSpot_0 .playerName").text();
+            clientInterface.out_draw(playerName);
+        };
+        _public.action_takeCard = function () {
+            var playerNameReceiver = $("#playerSpot_0 .playerName").text();
+			var playerIdOwner = cardSelection.getPlayerIdOfSelectedCardToTake();
+			var playerNameOwner = $("#playerSpot_"+ playerIdOwner + " .playerName").text();
+			var cardIndexTaken = cardSelection.getSelectedCardIndexFromPlayerId(playerIdOwner);
+            clientInterface.out_takeCard(playerNameOwner,cardIndexTaken,playerNameReceiver);
+        };
+        return _public;    
+    }();
