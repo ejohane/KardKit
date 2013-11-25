@@ -1,19 +1,26 @@
+/******************************************************************************************
+    Create By: Erik Johansson
+    Last Updated: 11/18/2013 
+******************************************************************************************/
+
 function Room(name, id, owner) {
   this.name = name;
   this.id = id;
   this.owner = owner;
   this.people = [];
   this.peopleLimit = 28;
-  this.status = "open";
+  this.status = "Open";
   this.private = false;
-  this.password = "";
+  this.password;
   this.invited = [];
 };
 
 
 Room.prototype.addPerson = function(personID) {
-  if (this.status === "open") {
+  if (this.status === "Open" && this.people.length + 1 <= this.peopleLimit) {
     this.people.push(personID);
+  }else if((this.people.length + 1) == this.peopleLimit){
+    this.status = "closed";
   }
 };
 
@@ -54,5 +61,6 @@ Room.prototype.isPrivate = function() {
     return false;
   }
 };
+
 
 module.exports = Room;

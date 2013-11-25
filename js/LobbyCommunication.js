@@ -3,11 +3,13 @@ function LobbyCommunication(){
 	var Player = require('./player.js');;
 	
 	this.rooms = [];
+	this.invitedRooms = [];
 
 	this.init();
 
 	this.lobbyRoom = this.rooms[0];
 	this.players = {};
+
 };
 
 LobbyCommunication.prototype.init = function(){
@@ -122,15 +124,14 @@ LobbyCommunication.prototype.getCreatePlayerListHTML = function(){
 	Updated:
 *********************************************************************/
 LobbyCommunication.prototype.validateGame = function(gameName){
-	var valid = true;
     for(var k in this.rooms){
     	if(gameName == this.rooms[k].name){
             return false;
         }else if(gameName == ""){
-                return false;
+            return false;
         }
     }
-    return valid;
+    return true;
  };
 
 /********************************************************************
@@ -139,12 +140,13 @@ LobbyCommunication.prototype.validateGame = function(gameName){
 	Created By: Erik Johansson		On: 10/16/2013
 	Updated:
 *********************************************************************/
-LobbyCommunication.prototype.createGame = function(gameName, password, invitedPlayers, hostID){
+LobbyCommunication.prototype.createGame = function(gameName, password, invitedPlayers, hostID, playerLimit){
 	var host = this.players[hostID];
 	//var room = createGame(host, gameName, password, invitedPlayers);
 	var Room = this.Room;
     var room = new Room(gameName, host.name, host);
     room.password = password;
+    room.peopleLimit = playerLimit;
     room.addPerson(host);
     room.invited = invitedPlayers;
     this.rooms.push(room);
@@ -153,12 +155,6 @@ LobbyCommunication.prototype.createGame = function(gameName, password, invitedPl
     host.inGame = true;
     host.status = "In-Game";
     return room;
-            client.join(room.name);
-            
-            var invitedGameName = gameName + "_Invited";
-            var invitedRoom = createInviteeRoom(invitedPlayers, invitedGameName, players[client.id]);
-            socket.sockets.in(invitedGameName).emit('playerInvited', players[client.id].name +" has invited you to play a game!");
-            client.emit('moveToGame');
  };
 
 /********************************************************************
@@ -169,15 +165,18 @@ LobbyCommunication.prototype.createGame = function(gameName, password, invitedPl
 	Created By: Erik Johansson		On: 10/16/2013
 	Updated:
 *********************************************************************/
-LobbyCommunication.prototype.createInviteeRoom = function(invitedPlayers, gameName, host){
+LobbyCommunication.prototype.createInviteeRoom = function(invitedPlayers, gameName, host,password){
 	var Room = this.Room;
     var room = new Room(gameName, host.id, host);
+    room.password = password;
     for (var i in invitedPlayers){
         var player = this.getPlayer(invitedPlayers[i]);
-        room.invited.push(player);
-        player.invitedGame = gameName; 
+        if(player.name != host.name){
+        	room.invited.push(player);
+        	player.invitedGame = gameName; 
+        }
     }
-    this.rooms.push(room);
+    this.invitedRooms.push(room);
     return room;
 };
 
@@ -204,8 +203,8 @@ LobbyCommunication.prototype.getPlayer = function(playerName){
 	Updated:
 *********************************************************************/
 LobbyCommunication.prototype.checkEmptyInviteRoom = function(roomName){
-    var room = this.getRoom(roomName);
-    if(room.invited.length == 0){
+    var room = this.getRoom(roomName, "inviteRoom");
+    if(room != null && room.invited.length == 0 ){
         this.rooms.splice(room, 1);
         return true;
     }
@@ -220,7 +219,7 @@ LobbyCommunication.prototype.checkEmptyInviteRoom = function(roomName){
 	Updated:
 *********************************************************************/
 LobbyCommunication.prototype.addPlayerToGame = function(gameName, player){
-    var room = this.getRoom((player.invitedGame).replace("_Invited", ""));
+    var room = this.getRoom(player.invitedGame.replace("_Invited", ""), "gameRoom");
     if(room != null){
     	room.addPerson(player);
     	player.room = room;
@@ -232,18 +231,93 @@ LobbyCommunication.prototype.addPlayerToGame = function(gameName, player){
 
 /********************************************************************
     Function: This function gets a room based on the name.
-	Return Value: the room
+	Return Value: the room index
+	Parameters: roomName: the name of the room
+				type: "inviteRoom" or "gameRoom" 
 	Created By: Erik Johansson		On: 10/30/2013
 	Updated:
 *********************************************************************/
-LobbyCommunication.prototype.getRoom = function(roomName){
-    var room = -1;
-    for (var i in rooms){
-        if(roomName == rooms[i].name){
-            room = i;
-        }
+LobbyCommunication.prototype.getRoom = function(roomName, type){
+    var room = null;
+    if(type == "inviteRoom" && this.invitedRooms == null ){
+    	for (var i in this.invitedRooms){
+        	if(roomName == this.invitedRooms[i].name){
+            	room = this.invitedRooms[i];
+        	}
+    	}
+    }else if(type == "gameRoom"){
+		for (var i in this.rooms){
+        	if(roomName == this.rooms[i].name){
+            	room = this.rooms[i];
+        	}
+    	}
     }
     return room;
-}
+};
+
+
+/********************************************************************
+    Function: creates the table html for the player list
+	Return Value: returns a string of HTML representing the player list table
+	Created By: Erik Johansson		On: 10/16/2013
+	Updated:
+*********************************************************************/
+LobbyCommunication.prototype.getGameRoomList = function(){
+    var table = "<thead> <tr> <th> Room </th> <th> Players </th> <th> Status </th> <th> Join </th> </tr> </thead> ";
+
+    //assumes a lobby has already been created and is held at rooms[0]
+    for(var i = 1; i < this.rooms.length; i++){
+    	var room = this.rooms[i];
+        table = table + "<tr><td>" + room.name +" </td>";
+        table += "<td> " +room.people.length + " / " + room.peopleLimit +"</td>" ;
+        
+        var col = "black";
+        if(room.status == "Open"){
+            col = "green";
+        }else if(room.status == "Closed"){
+            col = "red";
+        }
+        table += "<td><font color=\"" + col + "\"> " + room.status + "</font></td>" ;
+
+        var joinID = "join_" + room.name;
+        table += "<td> <button type=\"button\" class=\"btn btn-primary btn-sm join-from-gameList\" id=\"" + joinID + "\" >Join</button> </td>	</tr>"
+    }
+    return table;
+};
+
+
+/********************************************************************
+    Function: Player has been disconnected, remove them from everything.
+    Return Value: 
+    Created By: Erik Johansson      On: 11/25/2013
+    Updated:
+*********************************************************************/
+LobbyCommunication.prototype.playerDisconnected = function(playerID){
+    var player = this.players[playerID];
+    console.log("PlayerName: "+player.name);
+    //remove player from room
+    var room = player.room;
+    if(room != undefined){
+        var index = room.people.indexOf(player);
+        if(index > -1) room.people.splice(index, 1);  
+    } 
+
+    //remove player from invitedRooms
+    room = player.invitedGame;
+    if(room != undefined){
+        index = room.people.indexOf(player);
+        if(index > -1) room.people.splice(index, 1);
+    }
+
+    //remove player from lobby
+    index = this.lobbyRoom.people.indexOf(player);
+    if(index > -1) this.lobbyRoom.people.splice(index,1);
+
+    //remove player
+    //index = this.players.indexOf(playerID);
+    //if(index > -1) this.players.splice(index,1);
+    delete this.players[playerID];
+};
+
 
 module.exports = LobbyCommunication;

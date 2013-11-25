@@ -1,31 +1,14 @@
-
+/******************************************************************************************
+    Create By: Erik Johansson
+    Last Updated: 11/25/2013 
+******************************************************************************************/
 
 var socket = io.connect('142.4.210.12:8127');
 var validPlayer = "inprogress";
 var playerName = "BOB";
-/*This function updates the table list of players on home.html */
-function updateUserListTable(players){
-    $('#playerTable').children().remove();
-    var tableHTML = "<thead><tr> <th>#</th><th>Player Name</th><th>Status</th><th>Invite</th></tr></thead>";
-    var i = 0
-    for (var key in players){
-        tableHTML = tableHTML + "<tr><td>"+i+"</td><td>"+players[key].name+"</td><td>Waiting</td><td><input type=\"checkbox\" id=\"check"+players[key]+"\"></td></tr>";
-        i++;
-    }
-    $('#playerTable').append(tableHTML);
-}
-
-function updateUserBar(){
-	$('#gameCreateMenu').children().remove();
-	var html ="<table class=\"table table-condensed\"> <tr> <th><h4>Username: Erik</h4></th> <th>  <div class=\"btn-group\"> <button type=\"button\" class=\"btn btn-danger dropdown-toggle\" data-toggle=\"dropdown\" id=\"status\"> Waiting <span class=\"caret\"></span> </button> <ul class=\"dropdown-menu\" role=\"menu\"> <li><a href=\"#\" id=\"statusWait\">Waiting</a></li> <li><a href=\"#\" id=\"statusReady\">Ready</a></li> </ul> </div> </th> <th><center> <button type=\"button\" class=\"btn btn-primary btn-lg\" id=\"createGame\">Create Game</button></center></th> </tr> </table>"
-	$('#gameCreateMenu').html(html);       
-}
-
-
-
+var invPassword = "";
 
 $(document).ready(function() {
-    socket.emit('drawCurrentPlayers');
 
     //---Hide main page and ask for username
     $('.LobbyPage').hide();
@@ -37,7 +20,7 @@ $(document).ready(function() {
     });
 
 
-    //---Status Selection Functionality
+    //---Reflect change status for the status button
     $(".dropdown-menu li a").click(function(){
         var selText = $(this).text();
         if (selText == "Busy"){
@@ -58,6 +41,8 @@ $(document).ready(function() {
             $("#createUser").popover('show');
         }
     });
+
+    //--- Show error popup if username is invalid; if not add them to the lobby
     socket.on('checkValidPlayer', function(valid){
         validPlayer = valid;
         if (!(validPlayer)){
@@ -67,20 +52,34 @@ $(document).ready(function() {
         }
     });
 
+    //--- Called when user has succesffuly joined the lobby
     socket.on('succesfullyJoined', function(){
-        $('#usernameTitle').append("<h3>Player: "+playerName+"</h3>");
+        $('#usernameTitle').append(playerName);
+        var msg = "Hello "+ playerName + ", welcome to the Kard Kit Lobby! \n";
+        addInboxMessage(msg, "confirmation");
         $('.LobbyPage').show();
         $('#myModal').modal("hide");
     });
 
 
+    //--- Called to updated the list of players
     socket.on('updatePlayerList', function(tableHTML){
         $('#playerListTable').children().remove();
         $('#playerListTable').append(tableHTML);
     });
 
+    //--- Called whenver a player is added to the lobby to update different lists
+    socket.on('playerAddedToLobby', function(tableHTML, player){
+        $('#playerListTable').children().remove();
+        $('#playerListTable').append(tableHTML);
+        var msg = player + " has just joined the lobby";
+        addInboxMessage(msg, "confirmation");
+    });
+
 
     //------ Creating Games ------
+
+    //--- Create Game
     $("#launchGame").click(function(){
         var game = $("#gameName").val();
         var players = getInvitedPlayers();
@@ -88,36 +87,100 @@ $(document).ready(function() {
 
         socket.emit("validateGame", game, password, players);
     });
+
+    //--- Show modal for actually creating game
     $("#createGame").click(function(){
         socket.emit("getCreateGamePlayerListHTML");
         $('#createGameModal').modal("show");
     });
+
+    //-- Called when 
     socket.on('updatePlayerListGameRoom', function(tableHTML){
         var userInfo = "<tr><td>" + playerName +"</td><td><input type=\"checkbox\" id=\""+ playerName +"-check\"></td></tr>";
         tableHTML = tableHTML.replace(userInfo, "");
         $('#creatingGamePList').children().remove();
         $('#creatingGamePList').append(tableHTML);
     });
+
+    //--- alert when invalid game name
     socket.on('invalidGameCreation', function(message){
         alert(message);
     });
 
-    socket.on("playerInvited", function(message){
-        $('#playerInvitedMsg').append(message);
-        $('#playerInvited').modal("show");
+    //--- show the player invited message
+    socket.on("playerInvited", function(message, password){
+        if(password == undefined){
+            $('#playerInvitedMsg').append(message);
+            $('#playerInvited').modal("show");
+        }else{
+            invPassword = password;
+            $('#playerInvitedMsg-Pswd').append(message);
+            $('#playerInvited-Pswd').modal("show");
+        }      
     });
 
 
     /* JOINING GAME IF CLIENT CREATED */
     socket.on("moveToGame", function(){
-        window.open("/gameRoom.html", "_blank");
+        $('#createGameModal').modal("hide");
+        window.open("/gameUI/game.html", "_blank");
     });
     /* JOINING GAME IF ASKED TO JOIN */
     $('#joinGameBtn').click(function(){
         socket.emit('joinGame');
-        window.open("/gameRoom.html", "_blank");
+        $('#playerInvited').modal("hide");
+        window.open("/gameUI/game.html", "_blank");
     });
 
+    $('#joinGameBtnPwd').click(function(){
+        if($('#password-invite').val() == invPassword){
+            socket.emit('joinGame');
+            $('#playerInvited-Pswd').modal("hide");
+            window.open("/gameUI/game.html", "_blank");
+        }else{
+            alert("Invalid Password");  
+        }
+    });
+
+    //--updates the list of games
+    socket.on("updatedGamesList", function(table){
+        $('#gameListTable').children().remove();
+        $('#gameListTable').append(table);
+    });
+
+    $('.btn btn-primary btn-sm join-from-gameList').click(function(){
+       window.open("/gameUI/game.html", "_blank"); 
+    });
+
+
+
+
+
+    /***************************CHAT FUNCTIONALITY*************************************/
+
+    $("#sendMessage").click(function(){
+        sendOutboxMessage();
+    });
+    
+    socket.on("receiveInboxMessage", function(message, type){
+        addInboxMessage(message, type);
+    });
+    
+    function addInboxMessage(message, type){
+        var spanElement = document.createElement("span");
+        spanElement.innerHTML = message;
+        spanElement.className = type;
+        $("#chat-inbox").append(spanElement);
+        $("#chat-inbox").append(document.createElement("br"));
+        $('#chat-inbox').scrollTop = $('#chat-inbox').scrollHeight;
+    }
+
+    function sendOutboxMessage() {
+        var v = $('#outbox-text').val();
+        var outboxMessage = playerName + ": " + v;
+        socket.emit("chatSendPublicMessage", outboxMessage);
+        $("#outbox-text").val("");
+    }
 
 });
 
@@ -136,3 +199,6 @@ function getInvitedPlayers(){
     }
     return invitedPlayers;
 }
+
+
+
