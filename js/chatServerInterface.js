@@ -1,39 +1,52 @@
 //Serverside chat functionality
+//Created by Ben Jaberg
 
-var chatServerInterface = function () {
-		var _public = {};
+function chatServerInterface(socket){
+	this.socket = socket;
+};
+
+chatServerInterface.prototype.sendChat = function(message, senderID, receiverID, isPM) {
 		
-		_public.chatDigest = function(message, senderID) {
+			if (senderID = receiverID){
+				this.socket.sockets.socket(receiverID).emit("ChatConfirmMessage", message); //UNSAFE!
+			} else if (isPM) {
+				this.socket.sockets.socket(receiverID).emit("ChatPrivateMessage", message); //UNSAFE!
+			} else {
+				this.socket.sockets.socket(receiverID).emit("ChatReceiveMessage", message); //UNSAFE!
+			}
+		}
+		
+chatServerInterface.prototype.digest = function(message, senderID, lobby) {
 			
-			var finalMessage = players[senderID].name + ": " + message;
+			console.log("Chat message from " + senderID + ": " + message);
 			
 			//First, check if message is supposed to be private
 			var isPrivate = false;
-			for (var i in players){
-				if (message.indexOf("!".concat(players[i].name)) != -1){
+			for (var i in lobby.players){
+				var pName = lobby.players[i].name;
+				if (message.indexOf("!".concat(pName)) != -1){
 					isPrivate = true;
-					sendChat(finalMessage, senderID, players[i].id, true);
-					sendChat(finalMessage, senderID, senderID, false);
+					this.sendChat(message, senderID, lobby.players[i].id, true);
+					this.sendChat(message, senderID, senderID, false);
 				}
 			}
 			
 			if (!isPrivate){
-				for (var i in players){
-					sendChat(message, senderID, players[i].id, false);
+				var P = lobby.getPlayerByID(senderID);
+				var roomName = P.getRoomName();
+				if (roomName != "none"){ //Sends only to those in-game
+					var R = lobby.getRoom(roomName, "gameRoom");
+					for (var i in R.people){
+						this.sendChat(message, senderID, R.people[i].id, false);
+					}
+				} else { //Sends to everyone in the lobby
+					for (var i in lobby.players){
+						if (lobby.players[i].status != "In-Game"){
+							this.sendChat(message, senderID, lobby.players[i].id, false);
+						}
+					}
 				}
 			}
 		}
 		
-		_public.sendChat = function(message, senderID, receiverID, isPM) {
-		
-			if (senderID = receiverID){
-				socket.sockets.socket(receiverID).emit("ChatConfirmMessage", finalMessage); //UNSAFE!
-			} else if (isPM) {
-				socket.sockets.socket(receiverID).emit("ChatPrivateMessage", finalMessage); //UNSAFE!
-			} else {
-				socket.sockets.socket(receiverID).emit("ChatReceiveMessage", finalMessage); //UNSAFE!
-			}
-		}
- 
-		return _public;
-	}();
+module.exports = chatServerInterface;

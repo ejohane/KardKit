@@ -102,6 +102,8 @@ var Room = require('./js/room.js');
 var Player = require('./js/player.js');
 var LobbyCommunication = require('./js/LobbyCommunication.js');
 var lobby = new LobbyCommunication();
+var ChatInterface = require('./js/chatServerInterface.js');
+var chat = new ChatInterface(socket);
 
 // Get size of an object (used for players object)
 Object.size = function(obj) {
@@ -287,12 +289,15 @@ socket.on('connection', function (client) {
     /********************************************************************
         Created By: Erik Johansson      On: 10/30/2013
         - This function is called when a user clicks sends a public message
+		
+		Update By: Ben Jaberg		On: 11/26/2013
+		- Calls the digest method of the chatServerInterface to decide if the message
+			is private, public, or anything else.
     ********************************************************************/  
     client.on("chatSendPublicMessage", function(message){
-        socket.sockets.in(lobby.lobbyRoom).emit('receiveInboxMessage', message, "message");
+        chat.digest(message, client.id, lobby);
     });
 
 });
-
 
 

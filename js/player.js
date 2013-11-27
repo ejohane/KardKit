@@ -23,6 +23,10 @@ Player.prototype.getRoomName = function(){
 	}
 };
 
+Player.prototype.setRoom = function(room){
+	this.room = room;
+};
+
 Player.prototype
 
 

@@ -197,6 +197,22 @@ LobbyCommunication.prototype.getPlayer = function(playerName){
 };
 
 /********************************************************************
+    Function: gets the player class based on the client id of the player
+	Return Value: the player
+	Created By: Ben Jaberg		On: 11/26/2013
+	Updated:
+*********************************************************************/
+LobbyCommunication.prototype.getPlayerByID = function(playerID){
+	var player = null;
+	for (var k in this.players){
+		if (playerID = this.players[k].id){
+			player = this.players[k];
+		}
+	}
+	return player;
+};
+
+/********************************************************************
     Function: This function is used for inviteRooms. It checks if it is empty, and deletes it if it is. 
 	Return Value: true: empty, otherwise false
 	Created By: Erik Johansson		On: 10/30/2013

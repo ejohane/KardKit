@@ -161,10 +161,18 @@ $(document).ready(function() {
     $("#sendMessage").click(function(){
         sendOutboxMessage();
     });
-    
-    socket.on("receiveInboxMessage", function(message, type){
-        addInboxMessage(message, type);
-    });
+    	
+	socket.on("ChatReceiveMessage", function(message){
+		addInboxMessage(message, "message");
+	});
+	
+	socket.on("ChatConfirmMessage", function(message){
+		addInboxMessage(message, "confirmation");
+	});
+	
+	socket.on("ChatPrivateMessage", function(message){
+		addInboxMessage(message, "privateMessage");
+	});
     
     function addInboxMessage(message, type){
         var spanElement = document.createElement("span");

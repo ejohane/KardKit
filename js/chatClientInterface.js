@@ -1,9 +1,7 @@
 /////////////////////////////////////////
-//           chat interface .js
-//        Ben is building this out as a separate interface module 
-//             to encapsulate this functionality
-
-//  this will talk directly to clientInterface.js file
+//           chat Client Interface .js
+//        Works to help sort out incoming messages.
+//			by Ben Jaberg, last updated 11/26/2013
 /////////////////////////////////////////
 
 
