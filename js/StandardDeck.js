@@ -1,3 +1,7 @@
+/*
+ * Returns a standard playing card deck, Ace through King of four suits without the Jokers, inside a CardHolder.
+ */
+
 var Card = require('./Card.js');
 var CardHolder = require('./CardHolder.js');
 
