@@ -69,7 +69,7 @@ function PlayPile(cardholder) {}
 
 //takes all cards from the play pile and puts them in reverse order
 //in the destination holder
-PlayPile.prototype.empty(destination) {
+PlayPile.prototype.empty = function(destination) {
 	var temp;
 	for (int i = 0; i < this.length; i++) {
 		temp = this.pop();
