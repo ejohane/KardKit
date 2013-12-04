@@ -12,6 +12,8 @@
 //deck is the deck of cards- only exists during initial setup
 //isSlappable is a boolean that determines whether or not the play pile is actually slappable at the current time
 //currentPlayer is an int corresponding to the player whose turn it is
+//hopefulPlayer is an int used during digging. it corresponds to the player who will earn the pile if the dig fails.
+//digChances is an int used during digging.
 
 function RatSlapGame(room){
 	var StandardDeck = require('./StandardDeck.js');
