@@ -1,5 +1,5 @@
 function CardHolder() {
-	this = [];
+	var cards = [];
 	var numCards = 0;
 }
 
@@ -11,15 +11,15 @@ CardHolder.prototype.isEmpty = function() {
 
 //removes a card from a cardholder and returns that card
 CardHolder.prototype.take = function(index) {
-	var temp = this[i];
-	this.splice(index, 1);
+	var temp = this.cards[i];
+	this.cards.splice(index, 1);
 	this.numCards = this.numCards - 1;
 	return temp;
 }
 
 //puts a card into the end of the cardholder
 CardHolder.prototype.insert = function(card) {
-	this.push(card);
+	this.cards.push(card);
 	this.numCards = this.numCards + 1;
 }
 
@@ -29,21 +29,21 @@ CardHolder.prototype.shuffle = function() {
 	var source1;
 	var source2;
 	var temp;
-	for (var i = 0; i < this.length; i++) {
-		source1 = Math.floor(Math.random()*(this.length-1));
-		source2 = Math.floor(Math.random()*(this.length-1));
-		temp = this[source1];
-		this[source1] = this[source2];
-		this[source2] = temp;		
+	for (var i = 0; i < this.cards.length; i++) {
+		source1 = Math.floor(Math.random()*(this.cards.length-1));
+		source2 = Math.floor(Math.random()*(this.cards.length-1));
+		temp = this.cards[source1];
+		this.cards[source1] = this.cards[source2];
+		this.cards[source2] = temp;		
 	}
 }
 
 //splits the holder in two parts, then joins them together
 //with the second half first, followed by the first half
 CardHolder.prototype.cut = function() {
-	var one = this.slice(0, (this.length/2))
-	var two = this.slice((this.length/2)+1);
-	this = two.concat(one);
+	var one = this.cards.slice(0, (this.cards.length/2))
+	var two = this.cards.slice((this.cards.length/2)+1);
+	this.cards = two.concat(one);
 }
 
 function Deck(cardholder) {}
@@ -51,7 +51,7 @@ function Deck(cardholder) {}
 //takes the card at index 0 of the deck and 
 //puts it in the destination holder
 Deck.prototype.draw = function(destination) {
-	var temp = this.splice(0, 1);
+	var temp = this.cards.splice(0, 1);
 	this.numCards = this.numCards - 1;
 	destination.insert(temp);
 }
@@ -60,7 +60,7 @@ function Hand(cardholder) {}
 
 //takes a card of choice and places it in the destination holder
 Hand.prototype.play = function(index, destination) {
-	var temp = this.splice(index, 1);
+	var temp = this.cards.splice(index, 1);
 	this.numCards = this.numCards - 1;
 	destination.insert(temp);
 }
@@ -72,7 +72,7 @@ function PlayPile(cardholder) {}
 PlayPile.prototype.empty = function(destination) {
 	var temp;
 	for (var i = 0; i < this.length; i++) {
-		temp = this.pop();
+		temp = this.cards.pop();
 		this.numCards = numCards - 1;
 		destination.insert(temp);
 	}
