@@ -71,7 +71,7 @@ function PlayPile(cardholder) {}
 //in the destination holder
 PlayPile.prototype.empty = function(destination) {
 	var temp;
-	for (int i = 0; i < this.length; i++) {
+	for (var i = 0; i < this.length; i++) {
 		temp = this.pop();
 		this.numCards = numCards - 1;
 		destination.insert(temp);
