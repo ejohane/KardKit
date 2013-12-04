@@ -1,0 +1,30 @@
+/* high level styles */
+body{background-color: #009F50;}
+input[type="text"]{padding:0 0 0 5px;border:0;}
+
+/*action bar */
+#actionbar{height:100px;background-color:#aaa;padding:5px 0 0 5px; position:fixed; bottom:0px; left:0;}
+.action{width:100px;height:95px;background-color:#abcabc;float:left;margin-right:5px;}
+    .action:hover{background-color:#abccff;cursor:pointer;}
+.action > span{display:table; margin:auto;}
+.action > span:first-child{border:1px solid #faffaf;}
+
+/*chat window */
+#chat{float:left; width:280px; height:270px; background-color:#aaa; padding: 5px 5px 5px 5px; position:fixed; bottom:0px;right:0;}
+#inbox{width:277px;height:235px;background-color:#fff;margin: 0 0 5px 0;padding: 0 0 0 3px;}
+    #inbox > .message{color:green;}
+    #inbox > .privateMessage{color:red;}
+    #inbox > .confirmation{color:gray;}
+#outbox{ width:275px;height:30px;background-color:#fff;}
+
+/*player spots for hand, points, and name*/
+#playerSpot_0 {position:absolute;left:50%;top:50%;}
+#playerSpot_1 {position:absolute;right:25%;top:25%;}
+#playerSpot_2 {position:absolute;left:50%;top:0%;}
+#playerSpot_3 {position:absolute;left:25%;top:25%;}
+
+.hand + .playerName{}
+.playerName + .playerPoints{}
+
+
+

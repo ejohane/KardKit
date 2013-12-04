@@ -1,0 +1,8 @@
+.hand{ height: 155px;}
+.hand > .card:nth-child(1){margin-left:0;}
+.hand > .card:nth-child(2){margin-left:30px;}
+.hand > .card:nth-child(3){margin-left:60px;}
+.hand > .card:nth-child(4){margin-left:90px;}
+.hand > .card:nth-child(5){margin-left:120px;}
+
+

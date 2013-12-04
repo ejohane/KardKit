@@ -1,0 +1,9 @@
+#sandbox > div {border: 2px solid #3d3add; width:250px;height:22px; }
+#sandbox > div > span {float:left;margin-right:5px;}
+#sandbox > div > .args{float:right;}
+#sandbox > div > .args > input[type="textbox"]{ float:left;width:50px;margin-right:5px;height:14px;}
+#sandbox > div > .go{ float:right;width:20px;height:21px; background-color:#aaaaaa;}
+    #sandbox > div > .go:hover{cursor:pointer;float:right;}
+    /*sandbox - special massive functions */
+    #sandbox > div.massive {border: 2px solid #3d3add; width:300px;height:70px; }
+    #sandbox > div.massive > .args > input[type="textbox"]{ width:80px;margin-right:5px;}
