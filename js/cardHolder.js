@@ -1,6 +1,6 @@
 function CardHolder() {
-	var cards = [];
-	var numCards = 0;
+	this.cards = [];
+	this.numCards = 0;
 }
 
 CardHolder.prototype.isEmpty = function() {
