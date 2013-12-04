@@ -1,17 +1,26 @@
 function CardHolder() {
-	this = [];	
+	this = [];
+	int numCards = 0;
+}
+
+CardHolder.prototype.isEmpty = function() {
+	if (this.numCards == 0)
+		return true;
+	return false;
 }
 
 //removes a card from a cardholder and returns that card
 CardHolder.prototype.take = function(index) {
 	var temp = this[i];
 	this.splice(index, 1);
+	this.numCards = this.numCards - 1;
 	return temp;
 }
 
 //puts a card into the end of the cardholder
 CardHolder.prototype.insert = function(card) {
 	this.push(card);
+	this.numCards = this.numCards + 1;
 }
 
 //randomly swaps 2 cards places, does this for the total
@@ -43,7 +52,8 @@ function Deck(cardholder) {}
 //puts it in the destination holder
 Deck.prototype.draw = function(destination) {
 	var temp = this.splice(0, 1);
-	destination.push(temp);
+	this.numCards = this.numCards - 1;
+	destination.insert(temp);
 }
 
 function Hand(cardholder) {}
@@ -51,7 +61,8 @@ function Hand(cardholder) {}
 //takes a card of choice and places it in the destination holder
 Hand.prototype.play = function(index, destination) {
 	var temp = this.splice(index, 1);
-	destination.push(temp);
+	this.numCards = this.numCards - 1;
+	destination.insert(temp);
 }
 
 function PlayPile(cardholder) {}
@@ -62,6 +73,7 @@ PlayPile.prototype.empty(destination) {
 	var temp;
 	for (int i = 0; i < this.length; i++) {
 		temp = this.pop();
-		destination.push(temp);
+		this.numCards = numCards - 1;
+		destination.insert(temp);
 	}
 }
