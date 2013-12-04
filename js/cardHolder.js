@@ -77,3 +77,7 @@ PlayPile.prototype.empty = function(destination) {
 		destination.insert(temp);
 	}
 }
+
+if (typeof module !== 'undefined') {
+    module.exports = CardHolder;
+}
