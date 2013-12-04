@@ -16,10 +16,14 @@
 //digChances is an int used during digging.
 
 function RatSlapGame(room){
-	var StandardDeck = require('./StandardDeck.js');
 	//Declare deck & cardholders
 	/* Seriously, can you declare multiple objects in the same class as was done in cardHolder.js? */
+	var CardHolder = require('./js/cardHolder.js');
+	var deck;
 	var gameRoom = room;
+	var allPlayers = [];
+	var playerHands = [];
+	var playPile;
 	var isSlappable = false;
 	var currentPlayer = 0;
 	var hopefulPlayer = -1;
@@ -28,10 +32,27 @@ function RatSlapGame(room){
 
 //Called when all 4 players are loaded in the game room.
 RatSlapGame.prototype.setup = function(){
+	deck = new Deck(new cardHolder);
+	//Adding players in order???
+	for (var i = 0; i < 4; i++){
+		playerHands[i] = new Hand(new cardHolder);
+	}
+	playPile = new PlayPile(new cardHolder);
+	
 	deck.shuffle();
 	deck.cut();
-	//deal cards out
-	/* how to check if deck is empty? */
+	while (!deck.isEmpty()){
+		deck.draw(playerHands[currentPlayer]);
+		this.advanceCurrentPlayer();
+	}
+	currentPlayer = 0;
+	for (var i in playerHands){
+		playerHands[i].shuffle();
+		playerHands[i].cut();
+	}
+	
+	//ClientUI - draw hands
+	
 	isSlappable = true;
 	for (var i in allPlayers){
 		enableSlap(allPlayers[i]);
@@ -45,12 +66,15 @@ RatSlapGame.prototype.playAction = function(){
 		disablePlay(allPlayers[i]);
 	}
 	playerHands[currentPlayer].play(0, playPile);
+	
+	//ClientUI - draw new card on playpile
+	
 	isSlappable = true;
 	this.advanceCurrentPlayer();
-	if (playPile[playPile.length - 1].properties.rank == 'A' ||
-		playPile[playPile.length - 1].properties.rank == 'J' ||
-		playPile[playPile.length - 1].properties.rank == 'Q' ||
-		playPile[playPile.length - 1].properties.rank == 'K'){
+	if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
+		playPile[playPile.numCards - 1].properties.rank == 'J' ||
+		playPile[playPile.numCards - 1].properties.rank == 'Q' ||
+		playPile[playPile.numCards - 1].properties.rank == 'K'){
 			enableDigForFaceCard(currentPlayer, 3);
 	} else {
 		enablePlay(currentPlayer);
@@ -63,11 +87,14 @@ RatSlapGame.prototype.digAction = function(){
 		disableDig(allPlayers[i]);
 	}
 	playerHands[currentPlayer].play(0, playPile);
+	
+	//ClientUI - draw new card
+	
 	digChances--;
-	if (playPile[playPile.length - 1].properties.rank == 'A' ||
-		playPile[playPile.length - 1].properties.rank == 'J' ||
-		playPile[playPile.length - 1].properties.rank == 'Q' ||
-		playPile[playPile.length - 1].properties.rank == 'K'){
+	if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
+		playPile[playPile.numCards - 1].properties.rank == 'J' ||
+		playPile[playPile.numCards - 1].properties.rank == 'Q' ||
+		playPile[playPile.numCards - 1].properties.rank == 'K'){
 			this.advanceCurrentPlayer();
 			enablePlay(currentPlayer);
 	} else if (digChances == 0) {
@@ -81,16 +108,24 @@ RatSlapGame.prototype.digAction = function(){
 
 //Called to this game whenever the client sends a 'gameSlap' socket function.
 RatSlapGame.prototype.slapAction = function(player){
-	if (isSlappable /*&& !playPile.isEmpty*/ ){
+	if (isSlappable && (!playPile.isEmpty)){
 		var trulySlappable = this.slappableConditions;
-		//figure out who sent the slap action based on the player in the arguements
-		//Pass it along in a variable called slapper as an int
-		if (trulySlappable){
-			winPile(slapper);
-			currentPlayer = slapper;
-		} else {
-			burn(slapper);
-			burn(slapper);
+		var slapper = -1;
+		
+		for (var i in allPlayers){
+			if (allPlayers[i].name = player.name){
+				slapper = i;
+			}
+		}
+		
+		if (slapper != -1){
+			if (trulySlappable){
+				winPile(slapper);
+				currentPlayer = slapper;
+			} else {
+				burn(slapper);
+				burn(slapper);
+			}
 		}
 	}
 }
@@ -101,7 +136,7 @@ RatSlapGame.prototype.skipAction = function(){
 		disableSkip(allPlayers[i]);
 	}
 	if (checkWin){
-		//what do when over?
+		//ClientUI - redirect to Imgur? Seriously, what are we doing here?
 	} else {
 		this.advanceCurrentPlayer();
 		enablePlay(currentPlayer);
@@ -110,23 +145,23 @@ RatSlapGame.prototype.skipAction = function(){
 
 //Called internally. Takes the player to disable the appropriate actions for.
 RatSlapGame.prototype.disablePlay = function(player){
-	//disable the play action for that player
+	//ClientUI - disable the play action for that player
 }
 
 RatSlapGame.prototype.disableDig = function(player){
-	//disable the dig action for that player
+	//ClientUI - disable the dig action for that player
 }
 
 RatSlapGame.prototype.disableSkip = function(player){
-	//disable the skip action for that player
+	//ClientUI - disable the skip action for that player
 }
 
 //Called internally. Takes the index number corresponding to the next player (aka currentPlayer)
 RatSlapGame.prototype.enablePlay = function(playerIndex){
 	if (playerHands[playerIndex]/*is empty*/){
-		//enable the play action for that player
+		//ClientUI - enable the play action for that player
 	} else {
-		//enable the skip action for that player
+		//ClientUI - enable the skip action for that player
 	}
 }
 
@@ -134,12 +169,12 @@ RatSlapGame.prototype.enablePlay = function(playerIndex){
 RatSlapGame.prototype.enableDigForFaceCard = function(playerIndex, digNumber){
 	isSlappable = false;
 	digChances = digNumber;
-	//enable the dig action for that player
+	//ClientUI - enable the dig action for that player
 }
 
 //Called internally. Takes a player and enables the slap action for them
 RatSlapGame.prototype.enableSlap = function(player){
-	//enable the slap action for that player
+	//ClientUI - enable the slap action for that player
 }
 
 //Called internally. Advances the current player, but loops when it would be 4.
@@ -152,8 +187,10 @@ RatSlapGame.prototype.advanceCurrentPlayer = function(){
 
 //Called internally. Takes the player index of the burned player.
 RatSlapGame.prototype.burn = function(burntIndex){
-	if (playerHands[burntIndex]/*is not empty*/){
+	if (!playerHands[burntIndex].isEmpty()){
 		playerHands[burntIndex].play(0, playPile);
+		
+		//ClientUI - update the play pile
 	}
 }
 
@@ -166,7 +203,7 @@ RatSlapGame.prototype.winPile = function(winIndex){
 RatSlapGame.prototype.checkWin = function(){
 	var handsLeft = 0;
 	for (var i in playerHands){
-		if (playerHands[i]/*is not empty*/){
+		if (!playerHands[i].isEmpty()){
 			handsLeft++;
 		}
 	}

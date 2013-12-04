@@ -297,7 +297,37 @@ socket.on('connection', function (client) {
         //start drawing stuff
 
     });
-
+	
+	/*********************************************************************
+    ********************** Rat Slap Functions ************************
+    **********************************************************************/
+	client.on("RatSlapPlay", function(){
+		var affectedGameRoom = lobby.getRoom(lobby.players[client.id].getRoomName ,"gameRoom");
+		if (affectedGameRoom !== null){
+			affectedGameRoom.getGame.playAction();
+		}
+	});
+	
+	client.on("RatSlapDig", function(){
+		var affectedGameRoom = lobby.getRoom(lobby.players[client.id].getRoomName ,"gameRoom");
+		if (affectedGameRoom !== null){
+			affectedGameRoom.getGame.digAction();
+		}
+	});
+	
+	client.on("RatSlapSlap", function(){
+		var affectedGameRoom = lobby.getRoom(lobby.players[client.id].getRoomName ,"gameRoom");
+		if (affectedGameRoom !== null){
+			affectedGameRoom.getGame.slapAction(lobby.players[client.id]);
+		}
+	});
+	
+	client.on("RatSlapSkip", function(){
+		var affectedGameRoom = lobby.getRoom(lobby.players[client.id].getRoomName ,"gameRoom");
+		if (affectedGameRoom !== null){
+			affectedGameRoom.getGame.skipAction();
+		}
+	});
 
 });
 

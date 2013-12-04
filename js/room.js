@@ -13,6 +13,7 @@ function Room(name, id, owner) {
   this.private = false;
   this.password;
   this.invited = [];
+  this.RatSlapGame = null;
 };
 
 
@@ -62,6 +63,22 @@ Room.prototype.isPrivate = function() {
     return false;
   }
 };
+
+Room.prototype.setGame = function(game) {
+	this.RatSlapGame = game;
+}
+
+Room.prototype.getGame = function(){
+	return this.game;
+}
+
+Room.prototype.isGameRoom = function(){
+	if (this.RatSlapGame == null){
+		return false;
+	} else {
+		return true;
+	}
+}
 
 
 module.exports = Room;
