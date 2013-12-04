@@ -123,7 +123,7 @@ $(document).ready(function() {
     /* JOINING GAME IF CLIENT CREATED */
     socket.on("moveToGame", function(){
         $('#createGameModal').modal("hide");
-        window.open("/gameUI/game.html", "_blank");
+        window.open("./game.html", "_blank");
     });
     /* JOINING GAME IF ASKED TO JOIN */
     $('#joinGameBtn').click(function(){
