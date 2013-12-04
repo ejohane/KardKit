@@ -255,7 +255,7 @@ socket.on('connection', function (client) {
     ********************************************************************/  
     client.on('joinGame', function(){
         console.log(lobby.players[client.id].invitedGame);
-        var player = lobby.players[client.id]
+        var player = lobby.players[client.id];
         //Remove player from invited room
         client.leave(player.invitedGame);
         //Remove room if empty
@@ -268,17 +268,6 @@ socket.on('connection', function (client) {
         socket.sockets.in(lobby.lobbyRoom).emit('updatedGamesList', table);
         socket.sockets.in(lobby.lobbyRoom).emit('updatePlayerList',lobby.getPlayerListHTML());
         
-    });
-
-
-    /*********************************************************************
-    ********************** Game ROOM Functions ************************
-    **********************************************************************/
-
-
-    client.on("drawStuff",function(){
-        var room = players[client.id].room;
-
     });
 
      /*********************************************************************
@@ -297,6 +286,18 @@ socket.on('connection', function (client) {
     client.on("chatSendPublicMessage", function(message){
         chat.digest(message, client.id, lobby);
     });
+
+
+   /*********************************************************************
+    ********************** Game ROOM Functions ************************
+    **********************************************************************/
+    client.on("joinGameRoom", function(){
+        //get player's game room
+        //if game room doesn't have instance of game logic, create new one and add it
+        //start drawing stuff
+
+    });
+
 
 });
 

@@ -129,7 +129,8 @@ $(document).ready(function() {
     $('#joinGameBtn').click(function(){
         socket.emit('joinGame');
         $('#playerInvited').modal("hide");
-        window.open("/gameUI/game.html", "_blank");
+        window.open("/game.html", "_blank");
+        socket.emit('joinGameRoom');
     });
 
     $('#joinGameBtnPwd').click(function(){
