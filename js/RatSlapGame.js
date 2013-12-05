@@ -213,3 +213,5 @@ RatSlapGame.prototype.checkWin = function(){
 		return false;
 	}
 }
+
+module.exports = RatSlapGame;
