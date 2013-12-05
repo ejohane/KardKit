@@ -294,7 +294,7 @@ socket.on('connection', function (client) {
         var player = lobby.players[client.id];
 
         if(player.room.RatSlapGame == null){
-            var RatSlapGame = require('./RatSlapGame.js');
+            var RatSlapGame = require('./js/RatSlapGame.js');
             var ratSlapGame = new RatSlapGame(player.room);
             console.log(ratSlap);
             player.room.setGame(ratSlap);
