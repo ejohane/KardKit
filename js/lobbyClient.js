@@ -124,6 +124,7 @@ $(document).ready(function() {
     socket.on("moveToGame", function(){
         $('#createGameModal').modal("hide");
         window.open("./game.html", "_blank");
+        socket.emit('joinGameRoom');
     });
     /* JOINING GAME IF ASKED TO JOIN */
     $('#joinGameBtn').click(function(){
