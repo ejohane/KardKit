@@ -295,10 +295,13 @@ socket.on('connection', function (client) {
     client.on("joinGameRoom", function(){
         //get player's game room
         var player = lobby.players[client.id];
+
         if(player.room.RatSlapGame == null){
             var ratSlap = new RatSlapGame(player.room);
             player.room.setGame(ratSlap);
             console.log("RatSlapGame Created");
+        }else{
+            console.log("NOt Null: " + player.room.RatSlapGame);
         }
 
         var ratGame = player.room.getGame;
