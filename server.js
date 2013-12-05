@@ -98,12 +98,9 @@ var server = http.createServer(requestHandler).listen(8127, "142.4.210.12");
         console.log('Server running at http:142.4.210.12:8127/');
 var io = require('socket.io');
 var socket = io.listen(server);
-var Room = require('./js/room.js');
-var Player = require('./js/player.js');
 var LobbyCommunication = require('./js/LobbyCommunication.js');
 var lobby = new LobbyCommunication();
 var ChatInterface = require('./js/chatServerInterface.js');
-var RatSlapGame = require('./js/RatSlapGame.js');
 var chat = new ChatInterface(socket);
 
 // Get size of an object (used for players object)
@@ -297,7 +294,8 @@ socket.on('connection', function (client) {
         var player = lobby.players[client.id];
 
         if(player.room.RatSlapGame == null){
-            var ratSlap = new RatSlapGame(player.room);
+            var RatSlapGame = require('./RatSlapGame.js');
+            var ratSlapGame = new RatSlapGame(player.room);
             console.log(ratSlap);
             player.room.setGame(ratSlap);
             console.log("RatSlapGame Created");
