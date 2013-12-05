@@ -310,7 +310,7 @@ socket.on('connection', function (client) {
 
         */
         //client.emit("setUIFramework", ratGame.completeActionlistNames, ratGame.completeActionlistLabels, ratGame.completeActionlistKeyCodes, ratGame.completeActionlistKeyLabels);
-        console.log("here");
+        console.log(client.id);
         client.emit("setUIFramework", ["slap","play"], ["slap","play"], [32,112], ["S","P"]);
         //if game room doesn't have instance of game logic, create new one and add it
         //start drawing stuff
