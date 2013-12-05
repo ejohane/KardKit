@@ -327,7 +327,7 @@ socket.on('connection', function (client) {
         }
 
         client.emit("setUIFramework", ["slap","play"], ["slap","play"], [32,112], ["S","P"]);
-        client.emit("setActions", [1, 1]);
+        //client.emit("setActions", [1, 1]);
     });
 
 
