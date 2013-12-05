@@ -298,11 +298,16 @@ socket.on('connection', function (client) {
 
         if(player.room.RatSlapGame == null){
             var ratSlap = new RatSlapGame(player.room);
+            console.log(ratSlap);
             player.room.setGame(ratSlap);
             console.log("RatSlapGame Created");
         }
 
         var ratGame = player.room.getGame();
+
+        console.log(ratGame);
+        console.log(ratGame.completeActionlistNames);
+
         
         client.emit("setUIFramework", ratGame.completeActionlistNames, ratGame.completeActionlistLabels, ratGame.completeActionlistKeyCodes, ratGame.completeActionlistKeyLabels);
         //if game room doesn't have instance of game logic, create new one and add it
