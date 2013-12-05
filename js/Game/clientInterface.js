@@ -27,6 +27,7 @@ var clientInterface = function () {
          guiInterface.removePlayer(playerId);   
     };    
     _public.setActions = function(actionsToGive){
+        alert("here2"); 
         guiInterface.setActions(actionsToGive);        
     };
     _public.setHand = function(playerId, hand) {
@@ -91,7 +92,7 @@ socket.emit("gameLoaded", $.cookie("KardKit-username"));
 
 socket.on("setUIFramework", function(a1,a2,a3,a4){
     clientInterface.setUIFramework(a1,a2,a3,a4);
-    clientInterface.setActions([1,1]);
+    clientInterface.setActions("[1,1]");
 });
 
 socket.on("setActions", function(a1){
