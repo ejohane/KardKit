@@ -16,7 +16,8 @@ var clientInterface = function () {
     _public.setUIFramework = function(completeActionlistNames,
                                       completeActionlistLabels,
                                       completeActionlistKeyCodes,
-                                      completeActionlistKeyLabels){  
+                                      completeActionlistKeyLabels){
+        alert("here");  
          guiInterface.setActionbarFramework(completeActionlistNames,completeActionlistLabels,completeActionlistKeyCodes,completeActionlistKeyLabels);        
     };
     _public.addPlayer = function(playerName){
@@ -89,6 +90,5 @@ var socket = io.connect('142.4.210.12:8127');
 socket.emit("gameLoaded", $.cookie("KardKit-username"));
 
 socket.on("setUIFramework", function(a1,a2,a3,a4){
-    alert("HERE");
     clientInterface.setUIFramework(a1,a2,a3,a4);
 });
