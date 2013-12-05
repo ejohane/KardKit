@@ -298,7 +298,7 @@ socket.on('connection', function (client) {
         if(player.room.RatSlapGame == null){
             var ratSlap = new RatSlapGame(player.room);
             player.room.setGame(ratSlap);
-            client.on("RatSlapGame Created!");
+            console.log("RatSlapGame Created");
         }
 
         var ratGame = player.room.getGame;
