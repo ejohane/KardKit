@@ -30,7 +30,7 @@ function RatSlapGame(room){
 	var digChances = 0;
 
 	//Actions
-	var completeActionlistNames = ["slap","play";
+	var completeActionlistNames = ["slap","play"];
 	var completeActionlistLabels = [,"SLAP","Play"];
 	var completeActionlistKeyCodes = [32,112];
 	var completeActionlistKeyLabels = ["S","P"];

@@ -1,8 +1,3 @@
-var socket = io.connect('142.4.210.12:8127');
-
-socket.on("setUIFramework", function(a1,a2,a3,a4){
-    clientInterface.setUIFramework(a1,a2,a3,a4);
-});
 
 var clientInterface = function () {
      var _public = {};
@@ -88,3 +83,9 @@ var clientInterface = function () {
     
      return _public;
 }();
+
+var socket = io.connect('142.4.210.12:8127');
+
+socket.on("setUIFramework", function(a1,a2,a3,a4){
+    clientInterface.setUIFramework(a1,a2,a3,a4);
+});
