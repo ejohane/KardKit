@@ -86,6 +86,8 @@ var clientInterface = function () {
 
 var socket = io.connect('142.4.210.12:8127');
 
+socket.emit("gameLoaded", $.cookie("KardKit-username"));
+
 socket.on("setUIFramework", function(a1,a2,a3,a4){
     alert("HERE");
     clientInterface.setUIFramework(a1,a2,a3,a4);

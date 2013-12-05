@@ -193,7 +193,7 @@ socket.on('connection', function (client) {
         }   
         socket.sockets.in(lobby.lobbyRoom).emit('updatedGamesList', lobby.getGameRoomList());
         socket.sockets.in(lobby.lobbyRoom).emit('updatePlayerList',lobby.getPlayerListHTML());
-
+        
     });
 
     /********************************************* Creating Games ****************************************************** */
@@ -310,13 +310,26 @@ socket.on('connection', function (client) {
 
         */
         //client.emit("setUIFramework", ratGame.completeActionlistNames, ratGame.completeActionlistLabels, ratGame.completeActionlistKeyCodes, ratGame.completeActionlistKeyLabels);
-        console.log(client.id);
-        client.emit("setUIFramework", ["slap","play"], ["slap","play"], [32,112], ["S","P"]);
+        //console.log(client.id);
+        //client.emit("setUIFramework", ["slap","play"], ["slap","play"], [32,112], ["S","P"]);
         //if game room doesn't have instance of game logic, create new one and add it
         //start drawing stuff
 
 
     });
+
+    client.on("gameLoaded", function(username){
+        var player = lobby.getPlayer(username);
+        if(player != null){
+            player.gameID = client.id;
+        }else{
+            console.log("WHYYYYYY");
+        }
+
+        client.emit("setUIFramework", ["slap","play"], ["slap","play"], [32,112], ["S","P"]);
+    });
+
+
 	
 	/*********************************************************************
     ********************** Rat Slap Functions ************************
