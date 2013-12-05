@@ -10,6 +10,7 @@ function Player(name, id) {
   this.inGame = false;
   this.room ;
   this.invitedGame;
+  this.gameID;
 };
 
 Player.prototype.getRoomName = function(){

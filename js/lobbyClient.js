@@ -36,6 +36,7 @@ $(document).ready(function() {
    //--- Creates and Adds User
     $('#createUser').click(function(){
         playerName = $('#username').val();
+        $.cookie("KardKit-username", playerName);
         socket.emit('validatePlayer', playerName);
         if($("#username").val() == ""){
             $("#createUser").popover('show');
