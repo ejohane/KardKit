@@ -1,112 +1,90 @@
-function clientInterface(socket){
-	this.socket = socket;
-};
+var socket = io.connect('142.4.210.12:8127');
 
-/* private
---------------------------------*/
-clientInterface.prototype.addCard = function(playerId, card){
-	guiInterface.addCard(playerId,card);    
-}
-    
-clientInterface.prototype.removeCard = function(playerId, cardIndex){
-	guiInterface.removeCard(playerId, cardIndex);
-}    
-    
-/* incoming
---------------------------------------*/
-clientInterface.prototype.setUIFramework = function(completeActionlistNames,
-                                    completeActionlistLabels,
-                                    completeActionlistKeyCodes,
-                                    completeActionlistKeyLabels){  
-    guiInterface.setActionbarFramework(completeActionlistNames,completeActionlistLabels,completeActionlistKeyCodes,completeActionlistKeyLabels);        
-};
+socket.on("setUIFramework", function(a1,a2,a3,a4){
+    clientInterface.setUIFramework(a1,a2,a3,a4);
+});
 
-clientInterface.prototype.addPlayer = function(playerName){
-    guiInterface.addPlayerFramework(playerName);  
-};
+var clientInterface = function () {
+     var _public = {};
 
-clientInterface.prototype.removePlayer = function(playerId){
-    guiInterface.removePlayer(playerId);   
-}; 
-   
-clientInterface.prototype.setActions = function(actionsToGive){
-    guiInterface.setActions(actionsToGive);        
-};
-
-clientInterface.prototype.setHand = function(playerId, hand) {
-    guiInterface.setHand(playerId, hand);
-};
-
-clientInterface.prototype.setName = function(playerId, playerName){
-     guiInterface.setName(playerId,playerName);
-};
-
-clientInterface.prototype.setPoints = function(playerId, playerPoints){
-     guiInterface.setPoints(playerId,playerPoints);
-};
-
-clientInterface.prototype.removeCard = function(playerId, cardIndex){
-    removeCard(playerId, cardIndex);  
-};
-
-clientInterface.prototype.addCard = function(playerId,card){
-    addCard(playerId, card);
-};
-
-clientInterface.prototype.draw = function(playerId, card){
-    addCard(playerId, card);     
-};
- 
-clientInterface.prototype.discard = function(playerId, cardIndex){
-    removeCard(playerId, cardIndex);  
-};
-
-clientInterface.prototype.takeCard = function(playerIdOwner,cardIndexTaken,playerIdReceiver,cardTaken){
-	removeCard(playerIdOwner, cardIndexTaken);		
-	addCard(playerIdReceiver, cardTaken);
-};
-
-clientInterface.prototype.receiveInboxMessage = function(inboxMessage){
-    guiInterface.receiveInboxMessage(inboxMessage);  
-};
-
-clientInterface.prototype.receivePrivateMessage = function(privateMessage){
-    guiInterface.receivePrivateMessage(privateMessage);  
-};
-
-clientInterface.prototype.receiveOutboxConfirmation = function(yourMessage) {
-    guiInterface.receiveOutboxConfirmation(yourMessage);  
-};
-
-    /* outgoing
+    /* private
+    --------------------------------*/
+    function addCard(playerId, card){
+        guiInterface.addCard(playerId,card);    
+    }
+    function removeCard(playerId, cardIndex){
+        guiInterface.removeCard(playerId, cardIndex);
+    }    
+    /* incoming
     --------------------------------------*/
 
-	//NOTE FROM BEN:
-	//Should the bottom functions just coordinate with the ratSlap game commands the server is expecting?
-	//If that's the case, a lot of the arguments can actually be cut.
-	
-clientInterface.prototype.out_sendOutboxMessage = function(outboxMessage){
-	socket.emit("chatSendPublicMessage", outboxMessage);
-};
-
-clientInterface.prototype.out_playCard = function(playerName, cardIndex){
-    //alert("function playCard : call the server with playername = " + playerName + " , cardIndex = " + cardIndex);
-	socket.emit("r_playCard", playerName, cardIndex);
-};
-
-clientInterface.prototype.out_slap = function(playerName){
-    //alert("function slap: call the server with playername = " + playerName);
-	socket.emit("r_slap", playerName);
-};
-
-clientInterface.prototype.out_draw = function(playerName){
-    //alert("function draw: call the server with playername = " + playerName);
-	socket.emit("r_draw", playerName);
-};
-
-clientInterface.prototype.out_takeCard = function(playerNameOwner,cardIndex,playerNameReceiver){
-    //alert("function takeCard: call the server with owner playername = " + playerNameOwner + " , cardIndex = " + cardIndex + " , receiver playername = " + playerNameReceiver);
-	socket.emit("r_takeCard", playerNameOwner, cardIndex, playerNameReceiver);
-};
-
-module.exports = clientInterface;
+    _public.setUIFramework = function(completeActionlistNames,
+                                      completeActionlistLabels,
+                                      completeActionlistKeyCodes,
+                                      completeActionlistKeyLabels){  
+         guiInterface.setActionbarFramework(completeActionlistNames,completeActionlistLabels,completeActionlistKeyCodes,completeActionlistKeyLabels);        
+    };
+    _public.addPlayer = function(playerName){
+         guiInterface.addPlayerFramework(playerName);  
+    };
+    _public.removePlayer = function(playerId){
+         guiInterface.removePlayer(playerId);   
+    };    
+    _public.setActions = function(actionsToGive){
+        guiInterface.setActions(actionsToGive);        
+    };
+    _public.setHand = function(playerId, hand) {
+        guiInterface.setHand(playerId, hand);
+    };
+    _public.setName = function(playerId, playerName){
+         guiInterface.setName(playerId,playerName);
+    };
+    _public.setPoints = function(playerId, playerPoints){
+         guiInterface.setPoints(playerId,playerPoints);
+    };
+    _public.removeCard = function(playerId, cardIndex){
+         removeCard(playerId, cardIndex);  
+    };
+    _public.addCard = function(playerId,card){
+        addCard(playerId, card);
+    };
+    _public.draw = function(playerId, card){
+        addCard(playerId, card);     
+    };
+    _public.discard = function(playerId, cardIndex){
+        removeCard(playerId, cardIndex);  
+    };
+        _public.takeCard = function(playerIdOwner,cardIndexTaken,playerIdReceiver,cardTaken){
+                removeCard(playerIdOwner, cardIndexTaken);                
+                addCard(playerIdReceiver, cardTaken);
+        };
+    _public.receiveInboxMessage = function(inboxMessage){
+        guiInterface.receiveInboxMessage(inboxMessage);  
+    };
+    _public.receivePrivateMessage = function(privateMessage){
+        guiInterface.receivePrivateMessage(privateMessage);  
+    };
+    _public.receiveOutboxConfirmation = function(yourMessage) {
+        guiInterface.receiveOutboxConfirmation(yourMessage);  
+    };
+    /* outgoing
+    --------------------------------------*/
+        _public.out_sendOutboxMessage = function(outboxMessage){
+                alert("clientInterface function 'sendOutboxMessage' called with argument : " + outboxMessage);
+        };
+    _public.out_playCard = function(playerName, cardIndex){
+        alert("function playCard : call the server with playername = " + playerName + " , cardIndex = " + cardIndex);
+    };
+    _public.out_slap = function(playerName){
+        alert("function slap: call the server with playername = " + playerName);
+    };
+    _public.out_draw = function(playerName){
+        alert("function draw: call the server with playername = " + playerName);
+    };
+    _public.out_takeCard = function(playerNameOwner,cardIndex,playerNameReceiver){
+        alert("function takeCard: call the server with owner playername = " + playerNameOwner + " , cardIndex = " + cardIndex + " , receiver playername = " + playerNameReceiver);
+    };
+    
+    
+     return _public;
+}();

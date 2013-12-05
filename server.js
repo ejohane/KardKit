@@ -298,7 +298,9 @@ socket.on('connection', function (client) {
         if(player.room.RatSlapGame == null){
             var ratSlap = new RatSlapGame(player.room);
             player.room.setGame(ratSlap);
+            client.on("RatSlapGame Created!");
         }
+
         var ratGame = player.room.getGame;
         
         client.emit("setUIFramework", ratGame.completeActionlistNames, ratGame.completeActionlistLabels, ratGame.completeActionlistKeyCodes, ratGame.completeActionlistKeyLabels);
