@@ -296,8 +296,8 @@ socket.on('connection', function (client) {
         if(player.room.RatSlapGame == null){
             var RatSlapGame = require('./js/RatSlapGame.js');
             var ratSlapGame = new RatSlapGame(player.room);
-            console.log(ratSlap);
-            player.room.setGame(ratSlap);
+            console.log(ratSlapGame);
+            player.room.setGame(ratSlapGame);
             console.log("RatSlapGame Created");
         }
 
