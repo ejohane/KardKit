@@ -103,6 +103,8 @@ var lobby = new LobbyCommunication();
 var ChatInterface = require('./js/chatServerInterface.js');
 var chat = new ChatInterface(socket);
 
+var rat = require('./js/RatSlapGame.js');
+
 // Get size of an object (used for players object)
 Object.size = function(obj) {
     var size = 0, key;
@@ -291,7 +293,7 @@ socket.on('connection', function (client) {
     **********************************************************************/
     client.on("joinGameRoom", function(){
         //get player's game room
-        var player = lobby.players[client.id];
+        /*var player = lobby.players[client.id];
 
         if(player.room.RatSlapGame == null){
             var RatSlapGame = require('./js/RatSlapGame.js');
@@ -306,8 +308,9 @@ socket.on('connection', function (client) {
         console.log(ratGame);
         console.log(ratGame.completeActionlistNames);
 
-        
-        client.emit("setUIFramework", ratGame.completeActionlistNames, ratGame.completeActionlistLabels, ratGame.completeActionlistKeyCodes, ratGame.completeActionlistKeyLabels);
+        */
+        //client.emit("setUIFramework", ratGame.completeActionlistNames, ratGame.completeActionlistLabels, ratGame.completeActionlistKeyCodes, ratGame.completeActionlistKeyLabels);
+        client.emit("setUIFramework", ["slap","play"], ["slap","play"], [32,112], ["S","P"]);
         //if game room doesn't have instance of game logic, create new one and add it
         //start drawing stuff
 
