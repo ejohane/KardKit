@@ -28,7 +28,15 @@ function RatSlapGame(room){
 	var currentPlayer = 0;
 	var hopefulPlayer = -1;
 	var digChances = 0;
+
+	//Actions
+	var completeActionlistNames = ["slap","play";
+	var completeActionlistLabels = [,"SLAP","Play"];
+	var completeActionlistKeyCodes = [32,112];
+	var completeActionlistKeyLabels = ["S","P"];
+	var actionsToGive = [1,1];
 }
+
 
 //Called when all 4 players are loaded in the game room.
 RatSlapGame.prototype.setup = function(){

@@ -69,7 +69,7 @@ Room.prototype.setGame = function(game) {
 }
 
 Room.prototype.getGame = function(){
-	return this.game;
+	return this.RatSlapGame;
 }
 
 Room.prototype.isGameRoom = function(){
