@@ -1,7 +1,7 @@
 function CardHolder() {
 	this.cards = [];
 	this.numCards = 0;
-}
+};
 
 CardHolder.prototype.isEmpty = function() {
 	if (this.numCards == 0)

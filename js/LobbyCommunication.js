@@ -1,6 +1,6 @@
 function LobbyCommunication(){
-	var Room = require('./room.js');;
-	var Player = require('./player.js');;
+	var Room = require('./room.js');
+	var Player = require('./player.js');
 	
 	this.rooms = [];
 	this.invitedRooms = [];

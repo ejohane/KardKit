@@ -18,7 +18,7 @@
 function RatSlapGame(room){
 	//Declare deck & cardholders
 	/* Seriously, can you declare multiple objects in the same class as was done in cardHolder.js? */
-	var CardHolder = require('./js/cardHolder.js');
+	var CardHolder = require('./cardHolder.js');
 	var deck;
 	var gameRoom = room;
 	var allPlayers = [];
