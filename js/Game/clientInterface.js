@@ -66,25 +66,20 @@ var clientInterface = function () {
     };
     /* outgoing
     --------------------------------------*/
-    _public.out_sendOutboxMessage = function(outboxMessage){
-        alert("out_sendOutboxMessage called with arg = " + outboxMessage);
-        socket.emit("r_sendOutboxMessage", outboxMessage);            
-    };
+        _public.out_sendOutboxMessage = function(outboxMessage){
+                alert("clientInterface function 'sendOutboxMessage' called with argument : " + outboxMessage);
+        };
     _public.out_playCard = function(playerName, cardIndex){
-        alert("out_playCard with playername = " + playerName + " , cardIndex = " + cardIndex);
-        socket.emit("r_play", playerName, cardIndex);
+        alert("function playCard : call the server with playername = " + playerName + " , cardIndex = " + cardIndex);
     };
     _public.out_slap = function(playerName){
-        alert("out_slap with playername = " + playerName);
-        socket.emit("r_slap", playerName);
+        alert("function slap: call the server with playername = " + playerName);
     };
     _public.out_draw = function(playerName){
-        alert("out_draw with playername = " + playerName);
-        socket.emit("r_draw", playerName);
+        alert("function draw: call the server with playername = " + playerName);
     };
     _public.out_takeCard = function(playerNameOwner,cardIndex,playerNameReceiver){
-        alert("out_takeCard with owner playername = " + playerNameOwner + " , cardIndex = " + cardIndex + " , receiver playername = " + playerNameReceiver);
-        socket.emit("r_takeCard", playerNameOwner, cardIndex, playerNameReceiver);
+        alert("function takeCard: call the server with owner playername = " + playerNameOwner + " , cardIndex = " + cardIndex + " , receiver playername = " + playerNameReceiver);
     };
     
     

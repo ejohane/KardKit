@@ -10,7 +10,7 @@
 //playerHands[] is an array of Hands, where the index corresponds to the appropriate player in allPlayers[]
 //playPile is the center stack of cards
 //deck is the deck of cards- only exists during initial setup
-//isSlappable is a boolean that determines whether or not the play pile is actually slappable at the current time
+//slapAllowed is a boolean that determines whether or not the play pile is actually slappable at the current time
 //currentPlayer is an int corresponding to the player whose turn it is
 //hopefulPlayer is an int used during digging. it corresponds to the player who will earn the pile if the dig fails.
 //digChances is an int used during digging.
@@ -24,16 +24,16 @@ function RatSlapGame(room){
 	this.allPlayers = [];
 	this.playerHands = [];
 	this.playPile;
-	this.isSlappable = false;
+	this.slapAllowed = false;
 	this.currentPlayer = 0;
 	this.hopefulPlayer = -1;
 	this.digChances = 0;
 
 	//Actions
-	this.completeActionlistNames = ["play", "slap"];
-	this.completeActionlistLabels = ["PLAY", "SLAP"];
-	this.completeActionlistKeyCodes = [112, 32];
-	this.completeActionlistKeyLabels = ["P","S"];
+	this.completeActionlistNames = ["slap","play"];
+	this.completeActionlistLabels = ["SLAP","Play"];
+	this.completeActionlistKeyCodes = [32,112];
+	this.completeActionlistKeyLabels = ["S","P"];
 	this.actionsToGive = [1,1];
 };
 
@@ -55,8 +55,6 @@ RatSlapGame.prototype.setup = function(){
 		}
 	}
 
-	//ClientUI - add players in order
-
 	for (var i = 0; i < 4; i++){
 		playerHands[i] = new Hand(new cardHolder);
 	}
@@ -76,7 +74,7 @@ RatSlapGame.prototype.setup = function(){
 	
 	//ClientUI - draw hands
 	
-	isSlappable = true;
+	slapAllowed = true;
 	for (var i in allPlayers){
 		enableSlap(allPlayers[i]);
 	}
@@ -91,43 +89,47 @@ RatSlapGame.prototype.playAction = function(){
 	playerHands[currentPlayer].play(0, playPile);
 	
 	//ClientUI - draw new card on playpile
+	
+	slapAllowed = true;
+	this.advanceCurrentPlayer();
+	if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
+		playPile[playPile.numCards - 1].properties.rank == 'J' ||
+		playPile[playPile.numCards - 1].properties.rank == 'Q' ||
+		playPile[playPile.numCards - 1].properties.rank == 'K'){
+			enableDigForFaceCard(currentPlayer, 3);
+	} else {
+		enablePlay(currentPlayer);
+	}
+}
 
-	if (digChances == 0){	
-		isSlappable = true;
-		if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
-			playPile[playPile.numCards - 1].properties.rank == 'J' ||
-			playPile[playPile.numCards - 1].properties.rank == 'Q' ||
-			playPile[playPile.numCards - 1].properties.rank == 'K'){
-				isSlappable = false;
-				digChances = 3;
-				hopefulPlayer = currentPlayer;
-				this.advanceCurrentPlayer();
-				enablePlayer(currentPlayer);			
-		} else {
+//Called to this game whenever the client sends a 'gameDigFaceCard' socket function.
+RatSlapGame.prototype.digAction = function(){
+	for (var i in allPlayers){
+		disableDig(allPlayers[i]);
+	}
+	playerHands[currentPlayer].play(0, playPile);
+	
+	//ClientUI - draw new card
+	
+	digChances--;
+	if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
+		playPile[playPile.numCards - 1].properties.rank == 'J' ||
+		playPile[playPile.numCards - 1].properties.rank == 'Q' ||
+		playPile[playPile.numCards - 1].properties.rank == 'K'){
 			this.advanceCurrentPlayer();
 			enablePlay(currentPlayer);
-		}
+	} else if (digChances == 0) {
+		winPile(hopefulPlayer);
+		currentPlayer = hopefulPlayer;
+		enablePlay(currentPlayer);
 	} else {
-		digChances--;
-		if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
-			playPile[playPile.numCards - 1].properties.rank == 'J' ||
-			playPile[playPile.numCards - 1].properties.rank == 'Q' ||
-			playPile[playPile.numCards - 1].properties.rank == 'K'){
-				this.advanceCurrentPlayer();
-				enablePlayer(currentPlayer);
-		} else if (digChances == 0){
-			winPile(hopefulPlayer);
-			currentPlayer = hopefulPlayer;
-			enablePlay(currentPlayer);
-		} else {
-			enablePlay(currentPlayer);
-		}
+		enableDigForFaceCard(currentPlayer, digChances);
 	}
 }
 
 //Called to this game whenever the client sends a 'gameSlap' socket function.
 RatSlapGame.prototype.slapAction = function(player){
-	if (isSlappable && (!playPile.isEmpty)){
+	if (slapAllowed && (!playPile.isEmpty)){
 		var trulySlappable = this.slappableConditions;
 		var slapper = -1;
 		
@@ -167,6 +169,10 @@ RatSlapGame.prototype.disablePlay = function(player){
 	//ClientUI - disable the play action for that player
 }
 
+RatSlapGame.prototype.disableDig = function(player){
+	//ClientUI - disable the dig action for that player
+}
+
 RatSlapGame.prototype.disableSkip = function(player){
 	//ClientUI - disable the skip action for that player
 }
@@ -178,6 +184,13 @@ RatSlapGame.prototype.enablePlay = function(playerIndex){
 	} else {
 		//ClientUI - enable the skip action for that player
 	}
+}
+
+//Called internally. Takes a player index number and number of chances still left to dig.
+RatSlapGame.prototype.enableDigForFaceCard = function(playerIndex, digNumber){
+	slapAllowed = false;
+	digChances = digNumber;
+	//ClientUI - enable the dig action for that player
 }
 
 //Called internally. Takes a player and enables the slap action for them
@@ -222,9 +235,40 @@ RatSlapGame.prototype.checkWin = function(){
 	}
 }
 
-RatSlapGame.prototype.topCard = function(){
-	var tc = [playPile.cards[playPile.numCards-1].properties.rank, playPile.cards[playPile.numCards-1].properties.suit];
-	return tc;
+// Called internally. Checks against all the winning conditions for slapping the pile.
+RatSlapGame.prototype.isSlappable = function() {
+	// The top 4 cards' ranks
+	var first = playPile[playPile.numCards - 1].properties.rank;
+	var second = playPile[playPile.numCards - 2].properties.rank;
+	var third = playPile[playPile.numCards - 3].properties.rank;
+	var fourth = playPile[playPile.numCards - 4].properties.rank;
+
+	// Double: Top 2 cards are the same rank
+	if (first === second) {
+		return true;
+	}
+	// Sandwich: Top card and the second card beneath it are the same rank. (eg. Q 7 Q)
+	if (first === third) {
+		return true;
+	}
+	// Bottoms Up: Top card and the bottom card match rank.
+	if (first === playPile[0].properties.rank]) {
+		return true;
+	}
+	// Tens: When consecutive cards (or cards with a face card in between) total 10 (e.g. 4, 6 or 3, K, 7)
+	if (first + second === 10
+		|| ((second === 'J' || second === 'Q' || second === 'K') && first + third === 10) {
+		return true;
+	}
+	// Four in a Row: The last four cards were in sequence (eg. 4, 5, 6, 7)
+	if (fourth - 1 === third && third - 1 === second && second - 1 === first) {
+		return true;
+	}
+	// Marriage: If the last two cards are a queen and a king.
+	if (first === 'K' && second === 'Q' || first === 'Q' && second === 'K') {
+		return true;
+	}
+	return false;
 }
 
 module.exports = RatSlapGame;

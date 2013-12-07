@@ -105,7 +105,6 @@ var chat = new ChatInterface(socket);
 
 
 var RatSlapGame = require('./js/RatSlapGame.js');
-var serverInterface = require('./js/ServerInterface.js');
 
 // Get size of an object (used for players object)
 Object.size = function(obj) {
@@ -293,7 +292,32 @@ socket.on('connection', function (client) {
    /*********************************************************************
     ********************** Game ROOM Functions ************************
     **********************************************************************/
+    client.on("joinGameRoom", function(){
+        //get player's game room
+        /*var player = lobby.players[client.id];
 
+        if(player.room.RatSlapGame == null){
+            var RatSlapGame = require('./js/RatSlapGame.js');
+            var ratSlapGame = new RatSlapGame(player.room);
+            console.log(ratSlapGame);
+            player.room.setGame(ratSlapGame);
+            console.log("RatSlapGame Created");
+        }
+
+        var ratGame = player.room.getGame();
+
+        console.log(ratGame);
+        console.log(ratGame.completeActionlistNames);
+
+        */
+        //client.emit("setUIFramework", ratGame.completeActionlistNames, ratGame.completeActionlistLabels, ratGame.completeActionlistKeyCodes, ratGame.completeActionlistKeyLabels);
+        //console.log(client.id);
+        //client.emit("setUIFramework", ["slap","play"], ["slap","play"], [32,112], ["S","P"]);
+        //if game room doesn't have instance of game logic, create new one and add it
+        //start drawing stuff
+
+
+    });
 
     /* This function is called once the game page has loaded
         It assigns the players new client ID to gameID.
@@ -314,15 +338,16 @@ socket.on('connection', function (client) {
             ratSlapGame = new RatSlapGame(player.room);
             player.room.setGame(ratSlapGame);
             console.log("RatSlapGame Created");
-        }
-        console.log(player.room.people.length);
-        if(player.room.people.length == 4){
-            ratSlapGame.setup();
-        }
-        serverInterface.setUIFramework(client, ratSlapGame.completeActionlistNames,ratSlapGame.completeActionlistLabels,ratSlapGame.completeActionlistKeyCodes,ratSlapGame.completeActionlistKeyLabels);
-        serverInterface.setActions(client, ratSlapGame.actionsToGive);
+        }else{
 
+        }
+        console.log(ratSlapGame.completeActionlistNames);
+        console.log(ratSlapGame.completeActionlistLabels);
+        console.log(ratSlapGame.completeActionlistKeyCodes);
+        console.log(ratSlapGame.completeActionlistKeyLabels);
 
+        client.emit("setUIFramework", ratSlapGame.completeActionlistNames, ratSlapGame.completeActionlistLabels, ratSlapGame.completeActionlistKeyCodes, ratSlapGame.completeActionlistKeyLabels);
+        client.emit("setActions", ratSlapGame.actionsToGive);
     });
 
     /*********************************************************************
@@ -345,22 +370,42 @@ socket.on('connection', function (client) {
 	/*********************************************************************
     ********************** Rat Slap Functions ************************
     **********************************************************************/
+<<<<<<< HEAD
 	client.on("r_play", function(){
+=======
+	client.on("RatSlapPlay", function(){
+>>>>>>> 03521203dd6c200b4f189581bd9f53c3917b439f
 		var affectedGameRoom = lobby.getRoom(lobby.players[client.id].getRoomName ,"gameRoom");
 		if (affectedGameRoom !== null){
 			affectedGameRoom.getGame.playAction();
-            serverInterface.play(socket, affectedGameRoom, affectedGameRoom.game.topCard());
 		}
 	});
-
-	client.on("r_slap", function(){
+	
+	client.on("RatSlapDig", function(){
+		var affectedGameRoom = lobby.getRoom(lobby.players[client.id].getRoomName ,"gameRoom");
+		if (affectedGameRoom !== null){
+			affectedGameRoom.getGame.digAction();
+		}
+	});
+	
+	client.on("RatSlapSlap", function(){
 		var affectedGameRoom = lobby.getRoom(lobby.players[client.id].getRoomName ,"gameRoom");
 		if (affectedGameRoom !== null){
 			affectedGameRoom.getGame.slapAction(lobby.players[client.id]);
 		}
 	});
+<<<<<<< HEAD
 
 
+=======
+	
+	client.on("RatSlapSkip", function(){
+		var affectedGameRoom = lobby.getRoom(lobby.players[client.id].getRoomName ,"gameRoom");
+		if (affectedGameRoom !== null){
+			affectedGameRoom.getGame.skipAction();
+		}
+	});
+>>>>>>> 03521203dd6c200b4f189581bd9f53c3917b439f
 
 });
 
