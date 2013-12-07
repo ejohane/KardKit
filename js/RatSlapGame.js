@@ -15,10 +15,12 @@
 //hopefulPlayer is an int used during digging. it corresponds to the player who will earn the pile if the dig fails.
 //digChances is an int used during digging.
 
+var CardHolder = require('./cardHolder.js');
+var StandardDeck = require('./StandardDeck.js');
+
 function RatSlapGame(room){
 	//Declare deck & cardholders
 	/* Seriously, can you declare multiple objects in the same class as was done in cardHolder.js? */
-	this.CardHolder = require('./cardHolder.js');
 	this.deck;
 	this.gameRoom = room;
 	this.allPlayers = [];
