@@ -222,4 +222,9 @@ RatSlapGame.prototype.checkWin = function(){
 	}
 }
 
+RatSlapGame.prototype.topCard = function(){
+	var tc = [playPile.cards[playPile.numCards-1].properties.rank, playPile.cards[playPile.numCards-1].properties.suit];
+	return tc;
+}
+
 module.exports = RatSlapGame;
