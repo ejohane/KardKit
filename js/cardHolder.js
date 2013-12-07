@@ -70,7 +70,7 @@ Hand.super_.prototype.play = function(index, destination) {
 }
 
 function PlayPile(cardholder) {}
-util.inherits(PlayPile, CardHolder
+util.inherits(PlayPile, CardHolder);
 
 //takes all cards from the play pile and puts them in reverse order
 //in the destination holder
