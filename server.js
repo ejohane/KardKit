@@ -344,7 +344,7 @@ socket.on('connection', function (client) {
         console.log(ratSlapGame.completeActionlistNames);
         console.log(ratSlapGame.completeActionlistLabels);
         console.log(ratSlapGame.completeActionlistKeyCodes);
-        console.log(completeActionlistKeyLabels);
+        console.log(ratSlapGame.completeActionlistKeyLabels);
 
         client.emit("setUIFramework", ratSlapGame.completeActionlistNames, ratSlapGame.completeActionlistLabels, ratSlapGame.completeActionlistKeyCodes, ratSlapGame.completeActionlistKeyLabels);
 
