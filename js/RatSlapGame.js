@@ -31,7 +31,7 @@ function RatSlapGame(room){
 
 	//Actions
 	this.completeActionlistNames = ["slap","play"];
-	this.completeActionlistLabels = [,"SLAP","Play"];
+	this.completeActionlistLabels = ["SLAP","Play"];
 	this.completeActionlistKeyCodes = [32,112];
 	this.completeActionlistKeyLabels = ["S","P"];
 	this.actionsToGive = [1,1];
