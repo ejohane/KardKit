@@ -331,21 +331,21 @@ socket.on('connection', function (client) {
     client.on("r_sendOutboxMessage", function(outboxMessage){
         console.log("out_sendOutboxMessage called with arg = " + outboxMessage);
         chatServerInterface.chatDigest(outboxMessage, client.id,lobby);            
-    };
+    });
     client.on("r_play" , function(playerName, cardIndex){
         console.log("out_play with playername = " + playerName + " , cardIndex = " + cardIndex);
-    };
+    });
     client.on("r_slap", function(playerName){
         console.log("out_slap with playername = " + playerName);
         
-    };
+    });
     client.on("r_draw", function(playerName){
         console.log("out_draw with playername = " + playerName);
-    };
+    });
     client.on("r_takeCard", function(playerNameOwner,cardIndex,playerNameReceiver){
         console.log("out_takeCard with owner playername = " + playerNameOwner + " , cardIndex = " + cardIndex + " , receiver playername = " + playerNameReceiver);
         
-    };
+    });
   
 	
 	/*********************************************************************
