@@ -48,44 +48,6 @@ CardHolder.prototype.cut = function() {
 	this.cards = two.concat(one);
 }
 
-function Deck(cardholder) {}
-util.inherits(Deck, CardHolder);
-
-//takes the card at index 0 of the deck and 
-//puts it in the destination holder
-Deck.super_.prototype.draw = function(destination) {
-	var temp = this.cards.splice(0, 1);
-	this.numCards = this.numCards - 1;
-	destination.insert(temp);
-}
-
-function Hand(cardholder) {}
-util.inherits(Hand, CardHolder);
-
-//takes a card of choice and places it in the destination holder
-Hand.super_.prototype.play = function(index, destination) {
-	var temp = this.cards.splice(index, 1);
-	this.numCards = this.numCards - 1;
-	destination.insert(temp);
-}
-
-function PlayPile(cardholder) {}
-util.inherits(PlayPile, CardHolder);
-
-//takes all cards from the play pile and puts them in reverse order
-//in the destination holder
-PlayPile.super_.prototype.empty = function(destination) {
-	var temp;
-	for (var i = 0; i < this.length; i++) {
-		temp = this.cards.pop();
-		this.numCards = numCards - 1;
-		destination.insert(temp);
-	}
-}
-
 if (typeof module !== 'undefined') {
     module.exports = CardHolder;
-	module.exports = Deck;
-	module.exports = Hand;
-	module.exports = PlayPile;
 }
