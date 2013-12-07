@@ -196,6 +196,7 @@ LobbyCommunication.prototype.getPlayer = function(playerName){
     return player;
 };
 
+
 /********************************************************************
     Function: gets the player class based on the client id of the player
 	Return Value: the player
@@ -205,7 +206,7 @@ LobbyCommunication.prototype.getPlayer = function(playerName){
 LobbyCommunication.prototype.getPlayerByID = function(playerID){
 	var player = null;
 	for (var k in this.players){
-		if (playerID = this.players[k].id){
+		if (playerID = this.players[k].id || playerID = this.players[k].gameID){
 			player = this.players[k];
 		}
 	}
