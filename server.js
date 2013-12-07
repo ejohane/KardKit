@@ -103,7 +103,8 @@ var lobby = new LobbyCommunication();
 var ChatInterface = require('./js/chatServerInterface.js');
 var chat = new ChatInterface(socket);
 
-var rat = require('./js/RatSlapGame.js');
+
+var RatSlapGame = require('./js/RatSlapGame.js');
 
 // Get size of an object (used for players object)
 Object.size = function(obj) {
@@ -326,11 +327,20 @@ socket.on('connection', function (client) {
             console.log("WHYYYYYY");
         }
 
+
+
         client.emit("setUIFramework", ["slap","play"], ["slap","play"], [32,112], ["S","P"]);
         //client.emit("setActions", [1, 1]);
+
+        if(player.room.RatSlapGame == null){
+            var ratSlapGame = new RatSlapGame(player.room);
+            console.log(ratSlapGame);
+            player.room.setGame(ratSlapGame);
+            console.log("RatSlapGame Created");
+        }
     });
 
-
+  
 	
 	/*********************************************************************
     ********************** Rat Slap Functions ************************
