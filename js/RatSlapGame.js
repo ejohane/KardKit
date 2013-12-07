@@ -235,4 +235,40 @@ RatSlapGame.prototype.checkWin = function(){
 	}
 }
 
+// Called internally. Checks against all the winning conditions for slapping the pile.
+RatSlapGame.prototype.slappableConditions = function() {
+	// The top 4 cards' ranks
+	var first = playPile[playPile.numCards - 1].properties.rank;
+	var second = playPile[playPile.numCards - 2].properties.rank;
+	var third = playPile[playPile.numCards - 3].properties.rank;
+	var fourth = playPile[playPile.numCards - 4].properties.rank;
+
+	// Double: Top 2 cards are the same rank
+	if (first === second) {
+		return true;
+	}
+	// Sandwich: Top card and the second card beneath it are the same rank. (eg. Q 7 Q)
+	if (first === third) {
+		return true;
+	}
+	// Bottoms Up: Top card and the bottom card match rank.
+	if (first === playPile[0].properties.rank]) {
+		return true;
+	}
+	// Tens: When consecutive cards (or cards with a face card in between) total 10 (e.g. 4, 6 or 3, K, 7)
+	if (first + second === 10
+		|| ((second === 'J' || second === 'Q' || second === 'K') && first + third === 10) {
+		return true;
+	}
+	// Four in a Row: The last four cards were in sequence (eg. 4, 5, 6, 7)
+	if (fourth - 1 === third && third - 1 === second && second - 1 === first) {
+		return true;
+	}
+	// Marriage: If the last two cards are a queen and a king.
+	if (first === 'K' && second === 'Q' || first === 'Q' && second === 'K') {
+		return true;
+	}
+	return false;
+}
+
 module.exports = RatSlapGame;
