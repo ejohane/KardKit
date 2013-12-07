@@ -92,7 +92,6 @@ socket.emit("gameLoaded", $.cookie("KardKit-username"));
 
 socket.on("setUIFramework", function(a1,a2,a3,a4){
     clientInterface.setUIFramework(a1,a2,a3,a4);
-    clientInterface.setActions("[1,1]");
 });
 
 socket.on("setActions", function(a1){
