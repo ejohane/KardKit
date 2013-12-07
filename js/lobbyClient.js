@@ -125,14 +125,12 @@ $(document).ready(function() {
     socket.on("moveToGame", function(){
         $('#createGameModal').modal("hide");
         window.open("./game.html", "_blank");
-        socket.emit('joinGameRoom');
     });
     /* JOINING GAME IF ASKED TO JOIN */
     $('#joinGameBtn').click(function(){
         socket.emit('joinGame');
         $('#playerInvited').modal("hide");
         window.open("/game.html", "_blank");
-        socket.emit('joinGameRoom');
     });
 
     $('#joinGameBtnPwd').click(function(){
