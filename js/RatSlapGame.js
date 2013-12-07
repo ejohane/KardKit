@@ -37,9 +37,6 @@ function RatSlapGame(room){
 	var actionsToGive = [1,1];
 }
 
-RatSlapGame.prototype.testFunction = function(){
-	this.deck = "WE GOT HERE";
-}
 
 //Called when all 4 players are loaded in the game room.
 RatSlapGame.prototype.setup = function(){

@@ -319,6 +319,11 @@ socket.on('connection', function (client) {
 
     });
 
+    /* This function is called once the game page has loaded
+        It assigns the players new client ID to gameID.
+        If a Game Logic Instance does not exist, it adds it to the game room.
+        It then sets the actionbar for that game.
+    */
     client.on("gameLoaded", function(username){
         var player = lobby.getPlayer(username);
         if(player != null){
@@ -327,23 +332,18 @@ socket.on('connection', function (client) {
             console.log("WHYYYYYY");
         }
 
-
-
-        client.emit("setUIFramework", ["slap","play"], ["slap","play"], [32,112], ["S","P"]);
         //client.emit("setActions", [1, 1]);
-
-        if(player.room.RatSlapGame == null){
-            var ratSlapGame = new RatSlapGame(player.room);
-            ratSlapGame.deck = "TEST";
-            ratSlapGame.blah = "BLAH";
-            console.log(ratSlapGame);
-            console.log("RatSlap game deck test: " + ratSlapGame.deck);
-            console.log("RatSlap game deck blah: " + ratSlapGame.blah);
-            ratSlapGame.testFunction();
-            console.log("RatSlap game deck blah: " + ratSlapGame.deck);
+        var ratSlapGame = player.room.RatSlapGame;
+        if(ratSlapGame == null){
+            ratSlapGame = new RatSlapGame(player.room);
             player.room.setGame(ratSlapGame);
             console.log("RatSlapGame Created");
+        }else{
+
         }
+
+        client.emit("setUIFramework", ratSlapGame.completeActionlistNames, ratSlapGame.completeActionlistLabels, completeActionlistKeyCodes, ratSlapGame.completeActionlistKeyLabels);
+
     });
 
   
