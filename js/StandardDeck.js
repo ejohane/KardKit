@@ -1,6 +1,6 @@
 var Card = require('./Card.js');
 var util = require("util");
-var CardHolder = require('./CardHolder.js');
+var CardHolder = require('./cardHolder.js');
 
 function StandardDeck() {
 	//var cards = [];
