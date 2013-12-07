@@ -337,7 +337,7 @@ LobbyCommunication.prototype.playerDisconnected = function(playerID){
 };
 
 LobbyCommunication.prototype.playerExitsGame = function(playerID){
-    var player = getPlayerByID(playerID);
+    var player = this.getPlayerByID(playerID);
     console.log("PlayerName: "+player.name);
     
     //remove player from room
