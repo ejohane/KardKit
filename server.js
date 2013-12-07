@@ -202,6 +202,7 @@ socket.on('connection', function (client) {
             }else if(lobby.players[i].gameID == client.id){
                 console.log("Player exiting game");
                 lobby.playerExitsGame(client.id);
+                
                 break;
             }
         }
