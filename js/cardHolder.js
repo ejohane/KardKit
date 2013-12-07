@@ -85,4 +85,7 @@ PlayPile.super_.prototype.empty = function(destination) {
 
 if (typeof module !== 'undefined') {
     module.exports = CardHolder;
+	module.exports = Deck;
+	module.exports = Hand;
+	module.exports = PlayPile;
 }
