@@ -252,12 +252,12 @@ RatSlapGame.prototype.isSlappable = function() {
 		return true;
 	}
 	// Bottoms Up: Top card and the bottom card match rank.
-	if (first === playPile[0].properties.rank]) {
+	if (first === playPile[0].properties.rank) {
 		return true;
 	}
 	// Tens: When consecutive cards (or cards with a face card in between) total 10 (e.g. 4, 6 or 3, K, 7)
 	if (first + second === 10
-		|| ((second === 'J' || second === 'Q' || second === 'K') && first + third === 10) {
+		|| ((second === 'J' || second === 'Q' || second === 'K') && first + third === 10)) {
 		return true;
 	}
 	// Four in a Row: The last four cards were in sequence (eg. 4, 5, 6, 7)
