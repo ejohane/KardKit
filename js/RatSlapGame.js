@@ -36,6 +36,10 @@ function RatSlapGame(room){
 	this.completeActionlistKeyCodes = [32,112];
 	this.completeActionlistKeyLabels = ["S","P"];
 	this.actionsToGive = [1,1];
+
+	//Tracking player actions
+	this.playEnabledArray = [0, 0, 0, 0];
+	this.slapEnabledArray = [1, 1, 1, 1];
 };
 
 
@@ -155,21 +159,17 @@ RatSlapGame.prototype.slapAction = function(player){
 
 //Called internally. Takes the player to disable the appropriate actions for.
 RatSlapGame.prototype.disablePlay = function(player){
-	//ClientUI - disable the play action for that player
+	playEnabledArray[player] = 0;
 }
 
 //Called internally. Takes the index number corresponding to the next player (aka currentPlayer)
 RatSlapGame.prototype.enablePlay = function(playerIndex){
-	if (playerHands[playerIndex]/*is empty*/){
-		//ClientUI - enable the play action for that player
-	} else {
-		//ClientUI - enable the skip action for that player
-	}
+	playEnabledArray[player] = 1;
 }
 
 //Called internally. Takes a player and enables the slap action for them
 RatSlapGame.prototype.enableSlap = function(player){
-	//ClientUI - enable the slap action for that player
+	slapEnabledArray[player] = 1;
 }
 
 //Called internally. Advances the current player, but loops when it would be 4.
@@ -191,8 +191,6 @@ RatSlapGame.prototype.advanceCurrentPlayer = function(){
 RatSlapGame.prototype.burn = function(burntIndex){
 	if (!playerHands[burntIndex].isEmpty()){
 		playerHands[burntIndex].play(0, playPile);
-		
-		//ClientUI - update the play pile
 	}
 }
 
@@ -214,6 +212,17 @@ RatSlapGame.prototype.getCardsByPlayer = function(id){
 		}
 	}
 	return cbh;
+}
+
+RatSlapGame.prototype.getActionsByPlayer = function(id){
+	var gabp = [0, 0]
+	for (var i in allPlayers){
+		if (id = allPlayers[i].id || id = allPlayers[i].gameID){
+			gabp[0] = playEnabledArray[i];
+			gabp[1] = slapEnabledArray[i];
+		}
+	}
+	return gabp;
 }
 
 // Called internally. Checks against all the winning conditions for slapping the pile.
