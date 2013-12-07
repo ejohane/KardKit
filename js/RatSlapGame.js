@@ -26,6 +26,7 @@ function RatSlapGame(room){
 	this.playPile;
 	this.isSlappable = false;
 	this.currentPlayer = 0;
+	this.pastPlayer = -1;
 	this.hopefulPlayer = -1;
 	this.digChances = 0;
 
@@ -92,35 +93,39 @@ RatSlapGame.prototype.playAction = function(){
 	
 	//ClientUI - draw new card on playpile
 
-	if (digChances == 0){	
-		isSlappable = true;
-		if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
-			playPile[playPile.numCards - 1].properties.rank == 'J' ||
-			playPile[playPile.numCards - 1].properties.rank == 'Q' ||
-			playPile[playPile.numCards - 1].properties.rank == 'K'){
-				isSlappable = false;
-				digChances = 3;
-				hopefulPlayer = currentPlayer;
-				this.advanceCurrentPlayer();
-				enablePlayer(currentPlayer);			
-		} else {
-			this.advanceCurrentPlayer();
-			enablePlay(currentPlayer);
-		}
+	if (currentPlayer = pastPlayer && !slappableConditions){
+		//win
 	} else {
-		digChances--;
-		if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
-			playPile[playPile.numCards - 1].properties.rank == 'J' ||
-			playPile[playPile.numCards - 1].properties.rank == 'Q' ||
-			playPile[playPile.numCards - 1].properties.rank == 'K'){
+		if (digChances == 0){	
+			isSlappable = true;
+			if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
+				playPile[playPile.numCards - 1].properties.rank == 'J' ||
+				playPile[playPile.numCards - 1].properties.rank == 'Q' ||
+				playPile[playPile.numCards - 1].properties.rank == 'K'){
+					isSlappable = false;
+					digChances = 3;
+					hopefulPlayer = currentPlayer;
+					this.advanceCurrentPlayer();
+					enablePlayer(currentPlayer);			
+			} else {
 				this.advanceCurrentPlayer();
-				enablePlayer(currentPlayer);
-		} else if (digChances == 0){
-			winPile(hopefulPlayer);
-			currentPlayer = hopefulPlayer;
-			enablePlay(currentPlayer);
+				enablePlay(currentPlayer);
+			}
 		} else {
-			enablePlay(currentPlayer);
+			digChances--;
+			if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
+				playPile[playPile.numCards - 1].properties.rank == 'J' ||
+				playPile[playPile.numCards - 1].properties.rank == 'Q' ||
+				playPile[playPile.numCards - 1].properties.rank == 'K'){
+					this.advanceCurrentPlayer();
+					enablePlayer(currentPlayer);
+			} else if (digChances == 0){
+				winPile(hopefulPlayer);
+				currentPlayer = hopefulPlayer;
+				enablePlay(currentPlayer);
+			} else {
+				enablePlay(currentPlayer);
+			}
 		}
 	}
 }
@@ -149,26 +154,9 @@ RatSlapGame.prototype.slapAction = function(player){
 	}
 }
 
-//Called to this game whenever the client sends a 'gameSkip' socket function.
-RatSlapGame.prototype.skipAction = function(){
-	for (var i in allPlayers){
-		disableSkip(allPlayers[i]);
-	}
-	if (checkWin){
-		//ClientUI - redirect to Imgur? Seriously, what are we doing here?
-	} else {
-		this.advanceCurrentPlayer();
-		enablePlay(currentPlayer);
-	}
-}
-
 //Called internally. Takes the player to disable the appropriate actions for.
 RatSlapGame.prototype.disablePlay = function(player){
 	//ClientUI - disable the play action for that player
-}
-
-RatSlapGame.prototype.disableSkip = function(player){
-	//ClientUI - disable the skip action for that player
 }
 
 //Called internally. Takes the index number corresponding to the next player (aka currentPlayer)
@@ -187,9 +175,16 @@ RatSlapGame.prototype.enableSlap = function(player){
 
 //Called internally. Advances the current player, but loops when it would be 4.
 RatSlapGame.prototype.advanceCurrentPlayer = function(){
+	var temp = currentPlayer;
 	currentPlayer++;
 	if (currentPlayer >= 4){
 		currentPlayer = 0;
+	}
+
+	if (playerHands[currentPlayer].isEmpty()){
+		advanceCurrentPlayer();
+	} else {
+		pastPlayer = temp;
 	}
 }
 
@@ -205,21 +200,6 @@ RatSlapGame.prototype.burn = function(burntIndex){
 //Called internally. Takes the player index of the player to win the pile.
 RatSlapGame.prototype.winPile = function(winIndex){
 	playPile.empty(playerHands[winIndex]);
-}
-
-//Called internally. Checks and returns true if only one player still has a hand.
-RatSlapGame.prototype.checkWin = function(){
-	var handsLeft = 0;
-	for (var i in playerHands){
-		if (!playerHands[i].isEmpty()){
-			handsLeft++;
-		}
-	}
-	if (handsLeft == 1){
-		return true;
-	} else {
-		return false;
-	}
 }
 
 RatSlapGame.prototype.topCard = function(){
