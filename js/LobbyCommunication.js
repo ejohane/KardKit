@@ -206,7 +206,7 @@ LobbyCommunication.prototype.getPlayer = function(playerName){
 LobbyCommunication.prototype.getPlayerByID = function(playerID){
 	var player = null;
 	for (var k in this.players){
-		if (playerID = this.players[k].id || playerID = this.players[k].gameID){
+		if (playerID == this.players[k].id || playerID == this.players[k].gameID){
 			player = this.players[k];
 		}
 	}
