@@ -92,18 +92,7 @@ RatSlapGame.prototype.playAction = function(){
 	//ClientUI - draw new card on playpile
 	
 	slapAllowed = true;
-	this.advanceCurrentPlayer();
-	if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
-		playPile[playPile.numCards - 1].properties.rank == 'J' ||
-		playPile[playPile.numCards - 1].properties.rank == 'Q' ||
-		playPile[playPile.numCards - 1].properties.rank == 'K'){
-			enableDigForFaceCard(currentPlayer, 3);
-	} else {
-		enablePlay(currentPlayer);
-	}
-}
 
-<<<<<<< HEAD
 	if (currentPlayer = pastPlayer && !slappableConditions){
 		//win
 	} else {
@@ -138,30 +127,6 @@ RatSlapGame.prototype.playAction = function(){
 				enablePlay(currentPlayer);
 			}
 		}
-=======
-//Called to this game whenever the client sends a 'gameDigFaceCard' socket function.
-RatSlapGame.prototype.digAction = function(){
-	for (var i in allPlayers){
-		disableDig(allPlayers[i]);
-	}
-	playerHands[currentPlayer].play(0, playPile);
-	
-	//ClientUI - draw new card
-	
-	digChances--;
-	if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
-		playPile[playPile.numCards - 1].properties.rank == 'J' ||
-		playPile[playPile.numCards - 1].properties.rank == 'Q' ||
-		playPile[playPile.numCards - 1].properties.rank == 'K'){
-			this.advanceCurrentPlayer();
-			enablePlay(currentPlayer);
-	} else if (digChances == 0) {
-		winPile(hopefulPlayer);
-		currentPlayer = hopefulPlayer;
-		enablePlay(currentPlayer);
-	} else {
-		enableDigForFaceCard(currentPlayer, digChances);
->>>>>>> 03521203dd6c200b4f189581bd9f53c3917b439f
 	}
 }
 
@@ -194,17 +159,6 @@ RatSlapGame.prototype.disablePlay = function(player){
 	//ClientUI - disable the play action for that player
 }
 
-<<<<<<< HEAD
-=======
-RatSlapGame.prototype.disableDig = function(player){
-	//ClientUI - disable the dig action for that player
-}
-
-RatSlapGame.prototype.disableSkip = function(player){
-	//ClientUI - disable the skip action for that player
-}
-
->>>>>>> 03521203dd6c200b4f189581bd9f53c3917b439f
 //Called internally. Takes the index number corresponding to the next player (aka currentPlayer)
 RatSlapGame.prototype.enablePlay = function(playerIndex){
 	if (playerHands[playerIndex]/*is empty*/){
@@ -212,13 +166,6 @@ RatSlapGame.prototype.enablePlay = function(playerIndex){
 	} else {
 		//ClientUI - enable the skip action for that player
 	}
-}
-
-//Called internally. Takes a player index number and number of chances still left to dig.
-RatSlapGame.prototype.enableDigForFaceCard = function(playerIndex, digNumber){
-	slapAllowed = false;
-	digChances = digNumber;
-	//ClientUI - enable the dig action for that player
 }
 
 //Called internally. Takes a player and enables the slap action for them
@@ -255,24 +202,9 @@ RatSlapGame.prototype.winPile = function(winIndex){
 	playPile.empty(playerHands[winIndex]);
 }
 
-<<<<<<< HEAD
 RatSlapGame.prototype.topCard = function(){
 	var tc = [playPile.cards[playPile.numCards-1].properties.rank, playPile.cards[playPile.numCards-1].properties.suit];
 	return tc;
-=======
-//Called internally. Checks and returns true if only one player still has a hand.
-RatSlapGame.prototype.checkWin = function(){
-	var handsLeft = 0;
-	for (var i in playerHands){
-		if (!playerHands[i].isEmpty()){
-			handsLeft++;
-		}
-	}
-	if (handsLeft == 1){
-		return true;
-	} else {
-		return false;
-	}
 }
 
 // Called internally. Checks against all the winning conditions for slapping the pile.
@@ -309,7 +241,6 @@ RatSlapGame.prototype.isSlappable = function() {
 		return true;
 	}
 	return false;
->>>>>>> 03521203dd6c200b4f189581bd9f53c3917b439f
 }
 
 module.exports = RatSlapGame;
