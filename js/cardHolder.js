@@ -1,3 +1,5 @@
+var util = require("util");
+
 function CardHolder() {
 	this.cards = [];
 	this.numCards = 0;
@@ -47,29 +49,32 @@ CardHolder.prototype.cut = function() {
 }
 
 function Deck(cardholder) {}
+util.inherits(Deck, CardHolder);
 
 //takes the card at index 0 of the deck and 
 //puts it in the destination holder
-Deck.prototype.draw = function(destination) {
+Deck.super_.prototype.draw = function(destination) {
 	var temp = this.cards.splice(0, 1);
 	this.numCards = this.numCards - 1;
 	destination.insert(temp);
 }
 
 function Hand(cardholder) {}
+util.inherits(Hand, CardHolder);
 
 //takes a card of choice and places it in the destination holder
-Hand.prototype.play = function(index, destination) {
+Hand.super_.prototype.play = function(index, destination) {
 	var temp = this.cards.splice(index, 1);
 	this.numCards = this.numCards - 1;
 	destination.insert(temp);
 }
 
 function PlayPile(cardholder) {}
+util.inherits(PlayPile, CardHolder
 
 //takes all cards from the play pile and puts them in reverse order
 //in the destination holder
-PlayPile.prototype.empty = function(destination) {
+PlayPile.super_.prototype.empty = function(destination) {
 	var temp;
 	for (var i = 0; i < this.length; i++) {
 		temp = this.cards.pop();
