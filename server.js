@@ -186,16 +186,26 @@ socket.on('connection', function (client) {
         Called when user disconnects from server !!!!!!!!!! NOT IMPLEMENTED YET 
     ********************************************************************/  
     client.on('disconnect', function(){
-        console.log("******** Player with id: (" + client.id + ") with name: ("+ lobby.players[client.id].name +") has disconnected ********");
-        socket.sockets.in(lobby.lobbyRoom).emit('receiveInboxMessage', lobby.players[client.id].name +" has left the lobby", "message"); 
-        lobby.playerDisconnected(client.id);
-        delete lobby.players[client.id];
-        for(var key in lobby.players) {
-          console.log("******** Remaining players: " + key + ": " + lobby.players[key].name +"********");
-        }   
+        for(var i in lobby.players){
+            //if player exits lobby
+            if(lobby.players[i].id == client.id){
+               console.log("******** Player with id: (" + client.id + ") with name: ("+ lobby.players[client.id].name +") has disconnected ********");
+                socket.sockets.in(lobby.lobbyRoom).emit('receiveInboxMessage', lobby.players[client.id].name +" has left the lobby", "message"); 
+                lobby.playerDisconnected(client.id);
+                delete lobby.players[client.id];
+                for(var key in lobby.players) {
+                  console.log("******** Remaining players: " + key + ": " + lobby.players[key].name +"********");
+                }   
+                break;
+            //if player exits game
+            }else if(lobby.players[i].gameID == client.id){
+                console.log("Player exiting game");
+                lobby.playerExitsGame(client.id);
+                break;
+            }
+        }
         socket.sockets.in(lobby.lobbyRoom).emit('updatedGamesList', lobby.getGameRoomList());
         socket.sockets.in(lobby.lobbyRoom).emit('updatePlayerList',lobby.getPlayerListHTML());
-        
     });
 
     /********************************************* Creating Games ****************************************************** */
