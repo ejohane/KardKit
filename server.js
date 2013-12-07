@@ -330,15 +330,9 @@ socket.on('connection', function (client) {
     **********************************************************************/
     client.on("r_sendOutboxMessage", function(outboxMessage){
         console.log("out_sendOutboxMessage called with arg = " + outboxMessage);
-        chatServerInterface.chatDigest(outboxMessage, client.id,lobby);            
+        chat.digest(outboxMessage, client.id,lobby);            
     });
-    client.on("r_play" , function(playerName, cardIndex){
-        console.log("out_play with playername = " + playerName + " , cardIndex = " + cardIndex);
-    });
-    client.on("r_slap", function(playerName){
-        console.log("out_slap with playername = " + playerName);
-        
-    });
+
     client.on("r_draw", function(playerName){
         console.log("out_draw with playername = " + playerName);
     });
@@ -351,7 +345,7 @@ socket.on('connection', function (client) {
 	/*********************************************************************
     ********************** Rat Slap Functions ************************
     **********************************************************************/
-/*	client.on("r_play", function(){
+	client.on("r_play", function(){
 		var affectedGameRoom = lobby.getRoom(lobby.players[client.id].getRoomName ,"gameRoom");
 		if (affectedGameRoom !== null){
 			affectedGameRoom.getGame.playAction();
@@ -364,7 +358,7 @@ socket.on('connection', function (client) {
 		if (affectedGameRoom !== null){
 			affectedGameRoom.getGame.slapAction(lobby.players[client.id]);
 		}
-	});*/
+	});
 
 
 
