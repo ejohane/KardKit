@@ -335,8 +335,10 @@ socket.on('connection', function (client) {
         if(player.room.RatSlapGame == null){
             var ratSlapGame = new RatSlapGame(player.room);
             ratSlapGame.deck = "TEST";
+            ratSlapGame.blah = "BLAH";
             console.log(ratSlapGame);
             console.log("RatSlap game deck test: " + ratSlapGame.deck);
+            console.log("RatSlap game deck blah: " + ratSlapGame.blah);
             player.room.setGame(ratSlapGame);
             console.log("RatSlapGame Created");
         }
