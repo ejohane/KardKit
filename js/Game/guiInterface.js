@@ -69,7 +69,7 @@ var guiInterface = function () {
             PLAYERS++;
 			PLAYERS_AT_START++;            
             //set Html for player object            
-            var playerHtml = "<div id=\"playerSpot_" + (PLAYERS - 1) + "\"><div class=\"hand\"></div><div class=\"playerName\">" + playerName + "</div><div class=\"playerPoints\"></div></div>";
+            var playerHtml = "<div id=\"playerSpot_" + (PLAYERS - 1) + "\"><div class=\"hand\"></div><div class=\"playerName\">" + playerName + "</div><div class=\"playerPoints\"></div><div class=\"playerHand\"></div></div>";
             $("#players").append(playerHtml);                
             //set global variable for selecting cards by adding an array for this player
             SELECTED_CARDS.push([]);
@@ -88,6 +88,9 @@ var guiInterface = function () {
         _public.setPoints = function (playerId, playerPoints){
              setPoints(playerId, playerPoints);   
         };
+        _public.setHandCount = function(playerId, handCount){
+	     generateHand.setHandCount(playerId, handCount);
+	};
         _public.removeCard = function(playerId, cardIndex){
              generateHand.removeCard(playerId,cardIndex);  
         };

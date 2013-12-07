@@ -17,7 +17,6 @@ var clientInterface = function () {
                                       completeActionlistLabels,
                                       completeActionlistKeyCodes,
                                       completeActionlistKeyLabels){
-        alert("here");  
          guiInterface.setActionbarFramework(completeActionlistNames,completeActionlistLabels,completeActionlistKeyCodes,completeActionlistKeyLabels);        
     };
     _public.addPlayer = function(playerName){
@@ -26,8 +25,7 @@ var clientInterface = function () {
     _public.removePlayer = function(playerId){
          guiInterface.removePlayer(playerId);   
     };    
-    _public.setActions = function(actionsToGive){
-        alert("here2"); 
+    _public.setActions = function(actionsToGive){ 
         guiInterface.setActions(actionsToGive);        
     };
     _public.setHand = function(playerId, hand) {
@@ -38,6 +36,9 @@ var clientInterface = function () {
     };
     _public.setPoints = function(playerId, playerPoints){
          guiInterface.setPoints(playerId,playerPoints);
+    };
+    _public.setHandCount = function(playerId, handCount){
+	guiInterface.setHandCount(playerId,handCount);
     };
     _public.removeCard = function(playerId, cardIndex){
          removeCard(playerId, cardIndex);  
@@ -86,14 +87,68 @@ var clientInterface = function () {
      return _public;
 }();
 
+
+
+
+
+/* init socket capability
+-----------------------------------------------------------*/
 var socket = io.connect('142.4.210.12:8127');
 
+/* everything has loaded on user side, tell server I am here
+-----------------------------------------------------------*/
 socket.emit("gameLoaded", $.cookie("KardKit-username"));
 
-socket.on("setUIFramework", function(a1,a2,a3,a4){
-    clientInterface.setUIFramework(a1,a2,a3,a4);
-});
 
-socket.on("setActions", function(a1){
-    clientInterface.setActions(a1);
-});
+/* receive updates from server
+-----------------------------------------------------------*/
+    socket.on("setUIFramework", function(a1,a2,a3,a4){
+        clientInterface.setUIFramework(a1,a2,a3,a4);
+    });
+
+    socket.on("setActions", function(a1){
+        clientInterface.setActions(a1);
+    });
+
+    socket.on("addPlayer", function(playerName){
+         clientInterface.addPlayer(playerName);
+    };
+    socket.on("removePlayer", function(playerId){
+         clientInterface.removePlayer(playerId);
+    };
+    socket.on("setHand", function(playerId, hand) {
+        clientInterface.setHand(playerId, hand);
+    };
+    socket.on("setName", function(playerId, playerName){
+         clientInterface.setName(playerId,playerName);
+    };
+    socket.on("setPoints", function(playerId, playerPoints){
+         clientInterface.setPoints(playerId,playerPoints);
+    };
+    socket.on("setHandCount", function(playerId, handCount){
+         clientInterface.setHandCount(playerId,handCount);
+    };
+    socket.on("removeCard", function(playerId, cardIndex){
+         clientInterface.removeCard(playerId, cardIndex);
+    };
+    socket.on("addCard", function(playerId,card){
+        clientInterface.addCard(playerId, card);
+    };
+    socket.on("draw", function(playerId, card){
+        clientInterface.draw(playerId, card);
+    };
+    socket.on("discard", function(playerId, cardIndex){
+        clientInterface.discard(playerId, cardIndex);
+    };
+    socket.on("takeCard", function(playerIdOwner,cardIndexTaken,playerIdReceiver,cardTaken){
+	    clientInterface.takeCard(playerIdOwner,cardIndexTaken,playerIdReceiver,cardTaken);        
+    };
+    socket.on("receiveInboxMessage", function(inboxMessage){
+        clientInterface.receiveInboxMessage(inboxMessage);
+    };
+    socket.on("receivePrivateMessage", function(privateMessage){
+        clientInterface.receivePrivateMessage(privateMessage);
+    };
+    socket.on("receiveOutboxConfirmation", function(yourMessage) {
+        clientInterface.receiveOutboxConfirmation(yourMessage);
+    };

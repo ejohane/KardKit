@@ -54,6 +54,7 @@ clientInterface.addCard(0,["7","hearts"]); //notice that P1 has an empty hand, y
 clientInterface.draw(0,["2","diamonds"]);
 clientInterface.draw(0,["2","clubs"]);
 
+
 // 3. removeCard  , remove third card from P1
 clientInterface.removeCard(0,2);
 
@@ -65,3 +66,4 @@ clientInterface.takeCard(0,0,2,["7","hearts"]);
 
 //  P1 requested takeCard action to get his card back. test that takeCard action can work with empty hand
 clientInterface.takeCard(2,2,0,["7","hearts"]);
+clientInterface.setHandCount(0,1);

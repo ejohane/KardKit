@@ -54,6 +54,9 @@ var sandbox = function () {
             case "setPoints":
                 clientInterface.setPoints(args[0],args[1]);
                 break;
+            case "setHandCount":
+                clientInterface.setHandCount(args[0],args[1]);
+                break;
             case "setHand":                
                 clientInterface.setHand(args[0],makeHand(args[1]));
                 break;

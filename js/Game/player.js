@@ -138,6 +138,9 @@ var generateHand = function () {
     _public.removeCard = function(playerId, cardIndex){
         $("#playerSpot_" + playerId + " .hand .card:eq(" + cardIndex + ")").remove();    
     };
+    _public.setHandCount = function(playerId, handCount){
+	$("#playerSpot_" + playerId + " > .playerHand").html("count: " + handCount);
+    };
     
     return _public;    
 }();
