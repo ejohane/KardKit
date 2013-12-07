@@ -40,8 +40,21 @@ function RatSlapGame(room){
 
 //Called when all 4 players are loaded in the game room.
 RatSlapGame.prototype.setup = function(){
-	deck = new Deck(new cardHolder);
-	//Adding players in order???
+	deck = new Deck(new StandardDeck);
+	//We add the players in a random order, considering that we need to have 4 people in the room to call setup
+
+	var tempPlayerHolder = gameRoom.people;
+	var tempPlayerCounter = 0;
+	while (tempPlayerHolder.length != 0){
+		var source1;
+		source1 = Math.floor(Math.random() * (tempPlayerHolder.length - 1));
+		if (source1 > -1){
+			allPlayers[tempPlayerCounter] = tempPlayerHolder[source1];
+			tempPlayerCounter++;
+			tempPlayerHolder.splice[source1, 1];
+		}
+	}
+
 	for (var i = 0; i < 4; i++){
 		playerHands[i] = new Hand(new cardHolder);
 	}
