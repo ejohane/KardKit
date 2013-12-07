@@ -10,7 +10,7 @@
 //playerHands[] is an array of Hands, where the index corresponds to the appropriate player in allPlayers[]
 //playPile is the center stack of cards
 //deck is the deck of cards- only exists during initial setup
-//isSlappable is a boolean that determines whether or not the play pile is actually slappable at the current time
+//slapAllowed is a boolean that determines whether or not the play pile is actually slappable at the current time
 //currentPlayer is an int corresponding to the player whose turn it is
 //hopefulPlayer is an int used during digging. it corresponds to the player who will earn the pile if the dig fails.
 //digChances is an int used during digging.
@@ -24,7 +24,7 @@ function RatSlapGame(room){
 	this.allPlayers = [];
 	this.playerHands = [];
 	this.playPile;
-	this.isSlappable = false;
+	this.slapAllowed = false;
 	this.currentPlayer = 0;
 	this.hopefulPlayer = -1;
 	this.digChances = 0;
@@ -74,7 +74,7 @@ RatSlapGame.prototype.setup = function(){
 	
 	//ClientUI - draw hands
 	
-	isSlappable = true;
+	slapAllowed = true;
 	for (var i in allPlayers){
 		enableSlap(allPlayers[i]);
 	}
@@ -90,7 +90,7 @@ RatSlapGame.prototype.playAction = function(){
 	
 	//ClientUI - draw new card on playpile
 	
-	isSlappable = true;
+	slapAllowed = true;
 	this.advanceCurrentPlayer();
 	if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
 		playPile[playPile.numCards - 1].properties.rank == 'J' ||
@@ -129,7 +129,7 @@ RatSlapGame.prototype.digAction = function(){
 
 //Called to this game whenever the client sends a 'gameSlap' socket function.
 RatSlapGame.prototype.slapAction = function(player){
-	if (isSlappable && (!playPile.isEmpty)){
+	if (slapAllowed && (!playPile.isEmpty)){
 		var trulySlappable = this.slappableConditions;
 		var slapper = -1;
 		
@@ -188,7 +188,7 @@ RatSlapGame.prototype.enablePlay = function(playerIndex){
 
 //Called internally. Takes a player index number and number of chances still left to dig.
 RatSlapGame.prototype.enableDigForFaceCard = function(playerIndex, digNumber){
-	isSlappable = false;
+	slapAllowed = false;
 	digChances = digNumber;
 	//ClientUI - enable the dig action for that player
 }
@@ -236,7 +236,7 @@ RatSlapGame.prototype.checkWin = function(){
 }
 
 // Called internally. Checks against all the winning conditions for slapping the pile.
-RatSlapGame.prototype.slappableConditions = function() {
+RatSlapGame.prototype.isSlappable = function() {
 	// The top 4 cards' ranks
 	var first = playPile[playPile.numCards - 1].properties.rank;
 	var second = playPile[playPile.numCards - 2].properties.rank;
