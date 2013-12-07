@@ -350,8 +350,6 @@ socket.on('connection', function (client) {
         client.emit("setActions", ratSlapGame.actionsToGive);
     });
 
-<<<<<<< HEAD
-=======
     /*********************************************************************
     ********************** Toolkit Functions ************************
     **********************************************************************/
@@ -373,7 +371,6 @@ socket.on('connection', function (client) {
         console.log("out_takeCard with owner playername = " + playerNameOwner + " , cardIndex = " + cardIndex + " , receiver playername = " + playerNameReceiver);
         
     });
->>>>>>> 58efb634379783c763f551db0d0af279d8e4ff23
   
 	
 	/*********************************************************************
