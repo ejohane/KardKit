@@ -336,5 +336,20 @@ LobbyCommunication.prototype.playerDisconnected = function(playerID){
     delete this.players[playerID];
 };
 
+LobbyCommunication.prototype.playerExitsGame = function(playerID){
+    var player = getPlayerByID(playerID);
+    console.log("PlayerName: "+player.name);
+    
+    //remove player from room
+    var room = player.room;
+    if(room != undefined){
+        var index = room.people.indexOf(player);
+        if(index > -1) room.people.splice(index, 1);  
+    } 
+
+    player.inGame = false;
+    players.status = "Ready";
+};
+
 
 module.exports = LobbyCommunication;
