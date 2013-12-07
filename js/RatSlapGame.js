@@ -55,6 +55,8 @@ RatSlapGame.prototype.setup = function(){
 		}
 	}
 
+	//ClientUI - add players in order
+
 	for (var i = 0; i < 4; i++){
 		playerHands[i] = new Hand(new cardHolder);
 	}
@@ -89,41 +91,37 @@ RatSlapGame.prototype.playAction = function(){
 	playerHands[currentPlayer].play(0, playPile);
 	
 	//ClientUI - draw new card on playpile
-	
-	isSlappable = true;
-	this.advanceCurrentPlayer();
-	if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
-		playPile[playPile.numCards - 1].properties.rank == 'J' ||
-		playPile[playPile.numCards - 1].properties.rank == 'Q' ||
-		playPile[playPile.numCards - 1].properties.rank == 'K'){
-			enableDigForFaceCard(currentPlayer, 3);
-	} else {
-		enablePlay(currentPlayer);
-	}
-}
 
-//Called to this game whenever the client sends a 'gameDigFaceCard' socket function.
-RatSlapGame.prototype.digAction = function(){
-	for (var i in allPlayers){
-		disableDig(allPlayers[i]);
-	}
-	playerHands[currentPlayer].play(0, playPile);
-	
-	//ClientUI - draw new card
-	
-	digChances--;
-	if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
-		playPile[playPile.numCards - 1].properties.rank == 'J' ||
-		playPile[playPile.numCards - 1].properties.rank == 'Q' ||
-		playPile[playPile.numCards - 1].properties.rank == 'K'){
+	if (digChances == 0){	
+		isSlappable = true;
+		if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
+			playPile[playPile.numCards - 1].properties.rank == 'J' ||
+			playPile[playPile.numCards - 1].properties.rank == 'Q' ||
+			playPile[playPile.numCards - 1].properties.rank == 'K'){
+				isSlappable = false;
+				digChances = 3;
+				hopefulPlayer = currentPlayer;
+				this.advanceCurrentPlayer();
+				enablePlayer(currentPlayer);			
+		} else {
 			this.advanceCurrentPlayer();
 			enablePlay(currentPlayer);
-	} else if (digChances == 0) {
-		winPile(hopefulPlayer);
-		currentPlayer = hopefulPlayer;
-		enablePlay(currentPlayer);
+		}
 	} else {
-		enableDigForFaceCard(currentPlayer, digChances);
+		digChances--;
+		if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
+			playPile[playPile.numCards - 1].properties.rank == 'J' ||
+			playPile[playPile.numCards - 1].properties.rank == 'Q' ||
+			playPile[playPile.numCards - 1].properties.rank == 'K'){
+				this.advanceCurrentPlayer();
+				enablePlayer(currentPlayer);
+		} else if (digChances == 0){
+			winPile(hopefulPlayer);
+			currentPlayer = hopefulPlayer;
+			enablePlay(currentPlayer);
+		} else {
+			enablePlay(currentPlayer);
+		}
 	}
 }
 
@@ -169,10 +167,6 @@ RatSlapGame.prototype.disablePlay = function(player){
 	//ClientUI - disable the play action for that player
 }
 
-RatSlapGame.prototype.disableDig = function(player){
-	//ClientUI - disable the dig action for that player
-}
-
 RatSlapGame.prototype.disableSkip = function(player){
 	//ClientUI - disable the skip action for that player
 }
@@ -184,13 +178,6 @@ RatSlapGame.prototype.enablePlay = function(playerIndex){
 	} else {
 		//ClientUI - enable the skip action for that player
 	}
-}
-
-//Called internally. Takes a player index number and number of chances still left to dig.
-RatSlapGame.prototype.enableDigForFaceCard = function(playerIndex, digNumber){
-	isSlappable = false;
-	digChances = digNumber;
-	//ClientUI - enable the dig action for that player
 }
 
 //Called internally. Takes a player and enables the slap action for them
