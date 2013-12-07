@@ -112,43 +112,43 @@ socket.emit("gameLoaded", $.cookie("KardKit-username"));
 
     socket.on("addPlayer", function(playerName){
          clientInterface.addPlayer(playerName);
-    };
+    });
     socket.on("removePlayer", function(playerId){
          clientInterface.removePlayer(playerId);
-    };
+    });
     socket.on("setHand", function(playerId, hand) {
         clientInterface.setHand(playerId, hand);
-    };
+    });
     socket.on("setName", function(playerId, playerName){
          clientInterface.setName(playerId,playerName);
-    };
+    });
     socket.on("setPoints", function(playerId, playerPoints){
          clientInterface.setPoints(playerId,playerPoints);
-    };
+    });
     socket.on("setHandCount", function(playerId, handCount){
          clientInterface.setHandCount(playerId,handCount);
-    };
+    });
     socket.on("removeCard", function(playerId, cardIndex){
          clientInterface.removeCard(playerId, cardIndex);
-    };
+    });
     socket.on("addCard", function(playerId,card){
         clientInterface.addCard(playerId, card);
-    };
+    });
     socket.on("draw", function(playerId, card){
         clientInterface.draw(playerId, card);
-    };
+    });
     socket.on("discard", function(playerId, cardIndex){
         clientInterface.discard(playerId, cardIndex);
-    };
+    });
     socket.on("takeCard", function(playerIdOwner,cardIndexTaken,playerIdReceiver,cardTaken){
 	    clientInterface.takeCard(playerIdOwner,cardIndexTaken,playerIdReceiver,cardTaken);        
-    };
+    });
     socket.on("receiveInboxMessage", function(inboxMessage){
         clientInterface.receiveInboxMessage(inboxMessage);
-    };
+    });
     socket.on("receivePrivateMessage", function(privateMessage){
         clientInterface.receivePrivateMessage(privateMessage);
-    };
+    });
     socket.on("receiveOutboxConfirmation", function(yourMessage) {
         clientInterface.receiveOutboxConfirmation(yourMessage);
-    };
+    });

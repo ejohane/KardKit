@@ -186,6 +186,7 @@ socket.on('connection', function (client) {
         Called when user disconnects from server !!!!!!!!!! NOT IMPLEMENTED YET 
     ********************************************************************/  
     client.on('disconnect', function(){
+        console.log("Attempting to exit game")
         for(var i in lobby.players){
             //if player exits lobby
             if(lobby.players[i].id == client.id){
