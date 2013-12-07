@@ -347,8 +347,14 @@ LobbyCommunication.prototype.playerExitsGame = function(playerID){
         if(index > -1) room.people.splice(index, 1);  
     } 
 
+    //remove room
+    if(room.people.length == 0 || ){
+        index = this.rooms.indexOf(room);
+        if(index > -1) this.rooms.splice(index, 1);  
+    }
+
     player.inGame = false;
-    players.status = "Ready";
+    player.status = "Ready";
 };
 
 

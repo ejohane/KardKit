@@ -17,6 +17,9 @@
 
 var CardHolder = require('./cardHolder.js');
 var StandardDeck = require('./StandardDeck.js');
+var Deck = require('./deck.js');
+var Hand = require('./hand.js');
+var PlayPile = require('./playPile.js');
 
 function RatSlapGame(room){
 	//Declare deck & cardholders
@@ -181,17 +184,18 @@ RatSlapGame.prototype.enableSlap = function(player){
 }
 
 //Called internally. Advances the current player, but loops when it would be 4.
-RatSlapGame.prototype.advanceCurrentPlayer = function(){
+RatSlapGame.prototype.advanceCurrentPlayer = function(shouldSkip){
 	var temp = currentPlayer;
 	currentPlayer++;
 	if (currentPlayer >= 4){
 		currentPlayer = 0;
 	}
-
-	if (playerHands[currentPlayer].isEmpty()){
-		advanceCurrentPlayer();
-	} else {
-		pastPlayer = temp;
+	if (shouldSkip) {
+		if (playerHands[currentPlayer].isEmpty()){
+			advanceCurrentPlayer();
+		} else {
+			pastPlayer = temp;
+		}
 	}
 }
 
