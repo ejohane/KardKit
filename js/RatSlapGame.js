@@ -17,6 +17,9 @@
 
 var CardHolder = require('./cardHolder.js');
 var StandardDeck = require('./StandardDeck.js');
+var Deck = require('./deck.js');
+var Hand = require('./hand.js');
+var PlayPile = require('./playPile.js');
 
 function RatSlapGame(room){
 	//Declare deck & cardholders
