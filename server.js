@@ -339,6 +339,8 @@ socket.on('connection', function (client) {
             console.log(ratSlapGame);
             console.log("RatSlap game deck test: " + ratSlapGame.deck);
             console.log("RatSlap game deck blah: " + ratSlapGame.blah);
+            ratSlapGame.testFunction();
+            console.log("RatSlap game deck blah: " + ratSlapGame.deck);
             player.room.setGame(ratSlapGame);
             console.log("RatSlapGame Created");
         }
