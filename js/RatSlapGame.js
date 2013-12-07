@@ -42,6 +42,12 @@ function RatSlapGame(room){
 	//Tracking player actions
 	this.playEnabledArray = [0, 0, 0, 0];
 	this.slapEnabledArray = [1, 1, 1, 1];
+
+	//Tracking player mapping
+	this.trackingPlayersArray = [[0, 1, 2, 3],
+				[3, 0, 1, 2],
+				[2, 3, 0, 1],
+				[1, 2, 3, 0]];
 };
 
 
@@ -225,6 +231,21 @@ RatSlapGame.prototype.getActionsByPlayer = function(id){
 		}
 	}
 	return gabp;
+}
+
+RatSlapGame.prototype.getTrackingNumByPlayer = function(id1, id2){
+	var viewer = -1;
+	var target = -1;
+	var trackingNum = -1;
+	for (var i in allPlayers){
+		if (id1 = allPlayers[i].id || id1 = allPlayers[i].gameID){
+			viewer = i;
+		}
+		if (id2 = allPlayers[i].id || id2 = allPlayers[i].gameID){
+			target = i;
+		}
+	}
+	trackingNum = trackingPlayersArray[viewer][target];
 }
 
 // Called internally. Checks against all the winning conditions for slapping the pile.
