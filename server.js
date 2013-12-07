@@ -338,14 +338,11 @@ socket.on('connection', function (client) {
             ratSlapGame = new RatSlapGame(player.room);
             player.room.setGame(ratSlapGame);
             console.log("RatSlapGame Created");
-        }else{
-
         }
-        console.log(ratSlapGame.completeActionlistNames);
-        console.log(ratSlapGame.completeActionlistLabels);
-        console.log(ratSlapGame.completeActionlistKeyCodes);
-        console.log(ratSlapGame.completeActionlistKeyLabels);
-
+        console.log(player.room.people.length);
+        if(player.room.people.length == 4){
+            ratSlapGame.setup();
+        }
         client.emit("setUIFramework", ratSlapGame.completeActionlistNames, ratSlapGame.completeActionlistLabels, ratSlapGame.completeActionlistKeyCodes, ratSlapGame.completeActionlistKeyLabels);
         client.emit("setActions", ratSlapGame.actionsToGive);
     });

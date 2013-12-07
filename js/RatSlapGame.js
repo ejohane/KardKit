@@ -30,10 +30,10 @@ function RatSlapGame(room){
 	this.digChances = 0;
 
 	//Actions
-	this.completeActionlistNames = ["slap","play"];
-	this.completeActionlistLabels = ["SLAP","Play"];
-	this.completeActionlistKeyCodes = [32,112];
-	this.completeActionlistKeyLabels = ["S","P"];
+	this.completeActionlistNames = ["play", "slap"];
+	this.completeActionlistLabels = ["PLAY", "SLAP"];
+	this.completeActionlistKeyCodes = [112, 32];
+	this.completeActionlistKeyLabels = ["P","S"];
 	this.actionsToGive = [1,1];
 };
 
