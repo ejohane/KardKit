@@ -105,6 +105,7 @@ var chat = new ChatInterface(socket);
 
 
 var RatSlapGame = require('./js/RatSlapGame.js');
+var serverInterface = require('./js/ServerInterface.js');
 
 // Get size of an object (used for players object)
 Object.size = function(obj) {
@@ -343,7 +344,7 @@ socket.on('connection', function (client) {
         if(player.room.people.length == 4){
             ratSlapGame.setup();
         }
-        client.emit("setUIFramework", ratSlapGame.completeActionlistNames, ratSlapGame.completeActionlistLabels, ratSlapGame.completeActionlistKeyCodes, ratSlapGame.completeActionlistKeyLabels);
+        serverInterface.setUIFramework(client, ratSlapGame.completeActionlistNames,ratSlapGame.completeActionlistLabels,ratSlapGame.completeActionlistKeyCodes,completeActionlistKeyLabels);
         client.emit("setActions", ratSlapGame.actionsToGive);
     });
 
