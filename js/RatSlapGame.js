@@ -97,12 +97,11 @@ RatSlapGame.prototype.playAction = function(){
 		//win
 	} else {
 		if (digChances == 0){	
-			isSlappable = true;
 			if (playPile[playPile.numCards - 1].properties.rank == 'A' ||
 				playPile[playPile.numCards - 1].properties.rank == 'J' ||
 				playPile[playPile.numCards - 1].properties.rank == 'Q' ||
 				playPile[playPile.numCards - 1].properties.rank == 'K'){
-					isSlappable = false;
+					slapAllowed = false;
 					digChances = 3;
 					hopefulPlayer = currentPlayer;
 					this.advanceCurrentPlayer();
@@ -133,7 +132,7 @@ RatSlapGame.prototype.playAction = function(){
 //Called to this game whenever the client sends a 'gameSlap' socket function.
 RatSlapGame.prototype.slapAction = function(player){
 	if (slapAllowed && (!playPile.isEmpty)){
-		var trulySlappable = this.slappableConditions;
+		var trulySlappable = this.isSlappable();
 		var slapper = -1;
 		
 		for (var i in allPlayers){
