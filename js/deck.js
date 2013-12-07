@@ -1,9 +1,9 @@
-var CardHolder = require('./cardHolder');
+var CardHolder = require('./cardHolder.js');
 var util = require("util");
 
 function Deck(cardholder) {
-	this.cards = [];
-	this.numCards = 0;
+	this.cards = cardholder.cards;
+	this.numCards = cardholder.numCards;
 }
 util.inherits(Deck, CardHolder);
 
