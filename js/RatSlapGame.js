@@ -206,6 +206,16 @@ RatSlapGame.prototype.topCard = function(){
 	return tc;
 }
 
+RatSlapGame.prototype.getCardsByPlayer = function(id){
+	var cbh = -1;
+	for (var i in allPlayers){
+		if (id = allPlayers[i].id || id = allPlayers[i].gameID){
+			cbh = playerHands[i];
+		}
+	}
+	return cbh;
+}
+
 // Called internally. Checks against all the winning conditions for slapping the pile.
 RatSlapGame.prototype.isSlappable = function() {
 	// The top 4 cards' ranks
