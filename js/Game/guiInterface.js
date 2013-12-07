@@ -64,6 +64,7 @@ var guiInterface = function () {
                 ACTION_KEY_LABELS.push(completeActionlistKeyLabels[i]);  
             }
         };
+        
         _public.addPlayerFramework = function(playerName){
             //set global variable for player count
             PLAYERS++;
