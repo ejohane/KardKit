@@ -5,7 +5,7 @@ var CardHolder = require('./cardHolder.js');
 function StandardDeck() {
 	//var cards = [];
 	var cardHolder = new CardHolder();
-	var suits = new Array("C","D","H","S");
+	var suits = new Array("club","diamond","heart","spade");
 	var n = 52;
 
 	for (var i = 0; i < suits.length; i++) {
