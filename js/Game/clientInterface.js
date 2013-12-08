@@ -65,7 +65,7 @@ var clientInterface = function () {
     _public.receiveOutboxConfirmation = function(yourMessage) {
         guiInterface.receiveOutboxConfirmation(yourMessage);  
     };
-    _public.closingGameSession = function(url){
+    _public.closeGameSession = function(url){
         setTimeout(window.location.replace(url),1000);
     };
 
@@ -158,6 +158,6 @@ socket.emit("gameLoaded", $.cookie("KardKit-username"));
     socket.on("receiveOutboxConfirmation", function(yourMessage) {
         clientInterface.receiveOutboxConfirmation(yourMessage);
     });
-    socket.on("closingGameSession", function(url) {
-        clientInterface.closingGameSession(url);
+    socket.on("closeGameSession", function(url) {
+        clientInterface.closeGameSession(url);
     });

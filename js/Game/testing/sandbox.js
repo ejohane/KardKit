@@ -81,6 +81,9 @@ var sandbox = function () {
             case "takeCard":                
                 clientInterface.takeCard(args[0],args[1],args[2],makeCard(args[3]));
                 break;
+            case "closeGameSession":
+                clientInterface.closeGameSession(args[0]);
+	        break;
             default:
                 alert("Sandbox function error!");
         }
