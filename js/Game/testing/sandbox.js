@@ -28,14 +28,19 @@ var sandbox = function () {
     
     function makeArray(text){
         text = text.substr(1, text.length - 2); //remove outer brackets
-        return text.split(",");        
+        var array = text.split(",");
+        for(var i = 0; i < array.length; i++)
+	{
+	    array[i] = $.trim(array[i]);
+	}
+	return array;        
     }
     
     _public.doFunction = function(functionName, argsElement) {
-        var args = [];
+        var args = []; var arg; 
         for(var childId = 0; childId < argsElement.children.length; childId++){
-            args[childId] = argsElement.children[childId].value;    
-            //alert("args[" + childId + "] : " + argsElement.children[childId].value);
+            arg = argsElement.children[childId].value;
+            args[childId] = $.trim(arg);
         }
         
         switch(functionName){
