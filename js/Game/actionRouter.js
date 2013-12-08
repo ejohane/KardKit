@@ -20,9 +20,12 @@ var actionRouter = function () {
               case "draw":
                 guiInterface.action_draw();
                 break;
-			  case "takeCard":
+	      case "takeCard":
                 guiInterface.action_takeCard();
-                break;	
+                break;
+              case "quit":
+	        guiInterface.action_quit();
+	        break;	
               default:
                 alert("this action doesn't exist!");
             }

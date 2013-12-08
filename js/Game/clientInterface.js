@@ -52,10 +52,10 @@ var clientInterface = function () {
     _public.discard = function(playerId, cardIndex){
         removeCard(playerId, cardIndex);  
     };
-        _public.takeCard = function(playerIdOwner,cardIndexTaken,playerIdReceiver,cardTaken){
-                removeCard(playerIdOwner, cardIndexTaken);                
-                addCard(playerIdReceiver, cardTaken);
-        };
+    _public.takeCard = function(playerIdOwner,cardIndexTaken,playerIdReceiver,cardTaken){
+        removeCard(playerIdOwner, cardIndexTaken);                
+        addCard(playerIdReceiver, cardTaken);
+    };
     _public.receiveInboxMessage = function(inboxMessage){
         guiInterface.receiveInboxMessage(inboxMessage);  
     };
@@ -65,24 +65,30 @@ var clientInterface = function () {
     _public.receiveOutboxConfirmation = function(yourMessage) {
         guiInterface.receiveOutboxConfirmation(yourMessage);  
     };
+    _public.closingGameSession = function(url){
+        setTimeout(window.location.replace(url),1000);
+    };
+
     /* outgoing
     --------------------------------------*/
-        _public.out_sendOutboxMessage = function(outboxMessage){
-                alert("clientInterface function 'sendOutboxMessage' called with argument : " + outboxMessage);
-        };
+    _public.out_sendOutboxMessage = function(outboxMessage){
+        socket.emit("sendOutboxMessage", outboxMessage);
+    };
     _public.out_playCard = function(playerName, cardIndex){
-        alert("function playCard : call the server with playername = " + playerName + " , cardIndex = " + cardIndex);
+	socket.emit("r_play", playerName, cardIndex);
     };
     _public.out_slap = function(playerName){
-        alert("function slap: call the server with playername = " + playerName);
+	socket.emit("r_slap", playerName);
     };
     _public.out_draw = function(playerName){
-        alert("function draw: call the server with playername = " + playerName);
+	socket.emit("r_draw", playerName);
     };
-    _public.out_takeCard = function(playerNameOwner,cardIndex,playerNameReceiver){
-        alert("function takeCard: call the server with owner playername = " + playerNameOwner + " , cardIndex = " + cardIndex + " , receiver playername = " + playerNameReceiver);
+    _public.out_takeCard = function(playerNameOwner, cardIndex, playerNameReceiver){
+	socket.emit("r_takeCard",   playerNameOwner, cardIndex, playerNameReceiver);
+    };    
+    _public.out_quit = function(playerName){
+        socket.emit("r_quit", playerName);
     };
-    
     
      return _public;
 }();
@@ -151,4 +157,7 @@ socket.emit("gameLoaded", $.cookie("KardKit-username"));
     });
     socket.on("receiveOutboxConfirmation", function(yourMessage) {
         clientInterface.receiveOutboxConfirmation(yourMessage);
+    });
+    socket.on("closingGameSession", function(url) {
+        clientInterface.closingGameSession(url);
     });

@@ -125,6 +125,10 @@ var guiInterface = function () {
 			var cardIndexTaken = cardSelection.getSelectedCardIndexFromPlayerId(playerIdOwner);
             clientInterface.out_takeCard(playerNameOwner,cardIndexTaken,playerNameReceiver);
         };
+        _public.action_quit = function () {
+            var playerName = $("#playerSpot_0 .playerName").text();
+            clientInterface.out_quit(playerName);
+        };
         
         return _public;    
     }();
