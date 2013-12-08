@@ -293,7 +293,7 @@ socket.on('connection', function (client) {
         lobby.checkEmptyInviteRoom(player.invitedGame);
         //Join Created Room
         var gameName = (player.invitedGame).replace("_Invited", "");
-        var room = lobby.(gameName, lobby.players[client.id], client);
+        var room = lobby.addPlayerToGame(gameName, lobby.players[client.id], client);
         if(room != null) client.join(room.name);
         var table = lobby.getGameRoomList();
         socket.sockets.in(lobby.lobbyRoom).emit('updatedGamesList', table);
