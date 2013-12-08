@@ -349,7 +349,7 @@ socket.on('connection', function (client) {
 
         serverInterface.setUIFramework(client, ratSlapGame.completeActionlistNames,ratSlapGame.completeActionlistLabels,ratSlapGame.completeActionlistKeyCodes,ratSlapGame.completeActionlistKeyLabels);
 
-        if(player.room.people.length == 4){
+        if(player.room.people.length == 2){
             ratSlapGame.setup();
     	    var pOrder = ratSlapGame.allPlayers;
     	    

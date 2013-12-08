@@ -366,7 +366,7 @@ LobbyCommunication.prototype.playerExitsGame = function(playerID){
     //remove player
         //remove player from invitedRooms
     room = player.invitedGame;
-    if(room != undefined){
+    if(room != null){
         index = room.people.indexOf(player);
         if(index > -1) room.people.splice(index, 1);
     }
