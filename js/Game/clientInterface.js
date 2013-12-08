@@ -66,8 +66,7 @@ var clientInterface = function () {
         guiInterface.receiveOutboxConfirmation(yourMessage);  
     };
     _public.closeGameSession = function(url){
-        alert("Sorry, this game must close due to player(s) disconnecting...");
-        setTimeout(window.location = url,4000);
+        window.location = url;
     };
 
     /* outgoing
