@@ -126,8 +126,7 @@ var guiInterface = function () {
             clientInterface.out_takeCard(playerNameOwner,cardIndexTaken,playerNameReceiver);
         };
         _public.action_quit = function () {
-            var playerName = $("#playerSpot_0 .playerName").text();
-            clientInterface.out_quit(playerName);
+            clientInterface.out_quit($.cookie("KardKit-username"));
         };
         
         return _public;    
