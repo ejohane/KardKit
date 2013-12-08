@@ -16,6 +16,7 @@ $(document).ready(function() {
         $('#myModal').modal("show");
     }else{
         socket.emit("addExisistingPlayerToLobby",$.cookie("KardKit-username") );
+        playerName = $('#username').val();
         $('#usernameTitle').append($.cookie("KardKit-username"));
         $("#createUser").popover('hide');
         $('.LobbyPage').show();
