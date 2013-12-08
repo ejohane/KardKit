@@ -142,14 +142,14 @@ $(document).ready(function() {
     $('#joinGameBtn').click(function(){
         socket.emit('joinGame');
         $('#playerInvited').modal("hide");
-        window.open("/game.html", "_blank");
+        window.location = "./game.html";
     });
 
     $('#joinGameBtnPwd').click(function(){
         if($('#password-invite').val() == invPassword){
             socket.emit('joinGame');
             $('#playerInvited-Pswd').modal("hide");
-            window.open("/game.html", "_blank");
+            window.location = "./game.html";
         }else{
             alert("Invalid Password");  
         }
