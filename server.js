@@ -216,7 +216,7 @@ socket.on('connection', function (client) {
                 
                 console.log("Player exiting game");
                 lobby.playerExitsGame(client.id);
-                
+                socket.sockets.in(room).emit('closeGameSession');
                 break;
             }
         }
