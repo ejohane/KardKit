@@ -32,8 +32,8 @@ CardHolder.prototype.shuffle = function() {
 	var source2;
 	var temp;
 	for (var i = 0; i < this.cards.length; i++) {
-		source1 = Math.floor(Math.random()*(this.cards.length-1));
-		source2 = Math.floor(Math.random()*(this.cards.length-1));
+		source1 = Math.round(Math.random()*(this.cards.length-1));
+		source2 = Math.round(Math.random()*(this.cards.length-1));
 		temp = this.cards[source1];
 		this.cards[source1] = this.cards[source2];
 		this.cards[source2] = temp;		
