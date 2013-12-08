@@ -250,7 +250,7 @@ socket.on('connection', function (client) {
     client.on("validateGame", function(gameName, password, invitedPlayers){
         if(lobby.validateGame(gameName)){
             var room = lobby.createGame(gameName, password, invitedPlayers, client.id, 4, client);
-            client.join(room.name);
+            client.join(room);
             
             var invitedGameName = gameName + "_Invited";
             var invitedRoom = lobby.createInviteeRoom(invitedPlayers, invitedGameName, lobby.players[client.id], password);
@@ -333,7 +333,7 @@ socket.on('connection', function (client) {
         var player = lobby.getPlayer(username);
         if(player != null){
             player.gameID = client.id;
-
+            client.join(player.room);
         }else{
             console.log("WHYYYYYY");
         }
