@@ -201,7 +201,7 @@ socket.on('connection', function (client) {
             //if player exits lobby
             console.log("here");
             if(lobby.players[i].id == client.id){
-                if(lobby.players[i].room.name == null){
+                if(lobby.players[i].room == null){
                     console.log("******** Player with id: (" + client.id + ") with name: ("+ lobby.players[client.id].name +") has disconnected ********");
                     socket.sockets.in(lobby.lobbyRoom).emit('receiveInboxMessage', lobby.players[client.id].name +" has left the lobby", "message"); 
                     lobby.playerDisconnected(client.id);
