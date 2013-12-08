@@ -36,11 +36,11 @@ function RatSlapGame(room){
 	this.digChances = 0;
 
 	//Actions
-	this.completeActionlistNames = ["slap","play"];
-	this.completeActionlistLabels = ["SLAP","Play"];
-	this.completeActionlistKeyCodes = [32,112];
-	this.completeActionlistKeyLabels = ["S","P"];
-	this.actionsToGive = [1,1];
+	this.completeActionlistNames = ["slap","play","quit"];
+	this.completeActionlistLabels = ["SLAP","Play","Quit"];
+	this.completeActionlistKeyCodes = [32,112,113];
+	this.completeActionlistKeyLabels = ["Space","P","Q"];
+	this.actionsToGive = [0,0,1];
 
 	//Tracking player actions
 	this.playEnabledArray = [0, 0, 0, 0];
@@ -227,7 +227,7 @@ RatSlapGame.prototype.getCardsByPlayer = function(id){
 }
 
 RatSlapGame.prototype.getActionsByPlayer = function(id){
-	var gabp = [0, 0]
+	var gabp = [0, 0, 1];
 	for (var i in allPlayers){
 		if (id = allPlayers[i].id || id = allPlayers[i].gameID){
 			gabp[0] = playEnabledArray[i];

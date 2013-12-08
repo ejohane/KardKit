@@ -14,6 +14,13 @@ var ServerInterface = function () {
         socket.sockets.in(gameRoom).emit("play", topCard);
      };
 
+	_public.setCards = function(client, playerID, card){
+		client.emit("addCard", playerID, card);
+	};
+
+	_public.setPlayerPosition = function(client, playerName){
+		client.emit("assPlayer", playerName);
+	};
     
      return _public;
 }();
