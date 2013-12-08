@@ -164,7 +164,10 @@ socket.on('connection', function (client) {
 
     
     client.on("addExisistingPlayerToLobby", function(username){
-
+        lobby.addExisistingPlayerToLobby(username, client.id);
+        socket.sockets.in(lobby.lobbyRoom).emit('playerAddedToLobby',lobby.getPlayerListHTML(), lobby.players[client.id].name);
+        socket.sockets.in(lobby.lobbyRoom).emit('updatedGamesList',lobby.getGameRoomList());
+        socket.sockets.in(lobby.lobbyRoom).emit('updatePlayerListGameRoom', lobby.getCreatePlayerListHTML());
 
     });
     
@@ -369,11 +372,12 @@ socket.on('connection', function (client) {
 
     	    var rts = player.room;
     	    for (var i in rts.people){
-    		for (var j = 0; j < 4; j++){
-    			serverInterface.setCards(socket,rts.people[i].gameID,j,[null, null]);
-    			serverInterface.setCardCounts(socket,rts.people[i].gameID,j,13);
-    		}
-		  serverInterface.setActions(socket,rts.people[i].gameID, ratSlapGame.actionsToGive);
+        		for (var j = 0; j < 4; j++){
+        			serverInterface.setCards(socket,rts.people[i].gameID,j,[null, null]);
+        			serverInterface.setCardCounts(socket,rts.people[i].gameID,j,13);
+        		}
+		          serverInterface.setActions(socket,rts.people[i].gameID, ratSlapGame.actionsToGive);
+            }
 	    
         }
 

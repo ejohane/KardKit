@@ -365,7 +365,9 @@ LobbyCommunication.prototype.playerExitsGame = function(playerID){
 LobbyCommunication.prototype.addExisistingPlayerToLobby = function(username, clientID){
     var player = this.getPlayer(username);
     if(player != null) {
+        delete this.players[player.id];
         player.id = clientID;
+        this.players[clientID] = player;
     }
 };
 
