@@ -150,7 +150,7 @@ socket.on('connection', function (client) {
                     client.join(lobby.lobbyRoom);
                     socket.sockets.in(lobby.lobbyRoom).emit('playerAddedToLobby',lobby.getPlayerListHTML(), lobby.players[client.id].name);
                     socket.sockets.in(lobby.lobbyRoom).emit('updatedGamesList',lobby.getGameRoomList());
-                    socket.sockets.in(lobby.lobbyRoom).emit('updatePlayerListGameRoom', lobby.getCreatePlayerListHTML());
+                    socket.sockets.in(lobby.lobbyRoom).emit('updatePlayerListGameRoom', lobby.getCreatePlayerListHTML(client.id));
                     client.emit('succesfullyJoined');
                 }else{
                     console.log("Player: " + player.name +" unable to join the lobby");
@@ -168,7 +168,7 @@ socket.on('connection', function (client) {
         client.join(lobby.lobbyRoom);
         socket.sockets.in(lobby.lobbyRoom).emit('playerAddedToLobby',lobby.getPlayerListHTML(), lobby.players[client.id].name);
         socket.sockets.in(lobby.lobbyRoom).emit('updatedGamesList',lobby.getGameRoomList());
-        socket.sockets.in(lobby.lobbyRoom).emit('updatePlayerListGameRoom', lobby.getCreatePlayerListHTML());
+        socket.sockets.in(lobby.lobbyRoom).emit('updatePlayerListGameRoom', lobby.getCreatePlayerListHTML(client.id));
 
     });
     
@@ -187,7 +187,7 @@ socket.on('connection', function (client) {
     client.on("updateStatus", function(status){
         lobby.players[client.id].status = status;
         socket.sockets.in(lobby.lobbyRoom).emit('updatePlayerList',lobby.getPlayerListHTML());
-        socket.sockets.in(lobby.lobbyRoom).emit('updatePlayerListGameRoom', lobby.getCreatePlayerListHTML());
+        socket.sockets.in(lobby.lobbyRoom).emit('updatePlayerListGameRoom', lobby.getCreatePlayerListHTML(client.id));
     });
 
     /********************************************************************
@@ -238,7 +238,7 @@ socket.on('connection', function (client) {
         - Creates the list of available players for game creation modal
     ********************************************************************/  
     client.on("getCreateGamePlayerListHTML", function(){
-        var table = lobby.getCreatePlayerListHTML();
+        var table = lobby.getCreatePlayerListHTML(client.id);
         socket.sockets.in(lobby.lobbyRoom).emit('updatePlayerListGameRoom', table);
     });
     

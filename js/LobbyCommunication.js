@@ -100,12 +100,13 @@ LobbyCommunication.prototype.getPlayerListHTML = function(){
 	Created By: Erik Johansson		On: 10/16/2013
 	Updated:
 *********************************************************************/
-LobbyCommunication.prototype.getCreatePlayerListHTML = function(){
+LobbyCommunication.prototype.getCreatePlayerListHTML = function(clientID){
+    var client = this.players[clientID];
     var table = "<thead> <tr> <th> Name </th> <th>Invite</th></tr> </thead> "; 
     var availablePlayers = [];
     for (var k in this.players){
         var player = this.players[k];
-        if(player.status == "Ready"){
+        if(player.status == "Ready" && player != client){
             availablePlayers.push(player);
         }
     }  
@@ -349,6 +350,7 @@ LobbyCommunication.prototype.playerExitsGame = function(playerID){
             room.people[i].room = null;
             room.people[i].inGame = false;
             room.people[i].status = "Ready";
+            room.people[i].gameID = null;
         }
         room.people = [];
     }
@@ -367,6 +369,8 @@ LobbyCommunication.prototype.addExisistingPlayerToLobby = function(username, cli
         //updated socket id for player
         delete this.players[player.id];
         player.id = clientID;
+        player.status = "Ready";
+        player.inGame = false;
         this.players[clientID] = player;
         //update player in the lobby
             for(var i in this.rooms[0].people){
