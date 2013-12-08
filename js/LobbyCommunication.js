@@ -333,6 +333,7 @@ LobbyCommunication.prototype.playerDisconnected = function(playerID){
     //remove player
     //index = this.players.indexOf(playerID);
     //if(index > -1) this.players.splice(index,1);
+    $.cookie("KardKit-username", null);
     delete this.players[playerID];
 };
 
@@ -357,6 +358,14 @@ LobbyCommunication.prototype.playerExitsGame = function(playerID){
     if(room.people.length == 0){
         index = this.rooms.indexOf(room);
         if(index > -1) this.rooms.splice(index, 1);  
+    }
+};
+
+
+LobbyCommunication.prototype.addExisistingPlayerToLobby = function(username, clientID){
+    var player = this.getPlayer(username);
+    if(player != null) {
+        player.id = clientID;
     }
 };
 

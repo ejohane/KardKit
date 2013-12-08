@@ -161,6 +161,12 @@ socket.on('connection', function (client) {
         }
     });
  
+
+    
+    client.on("addExisistingPlayerToLobby", function(username){
+
+
+    });
     
     /********************************************************************
         Created By: Erik Johansson      On: 10/16/2013
@@ -190,17 +196,21 @@ socket.on('connection', function (client) {
         for(var i in lobby.players){
             //if player exits lobby
             if(lobby.players[i].id == client.id){
-               console.log("******** Player with id: (" + client.id + ") with name: ("+ lobby.players[client.id].name +") has disconnected ********");
-                socket.sockets.in(lobby.lobbyRoom).emit('receiveInboxMessage', lobby.players[client.id].name +" has left the lobby", "message"); 
-                lobby.playerDisconnected(client.id);
-                delete lobby.players[client.id];
-                for(var key in lobby.players) {
-                  console.log("******** Remaining players: " + key + ": " + lobby.players[key].name +"********");
-                }   
-                break;
+                if(lobby.players[i].room == null){
+                    console.log("******** Player with id: (" + client.id + ") with name: ("+ lobby.players[client.id].name +") has disconnected ********");
+                    socket.sockets.in(lobby.lobbyRoom).emit('receiveInboxMessage', lobby.players[client.id].name +" has left the lobby", "message"); 
+                    lobby.playerDisconnected(client.id);
+                    delete lobby.players[client.id];
+                    for(var key in lobby.players) {
+                      console.log("******** Remaining players: " + key + ": " + lobby.players[key].name +"********");
+                    }   
+                    break;
+                }
             //if player exits game
             }else if(lobby.players[i].gameID == client.id){
+                
                 console.log("Player exiting game");
+                socket.sockets.in(lobby.players[i].room).emit('closeGameSession', "kardkit.us:8127" );
                 lobby.playerExitsGame(client.id);
                 
                 break;
@@ -208,6 +218,10 @@ socket.on('connection', function (client) {
         }
         socket.sockets.in(lobby.lobbyRoom).emit('updatedGamesList', lobby.getGameRoomList());
         socket.sockets.in(lobby.lobbyRoom).emit('updatePlayerList',lobby.getPlayerListHTML());
+    });
+
+    client.on('r_quit',function(playerName){
+
     });
 
     /********************************************* Creating Games ****************************************************** */
@@ -334,33 +348,33 @@ socket.on('connection', function (client) {
 
         if(player.room.people.length == 4){
             ratSlapGame.setup();
-	    var pOrder = ratSlapGame.allPlayers;
-	    
-	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[0].name);
-	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[1].name);
-	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[2].name);
-	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[3].name);
-	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[1].name);
-	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[2].name);
-	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[3].name);
-	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[0].name);
-	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[2].name);
-	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[3].name);
-	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[0].name);
-	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[1].name);
-	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[3].name);
-	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[0].name);
-	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[1].name);
-	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[2].name);	    
+    	    var pOrder = ratSlapGame.allPlayers;
+    	    
+    	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[0].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[1].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[2].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[3].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[1].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[2].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[3].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[0].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[2].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[3].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[0].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[1].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[3].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[0].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[1].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[2].name);	    
 
-	    var rts = player.room;
-	    for (var i in rts.people){
-		for (var j = 0; j < 4; j++){
-			serverInterface.setCards(socket,rts.people[i].gameID,j,[null, null]);
-			serverInterface.setCardCounts(socket,rts.people[i].gameID,j,13);
-		}
-		serverInterface.setActions(socket,rts.people[i].gameID, ratSlapGame.actionsToGive);
-	    }
+    	    var rts = player.room;
+    	    for (var i in rts.people){
+    		for (var j = 0; j < 4; j++){
+    			serverInterface.setCards(socket,rts.people[i].gameID,j,[null, null]);
+    			serverInterface.setCardCounts(socket,rts.people[i].gameID,j,13);
+    		}
+		  serverInterface.setActions(socket,rts.people[i].gameID, ratSlapGame.actionsToGive);
+	    
         }
 
     });

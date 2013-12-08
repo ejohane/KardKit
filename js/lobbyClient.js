@@ -11,8 +11,18 @@ var invPassword = "";
 $(document).ready(function() {
 
     //---Hide main page and ask for username
-    $('.LobbyPage').hide();
-    $('#myModal').modal("show");
+    if($.cookie("KardKit-username") == null){
+        $('.LobbyPage').hide();
+        $('#myModal').modal("show");
+    }else{
+        socket.emit("addExisistingPlayerToLobby",$.cookie("KardKit-username") );
+        $('#usernameTitle').append($.cookie("KardKit-username"));
+        $('.LobbyPage').show();
+        $('#myModal').modal("hide");
+
+    }
+
+
 
     $('#myTab a').click(function (e) {
         e.preventDefault()
