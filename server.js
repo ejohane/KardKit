@@ -225,7 +225,7 @@ socket.on('connection', function (client) {
     });
 
     client.on('r_quit',function(playerName){
-        console.log("PlayerName: "playerName);
+        console.log("PlayerName: "+ playerName);
         console.log("PlayerName: " + lobby.getPlayer(playerName));
         var room = lobby.getPlayer(playerName).room;
         if(room != null){
@@ -256,7 +256,7 @@ socket.on('connection', function (client) {
     ********************************************************************/  
     client.on("validateGame", function(gameName, password, invitedPlayers){
         if(lobby.validateGame(gameName)){
-            var room = lobby.createGame(gameName, password, invitedPlayers, client.id, 4);
+            var room = lobby.createGame(gameName, password, invitedPlayers, client.id, 4, client);
             client.join(room.name);
             
             var invitedGameName = gameName + "_Invited";
@@ -300,7 +300,7 @@ socket.on('connection', function (client) {
         lobby.checkEmptyInviteRoom(player.invitedGame);
         //Join Created Room
         var gameName = (player.invitedGame).replace("_Invited", "");
-        var room = lobby.addPlayerToGame(gameName, lobby.players[client.id]);
+        var room = lobby.addPlayerToGame(gameName, lobby.players[client.id], client);
         if(room != null) client.join(room.name);
         var table = lobby.getGameRoomList();
         socket.sockets.in(lobby.lobbyRoom).emit('updatedGamesList', table);

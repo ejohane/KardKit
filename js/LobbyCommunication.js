@@ -141,7 +141,7 @@ LobbyCommunication.prototype.validateGame = function(gameName){
 	Created By: Erik Johansson		On: 10/16/2013
 	Updated:
 *********************************************************************/
-LobbyCommunication.prototype.createGame = function(gameName, password, invitedPlayers, hostID, playerLimit){
+LobbyCommunication.prototype.createGame = function(gameName, password, invitedPlayers, hostID, playerLimit, client){
 	var host = this.players[hostID];
 	//var room = createGame(host, gameName, password, invitedPlayers);
 	var Room = this.Room;
@@ -155,6 +155,8 @@ LobbyCommunication.prototype.createGame = function(gameName, password, invitedPl
     host.room   = room;
     host.inGame = true;
     host.status = "In-Game";
+
+    client.join(room);
     return room;
  };
 
@@ -236,13 +238,14 @@ LobbyCommunication.prototype.checkEmptyInviteRoom = function(roomName){
 	Created By: Erik Johansson		On: 10/30/2013
 	Updated:
 *********************************************************************/
-LobbyCommunication.prototype.addPlayerToGame = function(gameName, player){
+LobbyCommunication.prototype.addPlayerToGame = function(gameName, player, client){
     var room = this.getRoom(player.invitedGame.replace("_Invited", ""), "gameRoom");
     if(room != null){
     	room.addPerson(player);
     	player.room = room;
     	player.inGame = true;
-    	player.status = "In-Game";	
+    	player.status = "In-Game";
+        client.join(room);	
     }
     return room;
 };
