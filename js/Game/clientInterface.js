@@ -65,8 +65,9 @@ var clientInterface = function () {
     _public.receiveOutboxConfirmation = function(yourMessage) {
         guiInterface.receiveOutboxConfirmation(yourMessage);  
     };
-    _public.closeGameSession = function(url){
-        window.location = url;
+    _public.closeGameSession = function(){
+        alert('hre');
+        window.location.href = "kardkit.us:8127";
     };
 
     /* outgoing
@@ -159,5 +160,5 @@ socket.emit("gameLoaded", $.cookie("KardKit-username"));
         clientInterface.receiveOutboxConfirmation(yourMessage);
     });
     socket.on("closeGameSession", function(url) {
-        clientInterface.closeGameSession(url);
+        clientInterface.closeGameSession();
     });
