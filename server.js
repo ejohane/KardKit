@@ -224,14 +224,7 @@ socket.on('connection', function (client) {
         socket.sockets.in(lobby.lobbyRoom).emit('updatePlayerList',lobby.getPlayerListHTML());
     });
 
-    client.on('r_quit',function(playerName){
-        console.log("PlayerName: "+ playerName);
-        console.log("PlayerName: " + lobby.getPlayer(playerName));
-        var room = lobby.getPlayer(playerName).room;
-        if(room != null){
-            socket.sockets.in(room).emit('closeGameSession', "kardkit.us:8127");     
-        }
-    });
+
 
     /********************************************* Creating Games ****************************************************** */
 
@@ -300,7 +293,7 @@ socket.on('connection', function (client) {
         lobby.checkEmptyInviteRoom(player.invitedGame);
         //Join Created Room
         var gameName = (player.invitedGame).replace("_Invited", "");
-        var room = lobby.addPlayerToGame(gameName, lobby.players[client.id], client);
+        var room = lobby.(gameName, lobby.players[client.id], client);
         if(room != null) client.join(room.name);
         var table = lobby.getGameRoomList();
         socket.sockets.in(lobby.lobbyRoom).emit('updatedGamesList', table);
@@ -406,6 +399,16 @@ socket.on('connection', function (client) {
     client.on("r_takeCard", function(playerNameOwner,cardIndex,playerNameReceiver){
         console.log("out_takeCard with owner playername = " + playerNameOwner + " , cardIndex = " + cardIndex + " , receiver playername = " + playerNameReceiver);
         
+    });
+
+    client.on('r_quit',function(playerName){
+        console.log("PlayerName: "+ playerName);
+        console.log("player: " + lobby.getPlayer(playerName));
+        var room = lobby.getPlayer(playerName).room;
+        console.log("room name: " + room.name);
+        if(room != null){
+            socket.sockets.in(room).emit('closeGameSession', "kardkit.us:8127");     
+        }
     });
 //>>>>>>> 58efb634379783c763f551db0d0af279d8e4ff23
   
