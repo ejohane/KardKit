@@ -56,45 +56,44 @@ function RatSlapGame(room){
 
 //Called when all 4 players are loaded in the game room.
 RatSlapGame.prototype.setup = function(){
-	deck = new Deck(new StandardDeck);
+	this.deck = new Deck(new StandardDeck());
 	//We add the players in a random order, considering that we need to have 4 people in the room to call setup
 
-	var tempPlayerHolder = gameRoom.people;
+	// randomize player order
+	var tempPlayerHolder = this.gameRoom.people;
 	var tempPlayerCounter = 0;
 	while (tempPlayerHolder.length != 0){
 		var source1;
 		source1 = Math.floor(Math.random() * (tempPlayerHolder.length - 1));
 		if (source1 > -1){
-			allPlayers[tempPlayerCounter] = tempPlayerHolder[source1];
+			this.allPlayers[tempPlayerCounter] = tempPlayerHolder[source1];
 			tempPlayerCounter++;
-			tempPlayerHolder.splice[source1, 1];
+			tempPlayerHolder.splice(source1, 1);
 		}
 	}
 
+	// init player hands and playing pile
 	for (var i = 0; i < 4; i++){
-		playerHands[i] = new Hand(new cardHolder);
+		this.playerHands[i] = new Hand(new CardHolder());
 	}
-	playPile = new PlayPile(new cardHolder);
-	
-	deck.shuffle();
-	deck.cut();
-	while (!deck.isEmpty()){
-		deck.draw(playerHands[currentPlayer]);
-		this.advanceCurrentPlayer();
+	playPile = new PlayPile(new CardHolder());
+
+	// Shuffle and deal cards to players
+	this.deck.shuffle();
+	while (!this.deck.isEmpty()){
+		this.deck.draw(this.playerHands[this.currentPlayer]);
+		this.advanceCurrentPlayer(false);
 	}
 	currentPlayer = 0;
-	for (var i in playerHands){
-		playerHands[i].shuffle();
-		playerHands[i].cut();
-	}
-	
-	//ClientUI - draw hands
-	
+
+	// enable slap action for everyone
 	slapAllowed = true;
-	for (var i in allPlayers){
-		enableSlap(allPlayers[i]);
+	for (var i in this.allPlayers){
+		this.enableSlap(this.allPlayers[i]);
 	}
-	enablePlay(currentPlayer);
+
+	// enable play for first player (as this is setup)
+	this.enablePlay(this.currentPlayer);
 }
 
 //Called to this game whenever the client sends a 'gamePlayCard' socket function.
@@ -175,26 +174,26 @@ RatSlapGame.prototype.disablePlay = function(player){
 
 //Called internally. Takes the index number corresponding to the next player (aka currentPlayer)
 RatSlapGame.prototype.enablePlay = function(playerIndex){
-	playEnabledArray[player] = 1;
+	this.playEnabledArray[this.player] = 1;
 }
 
 //Called internally. Takes a player and enables the slap action for them
 RatSlapGame.prototype.enableSlap = function(player){
-	slapEnabledArray[player] = 1;
+	this.slapEnabledArray[this.player] = 1;
 }
 
 //Called internally. Advances the current player, but loops when it would be 4.
 RatSlapGame.prototype.advanceCurrentPlayer = function(shouldSkip){
-	var temp = currentPlayer;
-	currentPlayer++;
-	if (currentPlayer >= 4){
-		currentPlayer = 0;
+	var temp = this.currentPlayer;
+	this.currentPlayer++;
+	if (this.currentPlayer >= 4){
+		this.currentPlayer = 0;
 	}
 	if (shouldSkip) {
-		if (playerHands[currentPlayer].isEmpty()){
+		if (playerHands[this.currentPlayer].isEmpty()){
 			advanceCurrentPlayer();
 		} else {
-			pastPlayer = temp;
+			this.pastPlayer = temp;
 		}
 	}
 }
@@ -230,8 +229,8 @@ RatSlapGame.prototype.getActionsByPlayer = function(id){
 	var gabp = [0, 0]
 	for (var i in allPlayers){
 		if (id = allPlayers[i].id || id = allPlayers[i].gameID){
-			gabp[0] = playEnabledArray[i];
-			gabp[1] = slapEnabledArray[i];
+			gabp[0] = this.playEnabledArray[i];
+			gabp[1] = this.slapEnabledArray[i];
 		}
 	}
 	return gabp;
