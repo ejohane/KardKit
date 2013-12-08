@@ -311,7 +311,7 @@ LobbyCommunication.prototype.getGameRoomList = function(){
     Updated:
 *********************************************************************/
 LobbyCommunication.prototype.playerDisconnected = function(playerID){
-    var player = this.getPlayersByID(playerID);
+    var player = this.getPlayerByID(playerID);
     //remove player from room
     var room = player.room;
     if(room != undefined){
