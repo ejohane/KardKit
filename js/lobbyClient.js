@@ -110,14 +110,14 @@ $(document).ready(function() {
 
     //--- show the player invited message
     socket.on("playerInvited", function(message, password){
-        if(password == undefined){
+       if(password == null || password == ""){
             $('#playerInvitedMsg').append(message);
             $('#playerInvited').modal("show");
-        }else{
+       }else{
             invPassword = password;
             $('#playerInvitedMsg-Pswd').append(message);
             $('#playerInvited-Pswd').modal("show");
-        }      
+        } 
     });
 
 
@@ -137,7 +137,7 @@ $(document).ready(function() {
         if($('#password-invite').val() == invPassword){
             socket.emit('joinGame');
             $('#playerInvited-Pswd').modal("hide");
-            window.open("/gameUI/game.html", "_blank");
+            window.open("/game.html", "_blank");
         }else{
             alert("Invalid Password");  
         }
