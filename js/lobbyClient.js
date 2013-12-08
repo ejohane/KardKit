@@ -136,7 +136,7 @@ $(document).ready(function() {
     /* JOINING GAME IF CLIENT CREATED */
     socket.on("moveToGame", function(){
         $('#createGameModal').modal("hide");
-        window.open("./game.html", "_blank");
+        window.location = "./game.html";
     });
     /* JOINING GAME IF ASKED TO JOIN */
     $('#joinGameBtn').click(function(){

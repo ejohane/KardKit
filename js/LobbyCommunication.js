@@ -333,7 +333,6 @@ LobbyCommunication.prototype.playerDisconnected = function(playerID){
     //remove player
     //index = this.players.indexOf(playerID);
     //if(index > -1) this.players.splice(index,1);
-    $.cookie("KardKit-username", null);
     delete this.players[playerID];
 };
 
@@ -364,19 +363,23 @@ LobbyCommunication.prototype.playerExitsGame = function(playerID){
 
 LobbyCommunication.prototype.addExisistingPlayerToLobby = function(username, clientID){
     var player = this.getPlayer(username);
-    //updated socket id for player
     if(player != null) {
+        //updated socket id for player
         delete this.players[player.id];
         player.id = clientID;
         this.players[clientID] = player;
+        //update player in the lobby
+            for(var i in this.rooms[0].people){
+                if(this.rooms[0].people[i].name == username){
+                    this.rooms[0].people[i] = player;
+                }
+            }
+    }else{
+        var player = this.createPlayer(username, clientID);
+        this.addPlayerToLobby(player);
     }
 
-    //update player in the lobby
-    for(var i in this.rooms[0].people){
-        if(this.rooms[0].people[i].name == username){
-            this.rooms[0].people[i] = player;
-        }
-    }
+
 };
 
 

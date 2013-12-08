@@ -199,8 +199,9 @@ socket.on('connection', function (client) {
         console.log("Attempting to exit game")
         for(var i in lobby.players){
             //if player exits lobby
+            console.log("here");
             if(lobby.players[i].id == client.id){
-                if(lobby.players[i].room == null){
+                if(lobby.players[i].room.name == null){
                     console.log("******** Player with id: (" + client.id + ") with name: ("+ lobby.players[client.id].name +") has disconnected ********");
                     socket.sockets.in(lobby.lobbyRoom).emit('receiveInboxMessage', lobby.players[client.id].name +" has left the lobby", "message"); 
                     lobby.playerDisconnected(client.id);

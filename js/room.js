@@ -20,7 +20,7 @@ function Room(name, id, owner) {
 Room.prototype.addPerson = function(personID) {
   if (this.status === "Open" && this.people.length + 1 <= this.peopleLimit) {
     this.people.push(personID);
-	personID.setRoom(this);
+	//personID.setRoom(this);
   }else if((this.people.length + 1) == this.peopleLimit){
     this.status = "closed";
   }
