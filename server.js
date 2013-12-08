@@ -329,11 +329,38 @@ socket.on('connection', function (client) {
             console.log("RatSlapGame Created");
         }
         console.log(player.room.people.length);
+
+        serverInterface.setUIFramework(client, ratSlapGame.completeActionlistNames,ratSlapGame.completeActionlistLabels,ratSlapGame.completeActionlistKeyCodes,ratSlapGame.completeActionlistKeyLabels);
+
         if(player.room.people.length == 4){
             ratSlapGame.setup();
+	    var pOrder = ratSlapGame.allPlayers;
+	    
+	    serverInterface.setPlayerPosition(pOrder[0].id,pOrder[0]);
+	    serverInterface.setPlayerPosition(pOrder[0].id,pOrder[1]);
+	    serverInterface.setPlayerPosition(pOrder[0].id,pOrder[2]);
+	    serverInterface.setPlayerPosition(pOrder[0].id,pOrder[3]);
+	    serverInterface.setPlayerPosition(pOrder[1].id,pOrder[1]);
+	    serverInterface.setPlayerPosition(pOrder[1].id,pOrder[2]);
+	    serverInterface.setPlayerPosition(pOrder[1].id,pOrder[3]);
+	    serverInterface.setPlayerPosition(pOrder[1].id,pOrder[0]);
+	    serverInterface.setPlayerPosition(pOrder[2].id,pOrder[2]);
+	    serverInterface.setPlayerPosition(pOrder[2].id,pOrder[3]);
+	    serverInterface.setPlayerPosition(pOrder[2].id,pOrder[0]);
+	    serverInterface.setPlayerPosition(pOrder[2].id,pOrder[1]);
+	    serverInterface.setPlayerPosition(pOrder[3].id,pOrder[3]);
+	    serverInterface.setPlayerPosition(pOrder[3].id,pOrder[0]);
+	    serverInterface.setPlayerPosition(pOrder[3].id,pOrder[1]);
+	    serverInterface.setPlayerPosition(pOrder[3].id,pOrder[2]);	    
+
+	    var rts = player.room;
+	    for (var i in player.room.people){
+		for (var j = 0; j < 4; j++){
+			serverInterface.setCards(player.room.people[i],j,[null, null]);
+		} 
+	    }
         }
-        serverInterface.setUIFramework(client, ratSlapGame.completeActionlistNames,ratSlapGame.completeActionlistLabels,ratSlapGame.completeActionlistKeyCodes,ratSlapGame.completeActionlistKeyLabels);
-        serverInterface.setActions(client, ratSlapGame.actionsToGive);
+
 
 
     });
