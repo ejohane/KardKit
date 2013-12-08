@@ -225,6 +225,8 @@ socket.on('connection', function (client) {
     });
 
     client.on('r_quit',function(playerName){
+        console.log("PlayerName: "playerName);
+        console.log("PlayerName: " + lobby.getPlayer(playerName));
         var room = lobby.getPlayer(playerName).room;
         if(room != null){
             socket.sockets.in(room).emit('closeGameSession', "kardkit.us:8127");     
