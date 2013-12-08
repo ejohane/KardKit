@@ -165,6 +165,10 @@ socket.on('connection', function (client) {
     
     client.on("addExisistingPlayerToLobby", function(username){
         lobby.addExisistingPlayerToLobby(username, client.id);
+                for(var i = 0; i < lobby.lobbyRoom.people.length; i++){
+                        console.log("PEOPLE IN LOBBY   " + lobby.lobbyRoom.people[i].name +" with id: "+client.id); 
+                    }
+                    console.log(lobby.getPlayerListHTML());
         socket.sockets.in(lobby.lobbyRoom).emit('playerAddedToLobby',lobby.getPlayerListHTML(), lobby.players[client.id].name);
         socket.sockets.in(lobby.lobbyRoom).emit('updatedGamesList',lobby.getGameRoomList());
         socket.sockets.in(lobby.lobbyRoom).emit('updatePlayerListGameRoom', lobby.getCreatePlayerListHTML());
