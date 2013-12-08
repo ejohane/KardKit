@@ -349,7 +349,7 @@ socket.on('connection', function (client) {
 
         serverInterface.setUIFramework(client, ratSlapGame.completeActionlistNames,ratSlapGame.completeActionlistLabels,ratSlapGame.completeActionlistKeyCodes,ratSlapGame.completeActionlistKeyLabels);
 
-        if(player.room.people.length == 2){
+        if(player.room.people.length == 4){
             ratSlapGame.setup();
     	    var pOrder = ratSlapGame.allPlayers;
     	    
@@ -407,7 +407,7 @@ socket.on('connection', function (client) {
         var room = lobby.getPlayer(playerName).room;
         console.log("room name: " + room.name);
         if(room != null){
-            socket.sockets.in(room).emit('closeGameSession', "kardkit.us:8127");     
+            socket.sockets.in(room).emit('closeGameSession');     
         }
     });
 //>>>>>>> 58efb634379783c763f551db0d0af279d8e4ff23
