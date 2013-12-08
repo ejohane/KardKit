@@ -361,7 +361,21 @@ LobbyCommunication.prototype.playerExitsGame = function(playerID){
     }
 
     //remove player
-    this.playerDisconnected(playerID);
+        //remove player from invitedRooms
+    room = player.invitedGame;
+    if(room != undefined){
+        index = room.people.indexOf(player);
+        if(index > -1) room.people.splice(index, 1);
+    }
+
+    //remove player from lobby
+    index = this.lobbyRoom.people.indexOf(player);
+    if(index > -1) this.lobbyRoom.people.splice(index,1);
+
+    //remove player
+    //index = this.players.indexOf(playerID);
+    //if(index > -1) this.players.splice(index,1);
+    delete this.players[player.id];
 };
 
 

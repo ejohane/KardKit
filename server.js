@@ -215,7 +215,6 @@ socket.on('connection', function (client) {
             }else if(lobby.players[i].gameID == client.id){
                 
                 console.log("Player exiting game");
-                socket.sockets.in(lobby.players[i].room).emit('closeGameSession', "kardkit.us:8127" );
                 lobby.playerExitsGame(client.id);
                 
                 break;
@@ -226,7 +225,10 @@ socket.on('connection', function (client) {
     });
 
     client.on('r_quit',function(playerName){
-
+        var room = lobby.getPlayer(playerName).room;
+        if(room != null){
+            socket.sockets.in(room).emit('closeGameSession', "kardkit.us:8127");     
+        }
     });
 
     /********************************************* Creating Games ****************************************************** */
@@ -336,6 +338,7 @@ socket.on('connection', function (client) {
         var player = lobby.getPlayer(username);
         if(player != null){
             player.gameID = client.id;
+
         }else{
             console.log("WHYYYYYY");
         }
