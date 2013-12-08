@@ -1,5 +1,11 @@
 var cardSelection = function () {
     var _public = {};
+    var srcJack = "../../img/jack.png";
+    var srcQueen = "../../img/queen.png";
+    var srcKing = "../../img/king.png";
+    var srcJackHover = "../../img/jack_h.png";
+    var srcQueenHover = "../../img/queen_h.png";
+    var srcKingHover = "../../img/king_h.png";
     
     /*private
     -------------------------------------------------*/
@@ -32,7 +38,14 @@ var cardSelection = function () {
             $("#playerSpot_" + playerId + " > .hand > .card:eq(" + cardIndex + ")").find("div.front").addClass("highlight");        
         }else{
             $("#playerSpot_" + playerId + " > .hand > .card:eq(" + cardIndex + ")").addClass("highlight");
-        }        
+        }
+        //face cards
+        var img = $("#playerSpot_" + playerId + " > .hand > .card:eq(" + cardIndex + ")").find("img");
+        if( img.length > 0 ){
+            if( img.attr("src") === srcJack ){ img.attr("src", srcJackHover);} 	   
+            if( img.attr("src") === srcQueen ){ img.attr("src", srcQueenHover);} 	   
+            if( img.attr("src") === srcKing ){ img.attr("src", srcKingHover);}
+	}        
     }
     
     function removeHighlight(playerId, cardIndex){
@@ -41,6 +54,14 @@ var cardSelection = function () {
         }else{
             $("#playerSpot_" + playerId + " > .hand > .card:eq(" + cardIndex + ")").removeClass("highlight");
         }
+        //face cards
+        var img = $("#playerSpot_" + playerId + " > .hand > .card:eq(" + cardIndex + ")").find("img");
+        if( img.length > 0 ){
+            if( img.attr("src") === srcJackHover ){ img.attr("src", srcJack);}
+            if( img.attr("src") === srcQueenHover ){ img.attr("src", srcQueen);}
+            if( img.attr("src") === srcKingHover ){ img.attr("src", srcKing);}
+        }
+
     }
     
     function notAlreadySelected(playerId, cardIndex) {
