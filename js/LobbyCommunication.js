@@ -312,7 +312,6 @@ LobbyCommunication.prototype.getGameRoomList = function(){
 *********************************************************************/
 LobbyCommunication.prototype.playerDisconnected = function(playerID){
     var player = this.players[playerID];
-    console.log("PlayerName: "+player.name);
     //remove player from room
     var room = player.room;
     if(room != undefined){
@@ -360,6 +359,9 @@ LobbyCommunication.prototype.playerExitsGame = function(playerID){
         index = this.rooms.indexOf(room);
         if(index > -1) this.rooms.splice(index, 1);  
     }
+
+    //remove player
+    this.playerDisconnected(playerID);
 };
 
 
