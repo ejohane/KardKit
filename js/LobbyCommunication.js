@@ -340,21 +340,24 @@ LobbyCommunication.prototype.playerExitsGame = function(playerID){
     var player = this.getPlayerByID(playerID);
     console.log("PlayerName: "+player.name);
     
-    //remove player from room
+    //remove every player from room
     var room = player.room;
+
+    //remove everyone from game
     if(room != undefined){
-        var index = room.people.indexOf(player);
-        if(index > -1) room.people.splice(index, 1);  
-    } 
+        for(var i in room.people){
+            room.people[i].room = null;
+            room.people[i].inGame = false;
+            room.people[i].status = "Ready";
+        }
+        room.people = [];
+    }
 
     //remove room
     if(room.people.length == 0){
         index = this.rooms.indexOf(room);
         if(index > -1) this.rooms.splice(index, 1);  
     }
-
-    player.inGame = false;
-    player.status = "Ready";
 };
 
 

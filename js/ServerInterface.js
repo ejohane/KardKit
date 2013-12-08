@@ -15,7 +15,7 @@ var ServerInterface = function () {
      };
 
 	_public.setCards = function(socket, clientID, playerID, card){
-		socket.sockets.socket(clientID).emit("addCard, playerID, card);
+		socket.sockets.socket(clientID).emit("addCard", playerID, card);
 	};
 
 	_public.setCardCounts = function(socket, clientID, playerID, num){
