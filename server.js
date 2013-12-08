@@ -336,32 +336,32 @@ socket.on('connection', function (client) {
             ratSlapGame.setup();
 	    var pOrder = ratSlapGame.allPlayers;
 	    
-	    serverInterface.setPlayerPosition(pOrder[0].id,pOrder[0]);
-	    serverInterface.setPlayerPosition(pOrder[0].id,pOrder[1]);
-	    serverInterface.setPlayerPosition(pOrder[0].id,pOrder[2]);
-	    serverInterface.setPlayerPosition(pOrder[0].id,pOrder[3]);
-	    serverInterface.setPlayerPosition(pOrder[1].id,pOrder[1]);
-	    serverInterface.setPlayerPosition(pOrder[1].id,pOrder[2]);
-	    serverInterface.setPlayerPosition(pOrder[1].id,pOrder[3]);
-	    serverInterface.setPlayerPosition(pOrder[1].id,pOrder[0]);
-	    serverInterface.setPlayerPosition(pOrder[2].id,pOrder[2]);
-	    serverInterface.setPlayerPosition(pOrder[2].id,pOrder[3]);
-	    serverInterface.setPlayerPosition(pOrder[2].id,pOrder[0]);
-	    serverInterface.setPlayerPosition(pOrder[2].id,pOrder[1]);
-	    serverInterface.setPlayerPosition(pOrder[3].id,pOrder[3]);
-	    serverInterface.setPlayerPosition(pOrder[3].id,pOrder[0]);
-	    serverInterface.setPlayerPosition(pOrder[3].id,pOrder[1]);
-	    serverInterface.setPlayerPosition(pOrder[3].id,pOrder[2]);	    
+	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[0].name);
+	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[1].name);
+	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[2].name);
+	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[3].name);
+	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[1].name);
+	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[2].name);
+	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[3].name);
+	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[0].name);
+	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[2].name);
+	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[3].name);
+	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[0].name);
+	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[1].name);
+	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[3].name);
+	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[0].name);
+	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[1].name);
+	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[2].name);	    
 
 	    var rts = player.room;
-	    for (var i in player.room.people){
+	    for (var i in rts.people){
 		for (var j = 0; j < 4; j++){
-			serverInterface.setCards(player.room.people[i],j,[null, null]);
-		} 
+			serverInterface.setCards(socket,rts.people[i].gameID,j,[null, null]);
+			serverInterface.setCardCounts(socket,rts.people[i].gameID,j,13);
+		}
+		serverInterface.setActions(socket,rts.people[i].gameID, ratSlapGame.actionsToGive);
 	    }
         }
-
-
 
     });
 
@@ -402,8 +402,6 @@ socket.on('connection', function (client) {
             affectedGameRoom.getGame.slapAction(lobby.players[client.id]);
         }
     });
-
-
 
 });
 
