@@ -348,7 +348,7 @@ LobbyCommunication.prototype.playerExitsGame = function(playerID){
     } 
 
     //remove room
-    if(room.people.length == 0 || ){
+    if(room.people.length == 0){
         index = this.rooms.indexOf(room);
         if(index > -1) this.rooms.splice(index, 1);  
     }
