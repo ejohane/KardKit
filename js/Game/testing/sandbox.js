@@ -5,12 +5,16 @@ var sandbox = function () {
         // remove and parse text input
         cardText = cardText.replace(/"/g , "");
         cardText = cardText.replace(/'/g , "");
+        cardText = $.trim(cardText);
         //parse text into card object
         cardText = cardText.substr(1, cardText.length - 2); // strip the brackets on this card
         var cardParams = cardText.split(",");
+        cardParams[0] = $.trim(cardParams[0]);
+        cardParams[1] = $.trim(cardParams[1]);
         if(cardParams[0] === "null"){ 
             cardParams = [null,null]; 
         }
+
         return [cardParams[0], cardParams[1]];        
     }
     
