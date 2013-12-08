@@ -66,8 +66,8 @@ var clientInterface = function () {
         guiInterface.receiveOutboxConfirmation(yourMessage);  
     };
     _public.closeGameSession = function(){
-        alert('hre');
-        window.location.href = "kardkit.us:8127";
+        alert("The server must close this game session due to a player disconnect. Redirecting to lobby...");
+        window.location = "./home.html";
     };
 
     /* outgoing
@@ -159,6 +159,6 @@ socket.emit("gameLoaded", $.cookie("KardKit-username"));
     socket.on("receiveOutboxConfirmation", function(yourMessage) {
         clientInterface.receiveOutboxConfirmation(yourMessage);
     });
-    socket.on("closeGameSession", function(url) {
+    socket.on("closeGameSession", function() {
         clientInterface.closeGameSession();
     });
