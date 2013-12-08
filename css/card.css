@@ -34,13 +34,10 @@
     top:  0.250em;
 }
 
-.card > div.front > .face {
-  border: 1px solid #000000;
+.card > div.front > .faceImg {
   position: absolute;
-  left: 0.50em;
-  top:  0.45em;
-  width:  2.6em;
-  height: 4.0em;
+  left: 0.60em;
+  top:  0.25em;
 }
 
 .card > div.front > .spotA1 { position: absolute; left: 0.60em; top: 0.5em; }

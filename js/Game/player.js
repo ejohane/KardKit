@@ -73,13 +73,13 @@ var generateHand = function () {
 "<div class=\"spotC4\">" + suit + "</div>" + 
 "<div class=\"spotC5\">" + suit + "</div>";
             case "J":
-                return "<div class=\"spotB3\">" + "JACK" + "</div>";
+                return "<img src=\"../../img/jack.png\" class=\"faceImg\">";
             case "Q":
-                return "<div class=\"spotB3\">" + "QUEEN" + "</div>";
+                return "<img src=\"../../img/queen.png\" class=\"faceImg\">";
             case "K":
-                return "<div class=\"spotB3\">" + "KING" + "</div>";
+                return "<img src=\"../../img/king.png\" class=\"faceImg\">";
             case "A":
-                return "<div class=\"spotB3\">" + "ACE" + "</div>";
+                return "<div class=\"ace\">" + suit + "</div>";
             default:
                 alert("this is not correct suit generation!");
                 return "";                
