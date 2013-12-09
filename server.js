@@ -373,6 +373,11 @@ socket.on('connection', function (client) {
         }
 
         if(player.room.people.length == 4){
+            //set game room to closed
+            player.room.status = "Closed";
+            var invitedRoom = lobby.getRoom(player.room+"_Invited");
+            socket.sockets.in(invitedRoom.name).emit('playerInvited', lobby.players[client.id].name +" has invited you to play a game!");
+
             ratSlapGame.setup();
     	    var pOrder = ratSlapGame.allPlayers;
     	    

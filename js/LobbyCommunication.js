@@ -298,10 +298,10 @@ LobbyCommunication.prototype.getGameRoomList = function(){
         }else if(room.status == "Closed"){
             col = "red";
         }
-        table += "<td><font color=\"" + col + "\"> " + room.status + "</font></td>" ;
+        table += "<td><font color=\"" + col + "\"> " + room.status + "</font></td></tr>" ;
 
-        var joinID = "join_" + room.name;
-        table += "<td> <button type=\"button\" class=\"btn btn-primary btn-sm join-from-gameList\" id=\"" + joinID + "\" >Join</button> </td>	</tr>"
+        //var joinID = "join_" + room.name;
+        //table += "<td> <button type=\"button\" class=\"btn btn-primary btn-sm join-from-gameList\" id=\"" + joinID + "\" >Join</button> </td>	</tr>"
     }
     return table;
 };

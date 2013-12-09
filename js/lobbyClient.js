@@ -165,6 +165,12 @@ $(document).ready(function() {
        window.open("/game.html", "_blank"); 
     });
 
+    //close invited to game prompt if game is full
+    socket.on("dismissInvite", function(){
+        $('#playerInvited').modal("hide");
+        $('#playerInvited-Pswd').modal("hide");
+    });
+
 
 
 
