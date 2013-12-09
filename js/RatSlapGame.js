@@ -149,15 +149,11 @@ RatSlapGame.prototype.playAction = function(){
 			} else if (this.digChances === 0){
 				if (this.diagnosticLogs === true) console.log("Path 2.2");
 				this.winPile(this.hopefulPlayer);
-				//this.hopefulPlayer = this.currentPlayer; // isn't this correct? //No, it isn't.
 				this.pastPlayer = this.currentPlayer;
 				this.currentPlayer = this.hopefulPlayer; /* This sets the current player number to what the hopeful player number was,
 															since when the hopeful player wins the pile, they also become the current player.
 															*/
 				this.enablePlay(this.currentPlayer);
-				/*console.log("Current player: " + this.currentPlayer);
-				console.log("Hopeful player: " + this.hopefulPlayer);
-				console.log("Hopeful player's hand: " + this.playerHands[this.hopefulPlayer].cards);*/
 			} else {
 				if (this.diagnosticLogs === true) console.log("Path 2.3");
 				this.enablePlay(this.currentPlayer);
