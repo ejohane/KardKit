@@ -134,7 +134,7 @@ RatSlapGame.prototype.playAction = function(){
 					this.enablePlay(this.currentPlayer);
 			} else {
 				if (this.diagnosticLogs === true) console.log("Path 1.2");
-				//this.advanceCurrentPlayer(true);
+				this.advanceCurrentPlayer(true);
 				this.enablePlay(currentPlayer);
 			}
 		} else {
