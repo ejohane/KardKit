@@ -34,6 +34,8 @@ function RatSlapGame(room){
 	this.pastPlayer = -1;
 	this.hopefulPlayer = -1;
 	this.digChances = 0;
+	this.won = false;
+	this.winner = null;
 	this.diagnosticLogs = false;
 	this.done = false; // for diagnostic
 
@@ -115,9 +117,8 @@ RatSlapGame.prototype.playAction = function(){
 	slapAllowed = true;
 	if (this.diagnosticLogs === true) console.log(this.currentPlayer);
 	if (this.currentPlayer === this.pastPlayer && !this.isSlappable()){
-		//win
-		console.log("You WIN!!!!!");
-		this.done = true;
+		this.won = true;
+		this.winner = this.allPlayers[currentPlayer];
 	} else {
 		if (this.digChances === 0){
 			if (this.diagnosticLogs === true) console.log("Path 1");
@@ -307,6 +308,14 @@ RatSlapGame.prototype.isSlappable = function() {
 		return true;
 	}
 	return false;
+}
+
+RatSlapGame.prototype.winner = function() {
+	if (this.won){
+		return this.winner;
+	} else {
+		return null;
+	}
 }
 
 module.exports = RatSlapGame;
