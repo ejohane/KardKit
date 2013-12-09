@@ -347,16 +347,30 @@ socket.on('connection', function (client) {
 
         //add player to the rat slap game
         ratSlapGame.allPlayers.push(player);
+            for(var i = 0; i< ratSlapGame.allPlayers.length; i++){
+                console.log("player: "+ratSlapGame.allPlayers[i].name);
+            }
+        
 
         //drawing
         serverInterface.setUIFramework(client, ratSlapGame.completeActionlistNames,ratSlapGame.completeActionlistLabels,ratSlapGame.completeActionlistKeyCodes,ratSlapGame.completeActionlistKeyLabels);
-        serverInterface.addPlayer(client, player.name);
-        for(var i in game.allPlayers{
-            var currentPlayer = game.allPlayers[i];
 
+        //draw this player's view
+        serverInterface.addPlayer(socket, client.id, player.name);
+        for(var i = 0; i< ratSlapGame.allPlayers.length; i++){
+            var currentPlayer = ratSlapGame.allPlayers[i];
+            if(currentPlayer.name != player.name){
+                serverInterface.addPlayer(socket, client.id, currentPlayer.name);
+            }
         }
 
-
+        //draw everyone elses view
+        for(var i = 0; i< ratSlapGame.allPlayers.length; i++){
+            var currentPlayer = ratSlapGame.allPlayers[i];
+            if(currentPlayer.name != player.name){
+                serverInterface.addPlayer(socket, currentPlayer.gameID, player.name);
+            }
+        }
 
         if(player.room.people.length == 4){
             ratSlapGame.setup();

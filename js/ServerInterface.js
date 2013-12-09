@@ -10,8 +10,12 @@ var ServerInterface = function () {
 	socket.sockets.socket(clientID).emit("setActions", actions);
      };
 
-    _public.addPlayer = function(client, playerName){
-        client.emit("addPlayer", playerName);
+    _public.addPlayer = function(socket, clientID, playerName, playerList){
+        socket.sockets.socket(clientID).emit("addPlayer",playerName);
+    };
+
+    _public.removePlayer = function(socket, clientID, index){
+        socket.sockets.socket(clientID).emit("removePlayer",index);
     };
 
      _public.play = function(socket, gameRoom, topCard){
