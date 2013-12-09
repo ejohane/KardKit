@@ -463,7 +463,7 @@ socket.on('connection', function (client) {
             //update cards
             for(var i in ratSlap.allPlayers){
                 if(ratSlap.allPlayers[i].name == player.name){
-                    var cards = ratSlap.playerHands[i].cards.length;
+                    var cards = ratSlap.playerHands[i].cards[0];
                     break;
                 }
             }
