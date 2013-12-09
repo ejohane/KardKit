@@ -213,10 +213,9 @@ socket.on('connection', function (client) {
                 }
             //if player exits game
             }else if(lobby.players[i].gameID == client.id){
-                
+                socket.sockets.in(lobby.players[i].room).emit('closeGameSession');
                 console.log("Player exiting game");
                 lobby.playerExitsGame(client.id);
-                socket.sockets.in(room).emit('closeGameSession');
                 break;
             }
         }
