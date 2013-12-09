@@ -392,6 +392,7 @@ socket.on('connection', function (client) {
                 var currentPlayer = ratSlapGame.allPlayers[i];
                 for(var j in ratSlapGame.allPlayers){
                     serverInterface.setCards(socket, currentPlayer.gameID, j, [null, null]);
+                    console.log("HAND COUNT: "+ratSlapGame.playerHands[j].length);
                     serverInterface.setCardCounts(socket, currentPlayer.gameID,j, ratSlapGame.playerHands[j].length);
                 }
                 serverInterface.setActions(socket,currentPlayer.gameID, ratSlapGame.actionsToGive);

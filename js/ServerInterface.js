@@ -40,7 +40,7 @@ var ServerInterface = function () {
         for(var i in ratSlap.allPlayers){
             var currentPlayer = ratSlap.allPlayers[i];
             for(var j in ratSlap.allPlayers){
-                var cards = ratSlap.playerHands[j].numCards;
+                var cards = ratSlap.playerHands[j].length;
                 if(cards < 1){
                     this.setCardCounts(socket, currentPlayer.gameID, j, 0);
                 }else{
@@ -56,7 +56,7 @@ var ServerInterface = function () {
             for(var i = 0; i < ratSlapGame.allPlayers.length ; i++){
                 var currentPlayer = ratSlapGame.allPlayers[i];
                     var playerActions = [];
-                    for(var j in ratSlap.allPlayers){
+                    for(var j in ratSlapGame.allPlayers){
                         playerActions.push(ratSlapGame.slapEnabledArray[j]);
                         playerActions.push(ratSlapGame.playEnabledArray[j]);
                         playerActions.push(1);
