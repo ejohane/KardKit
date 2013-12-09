@@ -35,7 +35,7 @@ var ServerInterface = function () {
 	};
 
 
-    _public.updateCardCount = function(socket, ratSlap){
+    _public.updateCardCountFromRatSlap = function(socket, ratSlap){
         //draw their amount of cards
         for(var i in ratSlap.allPlayers){
             var currentPlayer = ratSlap.allPlayers[i];
@@ -44,6 +44,24 @@ var ServerInterface = function () {
             }                
         }
     };
+
+    _public.updateActionsFromRatSlap = function(socket, ratSlapGame){
+        if(ratSlapGame != null){
+            //determine actions for each player
+            for(var i = 0; i < ratSlapGame.allPlayers.length ; i++){
+                var currentPlayer = ratSlapGame.allPlayers[i];
+                    var playerActions = [];
+                    for(var j in ratSlap.allPlayers){
+                        playerActions.push(ratSlapGame.slapEnabledArray[j]);
+                        playerActions.push(ratSlapGame.playEnabledArray[j]);
+                        playerActions.push(1);
+                        this.setActions(socket,currentPlayer.gameID, playerActions);
+                    } 
+                        
+            }    
+        }
+        
+    }
 
 
      return _public;

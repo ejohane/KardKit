@@ -450,12 +450,16 @@ socket.on('connection', function (client) {
         if (affectedGameRoom !== null){
             var ratSlap = affectedGameRoom.getGame();
             ratSlap.playAction();
-
-
-            //serverInterface.play(socket, affectedGameRoom, affectedGameRoom.game.topCard());
+            
+            //update play pile
 
             //update cards
-            serverInterface.updateCardCount(socket, ratSlap);
+            serverInterface.updateCardCountFromRatSlap(socket, ratSlap);
+
+            //update actions
+            serverInterface.updateActionsFromRatSlap(socket, ratSlap);
+
+
         }
     });
 
