@@ -54,7 +54,7 @@ var ServerInterface = function () {
                         playerActions.push(ratSlapGame.playEnabledArray[i]);
                         playerActions.push(1);
                         console.log(playerActions);
-                        this.setActions(socket,ratSlapGame.allPlayers[i].clientID, playerActions);
+                        this.setActions(socket,ratSlapGame.allPlayers[i].gameID, playerActions);
             }    
         }
         
