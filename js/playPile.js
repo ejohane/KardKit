@@ -11,9 +11,9 @@ util.inherits(PlayPile, CardHolder);
 //in the destination holder
 PlayPile.super_.prototype.empty = function(destination) {
 	var temp;
-	for (var i = 0; i < this.length; i++) {
+	for (var i = 0; i < this.cards.length; i++) {
 		temp = this.cards.pop();
-		this.numCards = numCards - 1;
+		this.numCards = this.numCards - 1;
 		destination.insert(temp);
 	}
 }
