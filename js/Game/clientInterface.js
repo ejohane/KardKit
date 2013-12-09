@@ -46,6 +46,12 @@ var clientInterface = function () {
     _public.addCard = function(playerId,card){
         addCard(playerId, card);
     };
+	_public.play = function(card){
+        guiInterface.play(card);
+    };
+	_public.emptyPile = function(){
+        guiInterface.emptyPile();
+    };	
     _public.draw = function(playerId, card){
         addCard(playerId, card);     
     };
@@ -141,6 +147,12 @@ socket.emit("gameLoaded", $.cookie("KardKit-username"));
     socket.on("addCard", function(playerId,card){
         clientInterface.addCard(playerId, card);
     });
+	socket.on("play", function(card){
+        clientInterface.play(card);
+    });
+	socket.on("emptyPile", function(){
+        clientInterface.emptyPile();
+    });	
     socket.on("draw", function(playerId, card){
         clientInterface.draw(playerId, card);
     });

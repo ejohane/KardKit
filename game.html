@@ -5,12 +5,14 @@
 		<link href="css/ui.css" rel="stylesheet"></link>
 		<link href="css/hand.css" rel="stylesheet"></link>
 		<link href="css/card.css" rel="stylesheet"></link>
+		<link href="css/cardPile.css" rel="stylesheet"></link>
 		<link href="css/testing/sandbox.css" rel="stylesheet"></link>
 		<script src="js/Game/jquery-2-0-3.min.js" type="text/javascript"></script>
         <script src="js/jquery.cookie.js"></script>
 		<script src="socket.io/socket.io.js" type="text/javascript"></script>
 	</head>
 	<body>
+		<div id="cardPile"></div>
 		<div id="actionbar"></div>
 		<div id="chat">
 			<div id="inbox"></div>
@@ -80,6 +82,19 @@
         <input type="textbox" value="card" />
         </div>
     </div>
+    <div id="play">
+        <span>Play Card</span>
+        <div class="go">Go</div>
+        <div class="args">
+        <input type="textbox" value="card" />
+        </div>
+    </div>
+    <div id="emptyPile">
+        <span>Empty Pile</span>
+        <div class="go">Go</div>
+        <div class="args">        
+        </div>
+    </div>	
     <div id="removeCard">
         <span>Remove Card</span>
         <div class="go">Go</div>
@@ -144,6 +159,7 @@
 		<script src="js/Game/actionbar.js" type="text/javascript"></script>
 		<script src="js/Game/actionRouter.js" type="text/javascript"></script>
 		<script src="js/Game/player.js" type="text/javascript"></script>
+		<script src="js/Game/cardPile.js" type="text/javascript"></script>
 		<script src="js/Game/guiInterface.js" type="text/javascript"></script>
 		<script src="js/Game/cardSelection.js" type="text/javascript"></script>
 		<script src="js/Game/events_click.js" type="text/javascript"></script>

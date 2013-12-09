@@ -392,7 +392,7 @@ socket.on('connection', function (client) {
                 var currentPlayer = ratSlapGame.allPlayers[i];
                 for(var j in ratSlapGame.allPlayers){
                     serverInterface.setCards(socket, currentPlayer.gameID, j, [null, null]);
-                    serverInterface.setCardCounts(socket, currentPlayer.gameID,j, ratSlapGame.playerHands[j].numCards);
+                    serverInterface.setCardCounts(socket, currentPlayer.gameID,j, ratSlapGame.playerHands[j].length);
                 }
                 serverInterface.setActions(socket,currentPlayer.gameID, ratSlapGame.actionsToGive);
                 
@@ -446,7 +446,7 @@ socket.on('connection', function (client) {
     ********************** Rat Slap Functions ************************
     **********************************************************************/
  client.on("r_play", function(){
-        var affectedGameRoom = lobby.players[client.id].room
+        var affectedGameRoom = lobby.players[client.id].room;
         if (affectedGameRoom !== null){
             var ratSlap = affectedGameRoom.getGame();
             ratSlap.playAction();
@@ -464,9 +464,18 @@ socket.on('connection', function (client) {
     });
 
     client.on("r_slap", function(){
-        var affectedGameRoom = lobby.getRoom(lobby.players[client.id].getRoomName ,"gameRoom");
+        vvar affectedGameRoom = lobby.players[client.id].room;
         if (affectedGameRoom !== null){
-            affectedGameRoom.getGame.slapAction(lobby.players[client.id]);
+            var ratSlap = affectedGameRoom.getGame();
+
+            var slap = ratSlap.slapAction(lobby.players[client.id]);
+            
+            if(slap == false){
+
+            }else{
+                
+            }
+
         }
     });
 

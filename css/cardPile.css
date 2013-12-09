@@ -1,0 +1,2 @@
+#cardPile{ height: 155px; position: absolute; top: 0.25em; right: 7.75em;}
+#cardPile > .card{margin-left:0;}

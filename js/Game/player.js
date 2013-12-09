@@ -145,6 +145,9 @@ var generateHand = function () {
     _public.setHandCount = function(playerId, handCount){
 	$("#playerSpot_" + playerId + " > .playerHand").html("count: " + handCount);
     };
+	_public.generateCardHTML = function(card){
+		return generateCardHTML(card[0],card[1]);
+	};
     
     return _public;    
 }();
