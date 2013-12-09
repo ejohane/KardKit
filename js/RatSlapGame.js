@@ -298,7 +298,7 @@ RatSlapGame.prototype.isSlappable = function() {
 		return true;
 	}
 	// Bottoms Up: Top card and the bottom card match rank.
-	if (first === playPile[0].properties.rank) {
+	if (first === playPile[0].properties.rank && playPile.length > 1) {
 		return true;
 	}
 	// Tens: When consecutive cards (or cards with a face card in between) total 10 (e.g. 4, 6 or 3, K, 7)
