@@ -287,7 +287,7 @@ socket.on('connection', function (client) {
         console.log(lobby.players[client.id].invitedGame);
         var player = lobby.players[client.id];
         //Remove player from invited room
-        client.leave(player.invitedGame.name);
+        client.leave(player.invitedGame);
         //Remove room if empty
         lobby.checkEmptyInviteRoom(player.invitedGame);
         //Join Created Room
@@ -374,17 +374,8 @@ socket.on('connection', function (client) {
         }
 
         if(player.room.people.length == 4){
-            //set game room to closed
-            player.room.status = "Closed";
-            socket.sockets.in(lobby.lobbyRoom).emit('updatedGamesList', lobby.getGameRoomList());
-            var roomName = player.room.name+"_Invited";
-            var invitedRoom = lobby.getRoom(roomName, "inviteRoom");
-            if(invitedRoom != null){
-                socket.sockets.in(invitedRoom.name).emit('dismissInvite');    
-            }
-            
-
             ratSlapGame.setup();
+<<<<<<< HEAD
             
 
             //draw everyone's cards face down and enable their amount of cards
@@ -409,6 +400,37 @@ socket.on('connection', function (client) {
             }
 
 
+=======
+    	    var pOrder = ratSlapGame.allPlayers;
+    	    
+
+
+    	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[0].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[1].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[2].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[3].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[1].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[2].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[3].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[0].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[2].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[3].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[0].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[1].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[3].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[0].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[1].name);
+    	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[2].name);	    
+
+    	    var rts = player.room;
+    	    for (var i in rts.people){
+        		for (var j = 0; j < 4; j++){
+        			serverInterface.setCards(socket,rts.people[i].gameID,j,[null, null]);
+        			serverInterface.setCardCounts(socket,rts.people[i].gameID,j,13);
+        		}
+		          serverInterface.setActions(socket,rts.people[i].gameID, ratSlapGame.actionsToGive);
+            }
+>>>>>>> 4da87ee40f9428e95b0c6aa4105484175b937c1f
 	    
         }
 
@@ -453,9 +475,6 @@ socket.on('connection', function (client) {
         if (affectedGameRoom !== null){
             affectedGameRoom.getGame.playAction();
             serverInterface.play(socket, affectedGameRoom, affectedGameRoom.game.topCard());
-
-            //update amount of cards
-
         }
     });
 

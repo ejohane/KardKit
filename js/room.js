@@ -8,7 +8,7 @@ function Room(name, id, owner) {
   this.id = id;
   this.owner = owner;
   this.people = [];
-  this.peopleLimit = 4;
+  this.peopleLimit = 28;
   this.status = "Open";
   this.private = false;
   this.password;

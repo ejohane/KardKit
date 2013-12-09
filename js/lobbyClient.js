@@ -16,7 +16,7 @@ $(document).ready(function() {
         $('#myModal').modal("show");
     }else{
         socket.emit("addExisistingPlayerToLobby",$.cookie("KardKit-username") );
-        playerName = $.cookie("KardKit-username");
+        playerName = $('#username').val();
         $('#usernameTitle').append($.cookie("KardKit-username"));
         $("#createUser").popover('hide');
         $('.LobbyPage').show();
@@ -163,12 +163,6 @@ $(document).ready(function() {
 
     $('.btn btn-primary btn-sm join-from-gameList').click(function(){
        window.open("/game.html", "_blank"); 
-    });
-
-    //close invited to game prompt if game is full
-    socket.on("dismissInvite", function(){
-        $('#playerInvited').modal("hide");
-        $('#playerInvited-Pswd').modal("hide");
     });
 
 
