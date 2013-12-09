@@ -206,14 +206,14 @@ RatSlapGame.prototype.enableSlap = function(player){
 //Called internally. Advances the current player, but loops when it would be 4.
 RatSlapGame.prototype.advanceCurrentPlayer = function(shouldSkip){
 	var temp = this.currentPlayer;
-	var isSet = false;
+	var handIsEmpty = true;
 
-	while (!isSet){
+	while (handIsEmpty){
 		this.currentPlayer++;
 		if (this.currentPlayer >= 4){
 			this.currentPlayer = 0;
 		}
-		isSet = !this.playerHands[this.currentPlayer].isEmpty
+		handIsEmpty = this.playerHands[this.currentPlayer].isEmpty
 	}
 
 	this.pastPlayer = temp;
