@@ -6,7 +6,7 @@ function CardHolder() {
 };
 
 CardHolder.prototype.isEmpty = function() {
-	if (this.numCards == 0)
+	if (this.cards.length == 0)
 		return true;
 	return false;
 }
@@ -15,14 +15,12 @@ CardHolder.prototype.isEmpty = function() {
 CardHolder.prototype.take = function(index) {
 	var temp = this.cards[i];
 	this.cards.splice(index, 1);
-	this.numCards = this.numCards - 1;
 	return temp;
 }
 
 //puts a card into the end of the cardholder
 CardHolder.prototype.insert = function(card) {
 	this.cards.push(card);
-	this.numCards = this.numCards + 1;
 }
 
 //randomly swaps 2 cards places, does this for the total

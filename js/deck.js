@@ -3,7 +3,6 @@ var util = require("util");
 
 function Deck(cardholder) {
 	this.cards = cardholder.cards;
-	this.numCards = cardholder.numCards;
 }
 util.inherits(Deck, CardHolder);
 
@@ -11,7 +10,6 @@ util.inherits(Deck, CardHolder);
 //puts it in the destination holder
 Deck.super_.prototype.draw = function(destination) {
 	var temp = this.cards.splice(0, 1)[0];
-	this.numCards = this.numCards - 1;
 	destination.insert(temp);
 }
 
