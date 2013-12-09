@@ -452,6 +452,13 @@ socket.on('connection', function (client) {
             ratSlap.playAction();
             
             //update play pile
+            var player = lobby.getPlayerByID(client.id);
+            console.log("PLAYER: " + player);
+            for(var i in ratSlap.allPlayers){
+                if(ratSlap.allPlayers[i].name == player.name){
+                    serverInterface.play(socket, affectedGameRoom, ratSlap.playerHands[i].cards[0]);
+                }
+            }
 
             //update cards
             serverInterface.updateCardCountFromRatSlap(socket, ratSlap);
