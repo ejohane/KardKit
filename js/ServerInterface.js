@@ -47,7 +47,6 @@ var ServerInterface = function () {
 
 
      return _public;
-    }
 }();
 
 module.exports = ServerInterface;
