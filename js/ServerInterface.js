@@ -35,8 +35,19 @@ var ServerInterface = function () {
 	};
 
 
-    
+    _public.updateCardCount = function(socket, ratSlap){
+        //draw their amount of cards
+        for(var i in ratSlap.allPlayers){
+            var currentPlayer = ratSlap.allPlayers[i];
+            for(var j in ratSlap.allPlayers){
+                this.setCardCounts(socket, currentPlayer.gameID, j, ratSlap.playerHands[j].numCards);
+            }                
+        }
+    };
+
+
      return _public;
+    }
 }();
 
 module.exports = ServerInterface;

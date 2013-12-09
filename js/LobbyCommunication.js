@@ -405,6 +405,24 @@ LobbyCommunication.prototype.addExisistingPlayerToLobby = function(username, cli
 
 };
 
+LobbyCommunication.prototype.updateClientID = function(username, clientID){
+    var player = this.getPlayer(username);
+    if(player != null) {
+        //updated socket id for player
+        delete this.players[player.id];
+        player.id = clientID;
+        this.players[clientID] = player;
+        //update player in the lobby
+            for(var i in this.rooms[0].people){
+                if(this.rooms[0].people[i].name == username){
+                    this.rooms[0].people[i] = player;
+                }
+            }
+    }
+};
+
+
+
 
 
 module.exports = LobbyCommunication;

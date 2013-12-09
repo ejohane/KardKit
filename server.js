@@ -332,6 +332,7 @@ socket.on('connection', function (client) {
         var player = lobby.getPlayer(username);
         if(player != null){
             player.gameID = client.id;
+            lobby.updateClientID(username, client.id);
             client.join(player.room);
         }else{
             console.log("WHYYYYYY");
@@ -408,35 +409,6 @@ socket.on('connection', function (client) {
             }
 
 
-    	    var pOrder = ratSlapGame.allPlayers;
-    	    
-
-
-    	    /*serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[0].name);
-    	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[1].name);
-    	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[2].name);
-    	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[3].name);
-    	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[1].name);
-    	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[2].name);
-    	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[3].name);
-    	    serverInterface.setPlayerPosition(socket,pOrder[1].gameID,pOrder[0].name);
-    	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[2].name);
-    	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[3].name);
-    	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[0].name);
-    	    serverInterface.setPlayerPosition(socket,pOrder[2].gameID,pOrder[1].name);
-    	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[3].name);
-    	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[0].name);
-    	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[1].name);
-    	    serverInterface.setPlayerPosition(socket,pOrder[3].gameID,pOrder[2].name);*/	    
-
-    	    var rts = player.room;
-    	    for (var i in rts.people){
-        		for (var j = 0; j < 4; j++){
-        			serverInterface.setCards(socket,rts.people[i].gameID,j,[null, null]);
-        			serverInterface.setCardCounts(socket,rts.people[i].gameID,j,13);
-        		}
-		          serverInterface.setActions(socket,rts.people[i].gameID, ratSlapGame.actionsToGive);
-            }
 	    
         }
 
@@ -476,6 +448,7 @@ socket.on('connection', function (client) {
     ********************** Rat Slap Functions ************************
     **********************************************************************/
  client.on("r_play", function(){
+        console.log(lobby.players[client.id].name);
         var affectedGameRoom = lobby.getRoom(lobby.players[client.id].getRoomName ,"gameRoom");
         if (affectedGameRoom !== null){
             affectedGameRoom.getGame.playAction();
