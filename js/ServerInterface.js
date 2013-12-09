@@ -50,8 +50,8 @@ var ServerInterface = function () {
             //determine actions for each player
             for(var i = 0; i < ratSlapGame.allPlayers.length ; i++){
                         var playerActions = [];
-                        playerActions.push(ratSlapGame.slapEnabledArray[j]);
-                        playerActions.push(ratSlapGame.playEnabledArray[j]);
+                        playerActions.push(ratSlapGame.slapEnabledArray[i]);
+                        playerActions.push(ratSlapGame.playEnabledArray[i]);
                         playerActions.push(1);
                         console.log(playerActions);
                         this.setActions(socket,ratSlapGame.allPlayers[i].clientID, playerActions);

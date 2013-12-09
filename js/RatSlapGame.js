@@ -207,17 +207,23 @@ RatSlapGame.prototype.enableSlap = function(player){
 RatSlapGame.prototype.advanceCurrentPlayer = function(shouldSkip){
 	var temp = this.currentPlayer;
 	var handIsEmpty = true;
-
-	if(shouldSkip){
+	
+	if (shouldSkip){
 		while (handIsEmpty){
 			this.currentPlayer++;
+			
 			if (this.currentPlayer >= 4){
 				this.currentPlayer = 0;
 			}
-			handIsEmpty = this.playerHands[this.currentPlayer].isEmpty
-		}	
-	}
 
+			handIsEmpty = this.playerHands[this.currentPlayer].isEmpty();
+		}	
+	} else {
+		this.currentPlayer++;
+		if (this.currentPlayer >= 4){
+			this.currentPlayer = 0;
+		}
+	}
 
 	this.pastPlayer = temp;
 }
