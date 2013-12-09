@@ -126,11 +126,11 @@ RatSlapGame.prototype.playAction = function(){
 					this.slapAllowed = false;
 					this.digChances = 3;
 					this.hopefulPlayer = this.currentPlayer;
-					//this.advanceCurrentPlayer(true);
+					this.advanceCurrentPlayer(true);
 					this.enablePlay(this.currentPlayer);
 			} else {
 				console.log("Path 1.2");
-				//this.advanceCurrentPlayer(true);
+				this.advanceCurrentPlayer(true);
 				this.enablePlay(currentPlayer);
 			}
 		} else {
@@ -148,6 +148,7 @@ RatSlapGame.prototype.playAction = function(){
 				console.log("Path 2.2");
 				this.winPile(this.hopefulPlayer);
 				//this.hopefulPlayer = this.currentPlayer; // isn't this correct? //No, it isn't.
+				this.pastPlayer = this.currentPlayer;
 				this.currentPlayer = this.hopefulPlayer; /* This sets the current player number to what the hopeful player number was,
 															since when the hopeful player wins the pile, they also become the current player.
 															*/
