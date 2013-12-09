@@ -406,4 +406,5 @@ LobbyCommunication.prototype.addExisistingPlayerToLobby = function(username, cli
 };
 
 
+
 module.exports = LobbyCommunication;

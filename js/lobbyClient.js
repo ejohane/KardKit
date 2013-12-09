@@ -162,7 +162,7 @@ $(document).ready(function() {
     });
 
     $('.btn btn-primary btn-sm join-from-gameList').click(function(){
-       window.open("/gameUI/game.html", "_blank"); 
+       window.open("/game.html", "_blank"); 
     });
 
 

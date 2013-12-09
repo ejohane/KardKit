@@ -344,14 +344,26 @@ socket.on('connection', function (client) {
             player.room.setGame(ratSlapGame);
             console.log("RatSlapGame Created");
         }
-        console.log(player.room.people.length);
 
+        //add player to the rat slap game
+        ratSlapGame.allPlayers.push(player);
+
+        //drawing
         serverInterface.setUIFramework(client, ratSlapGame.completeActionlistNames,ratSlapGame.completeActionlistLabels,ratSlapGame.completeActionlistKeyCodes,ratSlapGame.completeActionlistKeyLabels);
+        serverInterface.addPlayer(client, player.name);
+        for(var i in game.allPlayers{
+            var currentPlayer = game.allPlayers[i];
+
+        }
+
+
 
         if(player.room.people.length == 4){
             ratSlapGame.setup();
     	    var pOrder = ratSlapGame.allPlayers;
     	    
+
+
     	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[0].name);
     	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[1].name);
     	    serverInterface.setPlayerPosition(socket,pOrder[0].gameID,pOrder[2].name);

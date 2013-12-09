@@ -10,6 +10,10 @@ var ServerInterface = function () {
 	socket.sockets.socket(clientID).emit("setActions", actions);
      };
 
+    _public.addPlayer = function(client, playerName){
+        client.emit("addPlayer", playerName);
+    };
+
      _public.play = function(socket, gameRoom, topCard){
         socket.sockets.in(gameRoom).emit("play", topCard);
      };
@@ -25,6 +29,8 @@ var ServerInterface = function () {
 	_public.setPlayerPosition = function(socket, clientID, playerName){
 		socket.sockets.socket(clientID).emit("addPlayer", playerName);
 	};
+
+
     
      return _public;
 }();
