@@ -262,10 +262,10 @@ RatSlapGame.prototype.getTrackingNumByPlayer = function(viewerName, targetName){
 	var target = -1;
 	var trackingNum = -1;
 	for (var i in this.allPlayers){
-		if (id1 = this.allPlayers[i].name){
+		if (viewerName === this.allPlayers[i].name){
 			viewer = i;
 		}
-		if (id2 = this.allPlayers[i].name){
+		if (targetName === this.allPlayers[i].name){
 			target = i;
 		}
 	}
