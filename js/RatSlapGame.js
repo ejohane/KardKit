@@ -66,7 +66,7 @@ RatSlapGame.prototype.setup = function(){
 	var tempPlayerCounter = 0;
 	while (tempPlayerHolder.length != 0){
 		var source1;
-		source1 = Math.floor(Math.random() * (tempPlayerHolder.length - 1));
+		source1 = Math.round(Math.random() * (tempPlayerHolder.length - 1));
 		if (source1 > -1){
 			this.allPlayers[tempPlayerCounter] = tempPlayerHolder[source1];
 			tempPlayerCounter++;
