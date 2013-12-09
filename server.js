@@ -464,7 +464,7 @@ socket.on('connection', function (client) {
     });
 
     client.on("r_slap", function(){
-        vvar affectedGameRoom = lobby.players[client.id].room;
+        var affectedGameRoom = lobby.players[client.id].room;
         if (affectedGameRoom !== null){
             var ratSlap = affectedGameRoom.getGame();
 
