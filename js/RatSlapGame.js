@@ -208,13 +208,16 @@ RatSlapGame.prototype.advanceCurrentPlayer = function(shouldSkip){
 	var temp = this.currentPlayer;
 	var handIsEmpty = true;
 
-	while (handIsEmpty){
-		this.currentPlayer++;
-		if (this.currentPlayer >= 4){
-			this.currentPlayer = 0;
-		}
-		handIsEmpty = this.playerHands[this.currentPlayer].isEmpty
+	if(shouldSkip){
+		while (handIsEmpty){
+			this.currentPlayer++;
+			if (this.currentPlayer >= 4){
+				this.currentPlayer = 0;
+			}
+			handIsEmpty = this.playerHands[this.currentPlayer].isEmpty
+		}	
 	}
+
 
 	this.pastPlayer = temp;
 }
