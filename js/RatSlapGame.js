@@ -216,7 +216,7 @@ RatSlapGame.prototype.advanceCurrentPlayer = function(shouldSkip){
 					this.currentPlayer = 0;
 				}
 			}
-			handIsEmpty = this.playerHands[this.currentPlayer].isEmpty
+			handIsEmpty = this.playerHands[this.currentPlayer].isEmpty();
 		}	
 
 
