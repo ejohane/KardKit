@@ -49,18 +49,12 @@ var ServerInterface = function () {
         if(ratSlapGame != null){
             //determine actions for each player
             for(var i = 0; i < ratSlapGame.allPlayers.length ; i++){
-                var currentPlayer = ratSlapGame.allPlayers[i];
-                    for(var j in ratSlapGame.allPlayers){
                         var playerActions = [];
                         playerActions.push(ratSlapGame.slapEnabledArray[j]);
                         playerActions.push(ratSlapGame.playEnabledArray[j]);
                         playerActions.push(1);
                         console.log(playerActions);
-                        this.setActions(socket,currentPlayer.gameID, playerActions);
-
-
-                    } 
-                        
+                        this.setActions(socket,ratSlapGame.allPlayers[i].clientID, playerActions);
             }    
         }
         
