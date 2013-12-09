@@ -128,7 +128,7 @@ RatSlapGame.prototype.playAction = function(){
 					this.slapAllowed = false;
 					this.digChances = 3;
 					this.hopefulPlayer = this.currentPlayer;
-					//this.advanceCurrentPlayer(true);
+					this.advanceCurrentPlayer(true);
 					this.enablePlay(this.currentPlayer);
 			} else {
 				if (this.diagnosticLogs === true) console.log("Path 1.2");
@@ -149,8 +149,11 @@ RatSlapGame.prototype.playAction = function(){
 			} else if (this.digChances === 0){
 				if (this.diagnosticLogs === true) console.log("Path 2.2");
 				this.winPile(this.hopefulPlayer);
-				this.hopefulPlayer = this.currentPlayer; // isn't this correct?
-				//this.currentPlayer = this.hopefulPlayer; // not this?
+				//this.hopefulPlayer = this.currentPlayer; // isn't this correct? //No, it isn't.
+				this.pastPlayer = this.currentPlayer;
+				this.currentPlayer = this.hopefulPlayer; /* This sets the current player number to what the hopeful player number was,
+															since when the hopeful player wins the pile, they also become the current player.
+															*/
 				this.enablePlay(this.currentPlayer);
 				/*console.log("Current player: " + this.currentPlayer);
 				console.log("Hopeful player: " + this.hopefulPlayer);
@@ -194,7 +197,7 @@ RatSlapGame.prototype.disablePlay = function(player){
 
 //Called internally. Takes the index number corresponding to the next player (aka currentPlayer)
 RatSlapGame.prototype.enablePlay = function(playerIndex){
-	this.playEnabledArray[this.player] = 1;
+	this.playEnabledArray[playerIndex] = 1;
 }
 
 //Called internally. Takes a player and enables the slap action for them
@@ -213,11 +216,10 @@ RatSlapGame.prototype.advanceCurrentPlayer = function(shouldSkip){
 	if (shouldSkip) {
 		if (this.playerHands[this.currentPlayer].isEmpty()){
 			console.log("hit");
-			//advanceCurrentPlayer(true);
-		} else {
-			this.pastPlayer = temp;
+			this.advanceCurrentPlayer(true);
 		}
 	}
+	this.pastPlayer = temp;
 }
 
 //Called internally. Takes the player index of the burned player.
