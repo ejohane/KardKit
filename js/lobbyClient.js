@@ -13,6 +13,7 @@ $(document).ready(function() {
     //---Hide main page and ask for username
     if($.cookie("KardKit-username") == null){
         $('.LobbyPage').hide();
+	playerName = $('#username').val();
         $('#myModal').modal("show");
     }else{
         socket.emit("addExisistingPlayerToLobby",$.cookie("KardKit-username") );
