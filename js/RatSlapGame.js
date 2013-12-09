@@ -263,15 +263,15 @@ RatSlapGame.prototype.getTrackingNumByPlayer = function(viewerName, targetName){
 	var viewer = -1;
 	var target = -1;
 	var trackingNum = -1;
-	for (var i in allPlayers){
-		if (id1 = allPlayers[i].name){
+	for (var i in this.allPlayers){
+		if (id1 = this.allPlayers[i].name){
 			viewer = i;
 		}
-		if (id2 = allPlayers[i].name){
+		if (id2 = this.allPlayers[i].name){
 			target = i;
 		}
 	}
-	trackingNum = trackingPlayersArray[viewer][target];
+	trackingNum = this.trackingPlayersArray[viewer][target];
 }
 
 // Called internally. Checks against all the winning conditions for slapping the pile.
