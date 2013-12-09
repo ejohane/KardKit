@@ -19,7 +19,7 @@ var ServerInterface = function () {
     };
 
      _public.play = function(socket, gameRoom, topCard){
-        socket.sockets.in(gameRoom).emit("play", [topCard.properties.rank,.toString topCard.properties.suit]);
+        socket.sockets.in(gameRoom).emit("play", [topCard.properties.rank.toString(), topCard.properties.suit]);
      };
 
 	_public.setCards = function(socket, clientID, playerID, cards){
