@@ -53,8 +53,8 @@ function RatSlapGame(room){
 	//Tracking player mapping
 	this.trackingPlayersArray = [[0, 1, 2, 3],
 				[1, 0, 2, 3],
-				[1, 2, 0, 3],
-				[1, 2, 3, 0]];
+				[2, 1, 0, 3],
+				[1, 1, 3, 0]];
 };
 
 
@@ -64,7 +64,7 @@ RatSlapGame.prototype.setup = function(){
 	//We add the players in a random order, considering that we need to have 4 people in the room to call setup
 
 	// randomize player order
-	var tempPlayerHolder = this.gameRoom.people;
+	/*var tempPlayerHolder = this.gameRoom.people;
 	var tempPlayerCounter = 0;
 	while (tempPlayerHolder.length != 0){
 		var source1;
@@ -74,7 +74,7 @@ RatSlapGame.prototype.setup = function(){
 			tempPlayerCounter++;
 			tempPlayerHolder.splice(source1, 1);
 		}
-	}
+	}*/
 
 	// init player hands and playing pile
 	for (var i = 0; i < 4; i++){
