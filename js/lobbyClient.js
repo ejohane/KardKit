@@ -13,7 +13,6 @@ $(document).ready(function() {
     //---Hide main page and ask for username
     if($.cookie("KardKit-username") == null){
         $('.LobbyPage').hide();
-	playerName = $('#username').val();
         $('#myModal').modal("show");
     }else{
         socket.emit("addExisistingPlayerToLobby",$.cookie("KardKit-username") );
@@ -199,7 +198,7 @@ $(document).ready(function() {
 
     function sendOutboxMessage() {
         var v = $('#outbox-text').val();
-        var outboxMessage = playerName + ": " + v;
+        var outboxMessage = $('#username').val() + ": " + v;
         socket.emit("chatSendPublicMessage", outboxMessage);
         $("#outbox-text").val("");
     }
