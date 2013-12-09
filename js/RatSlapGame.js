@@ -195,7 +195,7 @@ RatSlapGame.prototype.disablePlay = function(player){
 
 //Called internally. Takes the index number corresponding to the next player (aka currentPlayer)
 RatSlapGame.prototype.enablePlay = function(playerIndex){
-	this.playEnabledArray[this.player] = 1;
+	this.playEnabledArray[playerIndex] = 1;
 }
 
 //Called internally. Takes a player and enables the slap action for them

@@ -393,9 +393,19 @@ socket.on('connection', function (client) {
                     serverInterface.setCards(socket, currentPlayer.gameID, j, [null, null]);
                     serverInterface.setCardCounts(socket, currentPlayer.gameID,j, ratSlapGame.playerHands[j].numCards);
                 }
+                serverInterface.setActions(socket,currentPlayer.gameID, ratSlapGame.actionsToGive);
                 
             }
 
+            //determine actions for each player
+            for(var i = 0; i < ratSlapGame.allPlayers.length ; i++){
+                var currentPlayer = ratSlapGame.allPlayers[i];
+                    var playerActions = [];
+                    playerActions.push(ratSlapGame.slapEnabledArray[i]);
+                    playerActions.push(ratSlapGame.playEnabledArray[i]);
+                    playerActions.push(1);
+                    serverInterface.setActions(socket,currentPlayer.gameID, playerActions);
+            }
 
 
     	    var pOrder = ratSlapGame.allPlayers;
