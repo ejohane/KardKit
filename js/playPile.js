@@ -16,6 +16,7 @@ PlayPile.super_.prototype.empty = function(destination) {
 		this.numCards = this.numCards - 1;
 		destination.insert(temp);
 	}
+	//console.log(this.cards);
 }
 
 if (typeof module !== 'undefined') {

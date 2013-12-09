@@ -34,7 +34,7 @@ function RatSlapGame(room){
 	this.pastPlayer = -1;
 	this.hopefulPlayer = -1;
 	this.digChances = 0;
-	this.diagnosticLogs = true;
+	this.diagnosticLogs = false;
 	this.done = false; // for diagnostic
 
 	//Actions
@@ -78,6 +78,7 @@ RatSlapGame.prototype.setup = function(){
 	for (var i = 0; i < 4; i++){
 		this.playerHands[i] = new Hand(new CardHolder());
 	}
+	//console.log(this.playerHands[0]); // come back
 	this.playPile = new PlayPile(new CardHolder());
 
 	// Shuffle and deal cards to players
@@ -86,6 +87,7 @@ RatSlapGame.prototype.setup = function(){
 		this.deck.draw(this.playerHands[this.currentPlayer]);
 		this.advanceCurrentPlayer(false);
 	}
+	//console.log(this.playerHands[0]); // come back
 	currentPlayer = 0;
 
 	// enable slap action for everyone
@@ -121,9 +123,9 @@ RatSlapGame.prototype.playAction = function(){
 			if (this.diagnosticLogs === true) console.log("Path 1");
 			if (this.diagnosticLogs === true) console.log(this.playPile.cards[0][0]);
 		//console.log(this.playPile.cards[this.playPile.numCards - 1][0][0].properties);
-			if (this.playPile.cards[this.playPile.numCards - 1][0][0].properties.rank === 'J' ||
-				this.playPile.cards[this.playPile.numCards - 1][0][0].properties.rank === 'Q' ||
-				this.playPile.cards[this.playPile.numCards - 1][0][0].properties.rank === 'K'){
+			if (this.playPile.cards[this.playPile.numCards - 1].properties.rank === 'J' ||
+				this.playPile.cards[this.playPile.numCards - 1].properties.rank === 'Q' ||
+				this.playPile.cards[this.playPile.numCards - 1].properties.rank === 'K'){
 				if (this.diagnosticLogs === true) console.log("Path 1.1");
 					this.slapAllowed = false;
 					this.digChances = 3;
@@ -139,9 +141,9 @@ RatSlapGame.prototype.playAction = function(){
 			//console.log("Hit dig");
 			if (this.diagnosticLogs === true) console.log("Path 2");
 			this.digChances--;
-			if (this.playPile.cards[this.playPile.numCards - 1][0][0].properties.rank === 'J' ||
-				this.playPile.cards[this.playPile.numCards - 1][0][0].properties.rank === 'Q' ||
-				this.playPile.cards[this.playPile.numCards - 1][0][0].properties.rank === 'K'){
+			if (this.playPile.cards[this.playPile.numCards - 1].properties.rank === 'J' ||
+				this.playPile.cards[this.playPile.numCards - 1].properties.rank === 'Q' ||
+				this.playPile.cards[this.playPile.numCards - 1].properties.rank === 'K'){
 				if (this.diagnosticLogs === true) console.log("Path 2.1");
 					this.advanceCurrentPlayer(true);
 					this.enablePlay(this.currentPlayer);

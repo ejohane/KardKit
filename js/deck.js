@@ -10,7 +10,7 @@ util.inherits(Deck, CardHolder);
 //takes the card at index 0 of the deck and 
 //puts it in the destination holder
 Deck.super_.prototype.draw = function(destination) {
-	var temp = this.cards.splice(0, 1);
+	var temp = this.cards.splice(0, 1)[0];
 	this.numCards = this.numCards - 1;
 	destination.insert(temp);
 }
