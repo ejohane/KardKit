@@ -34,6 +34,7 @@ function RatSlapGame(room){
 	this.pastPlayer = -1;
 	this.hopefulPlayer = -1;
 	this.digChances = 0;
+	this.diagnosticLogs = true;
 	this.done = false; // for diagnostic
 
 	//Actions
@@ -105,47 +106,48 @@ RatSlapGame.prototype.playAction = function(){
 		this.disablePlay(this.allPlayers[i]);
 	}
 	// initiate currentPlayer's next card
-	//console.log("Player " + this.currentPlayer + " has " + this.playerHands[this.currentPlayer].cards.length + "(" + this.playerHands[this.currentPlayer].numCards + ")" + " cards remaining.");
+	//if (this.diagnosticLogs === true) console.log("Player " + this.currentPlayer + " has " + this.playerHands[this.currentPlayer].cards.length + "(" + this.playerHands[this.currentPlayer].numCards + ")" + " cards remaining.");
 	this.playerHands[this.currentPlayer].play(0, this.playPile);
-	console.log("Player " + this.currentPlayer + " has " + this.playerHands[this.currentPlayer].cards.length + "(" + this.playerHands[this.currentPlayer].numCards + ")" + " cards remaining.");
+	if (this.diagnosticLogs === true) console.log("Player " + this.currentPlayer + " has " + this.playerHands[this.currentPlayer].cards.length + "(" + this.playerHands[this.currentPlayer].numCards + ")" + " cards remaining.");
 	
 	slapAllowed = true;
-	console.log(this.currentPlayer);
+	if (this.diagnosticLogs === true) console.log(this.currentPlayer);
 	if (this.currentPlayer === this.pastPlayer && !this.isSlappable()){
 		//win
 		console.log("You WIN!!!!!");
+		this.done = true;
 	} else {
 		if (this.digChances === 0){
-			console.log("Path 1");
-			console.log(this.playPile.cards[0][0]);
+			if (this.diagnosticLogs === true) console.log("Path 1");
+			if (this.diagnosticLogs === true) console.log(this.playPile.cards[0][0]);
 		//console.log(this.playPile.cards[this.playPile.numCards - 1][0][0].properties);
 			if (this.playPile.cards[this.playPile.numCards - 1][0][0].properties.rank === 'J' ||
 				this.playPile.cards[this.playPile.numCards - 1][0][0].properties.rank === 'Q' ||
 				this.playPile.cards[this.playPile.numCards - 1][0][0].properties.rank === 'K'){
-				console.log("Path 1.1");
+				if (this.diagnosticLogs === true) console.log("Path 1.1");
 					this.slapAllowed = false;
 					this.digChances = 3;
 					this.hopefulPlayer = this.currentPlayer;
 					//this.advanceCurrentPlayer(true);
 					this.enablePlay(this.currentPlayer);
 			} else {
-				console.log("Path 1.2");
+				if (this.diagnosticLogs === true) console.log("Path 1.2");
 				//this.advanceCurrentPlayer(true);
 				this.enablePlay(currentPlayer);
 			}
 		} else {
 			//console.log("Hit dig");
-			console.log("Path 2");
+			if (this.diagnosticLogs === true) console.log("Path 2");
 			this.digChances--;
 			if (this.playPile.cards[this.playPile.numCards - 1][0][0].properties.rank === 'J' ||
 				this.playPile.cards[this.playPile.numCards - 1][0][0].properties.rank === 'Q' ||
 				this.playPile.cards[this.playPile.numCards - 1][0][0].properties.rank === 'K'){
-				console.log("Path 2.1");
+				if (this.diagnosticLogs === true) console.log("Path 2.1");
 					this.advanceCurrentPlayer(true);
 					this.enablePlay(this.currentPlayer);
 					this.digChances = 0;
 			} else if (this.digChances === 0){
-				console.log("Path 2.2");
+				if (this.diagnosticLogs === true) console.log("Path 2.2");
 				this.winPile(this.hopefulPlayer);
 				this.hopefulPlayer = this.currentPlayer; // isn't this correct?
 				//this.currentPlayer = this.hopefulPlayer; // not this?
@@ -154,7 +156,7 @@ RatSlapGame.prototype.playAction = function(){
 				console.log("Hopeful player: " + this.hopefulPlayer);
 				console.log("Hopeful player's hand: " + this.playerHands[this.hopefulPlayer].cards);*/
 			} else {
-				console.log("Path 2.3");
+				if (this.diagnosticLogs === true) console.log("Path 2.3");
 				this.enablePlay(this.currentPlayer);
 			}
 		}
