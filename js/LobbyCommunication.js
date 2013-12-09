@@ -260,7 +260,7 @@ LobbyCommunication.prototype.addPlayerToGame = function(gameName, player, client
 *********************************************************************/
 LobbyCommunication.prototype.getRoom = function(roomName, type){
     var room = null;
-    if(type == "inviteRoom" && this.invitedRooms == null ){
+    if(type == "inviteRoom" && this.invitedRooms != null ){
     	for (var i in this.invitedRooms){
         	if(roomName == this.invitedRooms[i].name){
             	room = this.invitedRooms[i];

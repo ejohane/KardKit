@@ -287,7 +287,7 @@ socket.on('connection', function (client) {
         console.log(lobby.players[client.id].invitedGame);
         var player = lobby.players[client.id];
         //Remove player from invited room
-        client.leave(player.invitedGame);
+        client.leave(player.invitedGame.name);
         //Remove room if empty
         lobby.checkEmptyInviteRoom(player.invitedGame);
         //Join Created Room
@@ -375,8 +375,12 @@ socket.on('connection', function (client) {
         if(player.room.people.length == 4){
             //set game room to closed
             player.room.status = "Closed";
-            var invitedRoom = lobby.getRoom(player.room+"_Invited");
-            socket.sockets.in(invitedRoom.name).emit('playerInvited', lobby.players[client.id].name +" has invited you to play a game!");
+            var roomName = player.room.name+"_Invited";
+            var invitedRoom = lobby.getRoom(roomName, "inviteRoom");
+            if(invitedRoom != null){
+                socket.sockets.in(invitedRoom.name).emit('dismissInvite');    
+            }
+            
 
             ratSlapGame.setup();
     	    var pOrder = ratSlapGame.allPlayers;
