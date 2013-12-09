@@ -123,7 +123,6 @@ RatSlapGame.prototype.playAction = function(){
 		if (this.digChances === 0){
 			if (this.diagnosticLogs === true) console.log("Path 1");
 			if (this.diagnosticLogs === true) console.log(this.playPile.cards[0][0]);
-		//console.log(this.playPile.cards[this.playPile.cards.length - 1][0][0].properties);
 			if (this.playPile.cards[this.playPile.cards.length - 1].properties.rank === 'J' ||
 				this.playPile.cards[this.playPile.cards.length - 1].properties.rank === 'Q' ||
 				this.playPile.cards[this.playPile.cards.length - 1].properties.rank === 'K'){
@@ -207,17 +206,16 @@ RatSlapGame.prototype.enableSlap = function(player){
 //Called internally. Advances the current player, but loops when it would be 4.
 RatSlapGame.prototype.advanceCurrentPlayer = function(shouldSkip){
 	var temp = this.currentPlayer;
-	//console.log("The current player is: " + this.currentPlayer + " and we're advancing to: " + (this.currentPlayer+1));
-	this.currentPlayer++;
-	if (this.currentPlayer >= 4){
-		this.currentPlayer = 0;
-	}
-	if (shouldSkip) {
-		if (this.playerHands[this.currentPlayer].isEmpty()){
-			console.log("hit");
-			this.advanceCurrentPlayer(true);
+	var isSet = false;
+
+	while (!isSet){
+		this.currentPlayer++;
+		if (this.currentPlayer >= 4){
+			this.currentPlayer = 0;
 		}
+		isSet = !this.playerHands[this.currentPlayer].isEmpty
 	}
+
 	this.pastPlayer = temp;
 }
 
