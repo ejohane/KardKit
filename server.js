@@ -408,8 +408,6 @@ socket.on('connection', function (client) {
                     serverInterface.setActions(socket,currentPlayer.gameID, playerActions);
             }
 
-
-        
         }
 
     });
@@ -448,9 +446,9 @@ socket.on('connection', function (client) {
     ********************** Rat Slap Functions ************************
     **********************************************************************/
  client.on("r_play", function(){
-        var affectedGameRoom = lobby.getRoom(lobby.players[client.id].getRoomName ,"gameRoom");
+        var affectedGameRoom = lobby.players[client.id].room
         if (affectedGameRoom !== null){
-            ratSlap = affectedGameRoom.getGame();
+            var ratSlap = affectedGameRoom.getGame();
             ratSlap.playAction();
 
 
