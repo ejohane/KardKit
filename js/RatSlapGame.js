@@ -258,15 +258,15 @@ RatSlapGame.prototype.getActionsByPlayer = function(id){
 	return gabp;
 }
 
-RatSlapGame.prototype.getTrackingNumByPlayer = function(id1, id2){
+RatSlapGame.prototype.getTrackingNumByPlayer = function(viewerName, targetName){
 	var viewer = -1;
 	var target = -1;
 	var trackingNum = -1;
 	for (var i in allPlayers){
-		if (id1 = allPlayers[i].id || id1 = allPlayers[i].gameID){
+		if (id1 = allPlayers[i].name){
 			viewer = i;
 		}
-		if (id2 = allPlayers[i].id || id2 = allPlayers[i].gameID){
+		if (id2 = allPlayers[i].name){
 			target = i;
 		}
 	}
