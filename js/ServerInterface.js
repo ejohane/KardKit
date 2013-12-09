@@ -40,7 +40,7 @@ var ServerInterface = function () {
         for(var i in ratSlap.allPlayers){
             var currentPlayer = ratSlap.allPlayers[i];
             for(var j in ratSlap.allPlayers){
-                var cards = ratSlap.playerHands[j].length;
+                var cards = ratSlap.playerHands[j].cards.length;
                 if(cards < 1){
                     this.setCardCounts(socket, currentPlayer.gameID, j, 0);
                 }else{
