@@ -166,23 +166,23 @@ RatSlapGame.prototype.playAction = function(){
 
 //Called to this game whenever the client sends a 'gameSlap' socket function.
 RatSlapGame.prototype.slapAction = function(player){
-	if (slapAllowed && (!playPile.isEmpty)){
+	if (slapAllowed && (!this.playPile.isEmpty)){
 		var trulySlappable = this.isSlappable();
 		var slapper = -1;
 		
-		for (var i in allPlayers){
-			if (allPlayers[i].name = player.name){
+		for (var i in this.allPlayers){
+			if (this.allPlayers[i].name = player.name){
 				slapper = i;
 			}
 		}
 		
 		if (slapper != -1){
 			if (trulySlappable){
-				winPile(slapper);
-				currentPlayer = slapper;
+				this.winPile(slapper);
+				this.currentPlayer = slapper;
 			} else {
-				burn(slapper);
-				burn(slapper);
+				this.burn(slapper);
+				this.burn(slapper);
 			}
 		}
 	}
