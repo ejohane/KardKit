@@ -310,7 +310,7 @@ RatSlapGame.prototype.isSlappable = function() {
 	return false;
 }
 
-RatSlapGame.prototype.winner = function() {
+RatSlapGame.prototype.getWinner = function() {
 	if (this.won){
 		return this.winner;
 	} else {
