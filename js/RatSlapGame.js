@@ -108,9 +108,9 @@ RatSlapGame.prototype.playAction = function(){
 		this.disablePlay(this.allPlayers[i]);
 	}
 	// initiate currentPlayer's next card
-	//if (this.diagnosticLogs === true) console.log("Player " + this.currentPlayer + " has " + this.playerHands[this.currentPlayer].cards.length + "(" + this.playerHands[this.currentPlayer].numCards + ")" + " cards remaining.");
+	//if (this.diagnosticLogs === true) console.log("Player " + this.currentPlayer + " has " + this.playerHands[this.currentPlayer].cards.length + "(" + this.playerHands[this.currentPlayer].cards.length + ")" + " cards remaining.");
 	this.playerHands[this.currentPlayer].play(0, this.playPile);
-	if (this.diagnosticLogs === true) console.log("Player " + this.currentPlayer + " has " + this.playerHands[this.currentPlayer].cards.length + "(" + this.playerHands[this.currentPlayer].numCards + ")" + " cards remaining.");
+	//if (this.diagnosticLogs === true) console.log("Player " + this.currentPlayer + " has " + this.playerHands[this.currentPlayer].cards.length + "(" + this.playerHands[this.currentPlayer].cards.length + ")" + " cards remaining.");
 	
 	slapAllowed = true;
 	if (this.diagnosticLogs === true) console.log(this.currentPlayer);
@@ -122,10 +122,10 @@ RatSlapGame.prototype.playAction = function(){
 		if (this.digChances === 0){
 			if (this.diagnosticLogs === true) console.log("Path 1");
 			if (this.diagnosticLogs === true) console.log(this.playPile.cards[0][0]);
-		//console.log(this.playPile.cards[this.playPile.numCards - 1][0][0].properties);
-			if (this.playPile.cards[this.playPile.numCards - 1].properties.rank === 'J' ||
-				this.playPile.cards[this.playPile.numCards - 1].properties.rank === 'Q' ||
-				this.playPile.cards[this.playPile.numCards - 1].properties.rank === 'K'){
+		//console.log(this.playPile.cards[this.playPile.cards.length - 1][0][0].properties);
+			if (this.playPile.cards[this.playPile.cards.length - 1].properties.rank === 'J' ||
+				this.playPile.cards[this.playPile.cards.length - 1].properties.rank === 'Q' ||
+				this.playPile.cards[this.playPile.cards.length - 1].properties.rank === 'K'){
 				if (this.diagnosticLogs === true) console.log("Path 1.1");
 					this.slapAllowed = false;
 					this.digChances = 3;
@@ -141,9 +141,9 @@ RatSlapGame.prototype.playAction = function(){
 			//console.log("Hit dig");
 			if (this.diagnosticLogs === true) console.log("Path 2");
 			this.digChances--;
-			if (this.playPile.cards[this.playPile.numCards - 1].properties.rank === 'J' ||
-				this.playPile.cards[this.playPile.numCards - 1].properties.rank === 'Q' ||
-				this.playPile.cards[this.playPile.numCards - 1].properties.rank === 'K'){
+			if (this.playPile.cards[this.playPile.cards.length - 1].properties.rank === 'J' ||
+				this.playPile.cards[this.playPile.cards.length - 1].properties.rank === 'Q' ||
+				this.playPile.cards[this.playPile.cards.length - 1].properties.rank === 'K'){
 				if (this.diagnosticLogs === true) console.log("Path 2.1");
 					this.advanceCurrentPlayer(true);
 					this.enablePlay(this.currentPlayer);
@@ -233,7 +233,7 @@ RatSlapGame.prototype.winPile = function(winIndex){
 }
 
 RatSlapGame.prototype.topCard = function(){
-	var tc = [playPile.cards[playPile.numCards-1].properties.rank, playPile.cards[playPile.numCards-1].properties.suit];
+	var tc = [playPile.cards[playPile.cards.length-1].properties.rank, playPile.cards[playPile.cards.length-1].properties.suit];
 	return tc;
 }
 
@@ -276,10 +276,10 @@ RatSlapGame.prototype.getTrackingNumByPlayer = function(id1, id2){
 // Called internally. Checks against all the winning conditions for slapping the pile.
 RatSlapGame.prototype.isSlappable = function() {
 	// The top 4 cards' ranks
-	var first = this.playPile[this.playPile.numCards - 1].properties.rank;
-	var second = this.playPile[this.playPile.numCards - 2].properties.rank;
-	var third = this.playPile[this.playPile.numCards - 3].properties.rank;
-	var fourth = this.playPile[this.playPile.numCards - 4].properties.rank;
+	var first = this.playPile[this.playPile.cards.length - 1].properties.rank;
+	var second = this.playPile[this.playPile.cards.length - 2].properties.rank;
+	var third = this.playPile[this.playPile.cards.length - 3].properties.rank;
+	var fourth = this.playPile[this.playPile.cards.length - 4].properties.rank;
 
 	// Double: Top 2 cards are the same rank
 	if (first === second) {
