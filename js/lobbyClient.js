@@ -199,7 +199,7 @@ $(document).ready(function() {
 
     function sendOutboxMessage() {
         var v = $('#outbox-text').val();
-        var outboxMessage = $('#username').val() + ": " + v;
+        var outboxMessage = playerName + ": " + v;
         socket.emit("chatSendPublicMessage", outboxMessage);
         $("#outbox-text").val("");
     }
