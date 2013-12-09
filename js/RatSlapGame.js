@@ -269,7 +269,7 @@ RatSlapGame.prototype.getTrackingNumByPlayer = function(viewerName, targetName){
 			target = i;
 		}
 	}
-	trackingNum = this.trackingPlayersArray[viewer][target];
+	return this.trackingPlayersArray[viewer][target];
 }
 
 // Called internally. Checks against all the winning conditions for slapping the pile.
