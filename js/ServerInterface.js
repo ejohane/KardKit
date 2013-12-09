@@ -38,7 +38,7 @@ var ServerInterface = function () {
     _public.updateCardCountFromRatSlap = function(socket, clientName, ratSlap,cards){
         for(var i in ratSlap.allPlayers){
             var currentPlayer = ratSlap.allPlayers[i];
-            var index = getTrackingNumByPlayer(currentPlayer,clientName);
+            var index = getTrackingNumByPlayer(currentPlayer.name,clientName);
             this.setCardCounts(socket, currentPlayer.gameID,index, cards);
         }
     };
@@ -55,6 +55,7 @@ var ServerInterface = function () {
                         playerActions.push(1);
                         console.log(playerActions);
                         this.setActions(socket,currentPlayer.gameID, playerActions);
+
 
                     } 
                         

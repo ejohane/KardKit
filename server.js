@@ -467,7 +467,7 @@ socket.on('connection', function (client) {
                     break;
                 }
             }
-            serverInterface.updateCardCountFromRatSlap(socket, ratSlap, player.name, cards);
+            serverInterface.updateCardCountFromRatSlap(socket, player.name, ratSlap, cards);
 
             //update actions
             serverInterface.updateActionsFromRatSlap(socket, ratSlap);
