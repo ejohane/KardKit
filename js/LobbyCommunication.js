@@ -284,7 +284,7 @@ LobbyCommunication.prototype.getRoom = function(roomName, type){
 	Updated:
 *********************************************************************/
 LobbyCommunication.prototype.getGameRoomList = function(){
-    var table = "<thead> <tr> <th> Room </th> <th> Players </th> <th> Status </th> <th> Join </th> </tr> </thead> ";
+    var table = "<thead> <tr> <th> Room </th> <th> Players </th> <th> Status </th> </tr> </thead> ";
 
     //assumes a lobby has already been created and is held at rooms[0]
     for(var i = 1; i < this.rooms.length; i++){

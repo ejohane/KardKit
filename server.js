@@ -375,6 +375,7 @@ socket.on('connection', function (client) {
         if(player.room.people.length == 4){
             //set game room to closed
             player.room.status = "Closed";
+            socket.sockets.in(lobby.lobbyRoom).emit('updatedGamesList', table);
             var roomName = player.room.name+"_Invited";
             var invitedRoom = lobby.getRoom(roomName, "inviteRoom");
             if(invitedRoom != null){
