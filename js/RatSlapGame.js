@@ -215,6 +215,7 @@ RatSlapGame.prototype.advanceCurrentPlayer = function(shouldSkip){
 		if (this.playerHands[this.currentPlayer].isEmpty()){
 			console.log("hit");
 			this.advanceCurrentPlayer(true);
+		}
 	}
 	this.pastPlayer = temp;
 }
