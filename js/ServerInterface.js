@@ -60,7 +60,7 @@ var ServerInterface = function () {
         
     };
 
-	_public.updateSlap = function(socket, ratSlap){
+	_public.updateSlapped = function(socket, ratSlap){
 		socket.sockets.in(ratSlap.gameRoom).emit("emptyPile");
 	};	
 
