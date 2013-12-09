@@ -75,6 +75,15 @@ var clientInterface = function () {
         alert("The server must close this game session due to a player disconnect. Redirecting to lobby...");
         window.location = "./home.html";
     };
+    _public.youWon = function(){
+	alert("You won the game! Thanks for playing!");
+        window.location = "./home.html";
+    };
+    _public.youLost = function(winnerName){
+        alert("Player " + winnerName + " won the game");
+        window.location = "./home.html";
+    };
+
 
     /* outgoing
     --------------------------------------*/
@@ -174,3 +183,10 @@ socket.emit("gameLoaded", $.cookie("KardKit-username"));
     socket.on("closeGameSession", function() {
         clientInterface.closeGameSession();
     });
+    socket.on("youWon", function(){
+	clientInterface.youWon();
+    });
+    socket.on("youLost", function(winnerName){
+        clientInterface.youLost(winnerName);
+    });
+

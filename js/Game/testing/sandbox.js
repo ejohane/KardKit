@@ -99,6 +99,12 @@ var sandbox = function () {
             case "closeGameSession":
                 clientInterface.closeGameSession(args[0]);
 	        break;
+            case "youWon":
+                clientInterface.youWon();
+                break;
+            case "youLost":
+                clientInterface.youLost(args[0]);
+                break;
             default:
                 alert("Sandbox function error!");
         }
