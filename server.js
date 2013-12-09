@@ -456,6 +456,7 @@ socket.on('connection', function (client) {
             console.log("PLAYER: " + player);
             for(var i in ratSlap.allPlayers){
                 if(ratSlap.allPlayers[i].name == player.name){
+                    console.log("Card: ")
                     serverInterface.play(socket, affectedGameRoom, ratSlap.playerHands[i].cards[0]);
                 }
             }
