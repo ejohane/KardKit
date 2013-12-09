@@ -35,18 +35,11 @@ var ServerInterface = function () {
 	};
 
 
-    _public.updateCardCountFromRatSlap = function(socket, ratSlap){
-        //draw their amount of cards
+    _public.updateCardCountFromRatSlap = function(socket, clientName, ratSlap,cards){
         for(var i in ratSlap.allPlayers){
             var currentPlayer = ratSlap.allPlayers[i];
-            for(var j in ratSlap.allPlayers){
-                var cards = ratSlap.playerHands[j].cards.length;
-                if(cards < 1){
-                    this.setCardCounts(socket, currentPlayer.gameID, j, 0);
-                }else{
-                    this.setCardCounts(socket, currentPlayer.gameID, j, cards);
-                }
-            }                
+            var index = getTrackingNumByPlayer(currentPlayer,clientName);
+            this.setCardCounts(socket, currentPlayer.gameID,index, cards);
         }
     };
 

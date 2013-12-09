@@ -456,13 +456,18 @@ socket.on('connection', function (client) {
             console.log("PLAYER: " + player);
             for(var i in ratSlap.allPlayers){
                 if(ratSlap.allPlayers[i].name == player.name){
-                    console.log("Card: ")
                     serverInterface.play(socket, affectedGameRoom, ratSlap.playerHands[i].cards[0]);
                 }
             }
 
             //update cards
-            serverInterface.updateCardCountFromRatSlap(socket, ratSlap);
+            for(var i in ratSlap.allPlayers){
+                if(ratSlap.allPlayers[i].name == player.name){
+                    var cards = ratSlap.playerHands[i].cards.length;
+                    break;
+                }
+            }
+            serverInterface.updateCardCountFromRatSlap(socket, ratSlap, player.name, cards);
 
             //update actions
             serverInterface.updateActionsFromRatSlap(socket, ratSlap);
