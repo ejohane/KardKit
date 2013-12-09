@@ -58,8 +58,11 @@ var ServerInterface = function () {
             }    
         }
         
-    }
+    };
 
+	_public.updateSlap = function(socket, ratSlap){
+		socket.sockets.in(ratSlap.gameRoom).emit("emptyPile");
+	};	
 
      return _public;
 }();
