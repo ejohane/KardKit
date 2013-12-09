@@ -107,7 +107,7 @@ RatSlapGame.prototype.playAction = function(){
 
 	// Disable those whose turn it is not
 	for (var i in this.allPlayers){
-		this.disablePlay(this.allPlayers[i]);
+		this.disablePlay(i);
 	}
 	// initiate currentPlayer's next card
 	//if (this.diagnosticLogs === true) console.log("Player " + this.currentPlayer + " has " + this.playerHands[this.currentPlayer].cards.length + "(" + this.playerHands[this.currentPlayer].cards.length + ")" + " cards remaining.");
@@ -189,8 +189,8 @@ RatSlapGame.prototype.slapAction = function(player){
 }
 
 //Called internally. Takes the player to disable the appropriate actions for.
-RatSlapGame.prototype.disablePlay = function(player){
-	this.playEnabledArray[this.player] = 0;
+RatSlapGame.prototype.disablePlay = function(playerIndex){
+	this.playEnabledArray[playerIndex] = 0;
 }
 
 //Called internally. Takes the index number corresponding to the next player (aka currentPlayer)
