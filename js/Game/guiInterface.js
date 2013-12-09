@@ -90,12 +90,19 @@ var guiInterface = function () {
         };
         _public.setHandCount = function(playerId, handCount){
 	     generateHand.setHandCount(playerId, handCount);
-	};
+		};
         _public.removeCard = function(playerId, cardIndex){
              generateHand.removeCard(playerId,cardIndex);  
         };
         _public.addCard = function(playerId,card){
             generateHand.addCard(playerId,card);    
+        };
+		_public.play = function(card){
+            var cardHtml = generateHand.generateCardHTML(card);
+			cardPile.set(cardHtml);
+        };
+		_public.emptyPile = function(){            
+			cardPile.empty();
         };
         _public.removePlayer = function(playerId){
             $("#playerSpot_" + playerId).remove();

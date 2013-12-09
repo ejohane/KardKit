@@ -75,6 +75,12 @@ var sandbox = function () {
             case "removeCard":
                 clientInterface.removeCard(args[0],args[1]);
                 break;
+			case "play":
+                clientInterface.play(makeCard(args[0]));
+                break;
+			case "emptyPile":
+                clientInterface.emptyPile();
+                break;				
             case "receivePrivateMessage":
                 clientInterface.receivePrivateMessage(args[0]);
                 break;

@@ -23,8 +23,10 @@ input[type="text"]{padding:0 0 0 5px;border:0;}
 #playerSpot_2 {position:absolute;left:50%;top:0%;}
 #playerSpot_3 {position:absolute;left:25%;top:25%;}
 
-.hand + .playerName{}
-.playerName + .playerPoints{}
+.playerName,
+.playerPoints,
+.playerHand{color:white;}
+
 
 
 
