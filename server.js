@@ -200,7 +200,12 @@ socket.on('connection', function (client) {
         for(var i in lobby.players){
             //if player exits lobby
             console.log("here");
-            if(lobby.players[i].id == client.id){
+            if(lobby.players[i].gameID == client.id){
+                socket.sockets.in(lobby.players[i].room).emit('closeGameSession');
+                console.log("Player exiting game");
+                lobby.playerExitsGame(client.id);
+                break;
+            }else if(lobby.players[i].id == client.id){
                 if(lobby.players[i].room == null){
                     console.log("******** Player with id: (" + client.id + ") with name: ("+ lobby.players[client.id].name +") has disconnected ********");
                     socket.sockets.in(lobby.lobbyRoom).emit('receiveInboxMessage', lobby.players[client.id].name +" has left the lobby", "message"); 
@@ -212,12 +217,7 @@ socket.on('connection', function (client) {
                     break;
                 }
             //if player exits game
-            }else if(lobby.players[i].gameID == client.id){
-                socket.sockets.in(lobby.players[i].room).emit('closeGameSession');
-                console.log("Player exiting game");
-                lobby.playerExitsGame(client.id);
-                break;
-            }
+            } 
         }
         socket.sockets.in(lobby.lobbyRoom).emit('updatedGamesList', lobby.getGameRoomList());
         socket.sockets.in(lobby.lobbyRoom).emit('updatePlayerList',lobby.getPlayerListHTML());
