@@ -428,4 +428,3 @@ LobbyCommunication.prototype.updateClientID = function(username, clientID){
 
 module.exports = LobbyCommunication;
  
-Status API Training Shop Blog About © 2013 GitHub, Inc. Terms Privacy Security Contact
