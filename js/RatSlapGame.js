@@ -112,9 +112,9 @@ RatSlapGame.prototype.playAction = function(){
 	// initiate currentPlayer's next card
 	//if (this.diagnosticLogs === true) console.log("Player " + this.currentPlayer + " has " + this.playerHands[this.currentPlayer].cards.length + "(" + this.playerHands[this.currentPlayer].cards.length + ")" + " cards remaining.");
 	this.playerHands[this.currentPlayer].play(0, this.playPile);
-	//if (this.diagnosticLogs === true) console.log("Player " + this.currentPlayer + " has " + this.playerHands[this.currentPlayer].cards.length + "(" + this.playerHands[this.currentPlayer].cards.length + ")" + " cards remaining.");
+	console.log("Player " + this.currentPlayer + " has " + this.playerHands[this.currentPlayer].cards.length + "(" + this.playerHands[this.currentPlayer].cards.length + ")" + " cards remaining.");
 	
-	slapAllowed = true;
+	this.slapAllowed = true;
 	if (this.diagnosticLogs === true) console.log(this.currentPlayer);
 	if (this.currentPlayer === this.pastPlayer && !this.isSlappable()){
 		this.won = true;
@@ -166,18 +166,15 @@ RatSlapGame.prototype.playAction = function(){
 
 //Called to this game whenever the client sends a 'gameSlap' socket function.
 RatSlapGame.prototype.slapAction = function(player){
-	if (slapAllowed && (!this.playPile.isEmpty)){
+	if (this.slapAllowed){
 		var trulySlappable = this.isSlappable();
 		var slapper = -1;
 		
-		for (var i in this.allPlayers){
-			if (this.allPlayers[i].name = player.name){
-				slapper = i;
-			}
-		}
-		
+		slapper = player;
+
 		if (slapper != -1){
 			if (trulySlappable){
+				console.log("Slap succeeded");
 				this.winPile(slapper);
 				this.currentPlayer = slapper;
 			} else {
@@ -230,13 +227,14 @@ RatSlapGame.prototype.advanceCurrentPlayer = function(shouldSkip){
 
 //Called internally. Takes the player index of the burned player.
 RatSlapGame.prototype.burn = function(burntIndex){
-	if (!playerHands[burntIndex].isEmpty()){
-		playerHands[burntIndex].play(0, playPile);
+	if (!this.playerHands[burntIndex].isEmpty()){
+		this.playerHands[burntIndex].play(0, this.playPile);
 	}
 }
 
 //Called internally. Takes the player index of the player to win the pile.
 RatSlapGame.prototype.winPile = function(winIndex){
+	console.log("The player winning the pile is: " + winIndex);
 	this.playPile.empty(this.playerHands[winIndex]);
 }
 
@@ -284,10 +282,20 @@ RatSlapGame.prototype.getTrackingNumByPlayer = function(viewerName, targetName){
 // Called internally. Checks against all the winning conditions for slapping the pile.
 RatSlapGame.prototype.isSlappable = function() {
 	// The top 4 cards' ranks
-	var first = this.playPile[this.playPile.cards.length - 1].properties.rank;
-	var second = this.playPile[this.playPile.cards.length - 2].properties.rank;
-	var third = this.playPile[this.playPile.cards.length - 3].properties.rank;
-	var fourth = this.playPile[this.playPile.cards.length - 4].properties.rank;
+	if (this.playPile.cards.length < 1) { 
+		return false
+	}
+	//console.log(this.playPile.cards[this.playPile.cards.length - 1].properties.rank);
+	var first = this.playPile.cards[this.playPile.cards.length - 1].properties.rank;
+	var second = null;
+	var third = null;
+	var fourth = null;
+	if (this.playPile.cards.length > 1) { second = this.playPile.cards[this.playPile.cards.length - 2].properties.rank; }
+	//else { return false; }
+	if (this.playPile.cards.length > 2) { third = this.playPile.cards[this.playPile.cards.length - 3].properties.rank; }
+	//else { return false; }
+	if (this.playPile.cards.length > 3) { fourth = this.playPile.cards[this.playPile.cards.length - 4].properties.rank; }
+	//else { return false; }
 
 	// Double: Top 2 cards are the same rank
 	if (first === second) {
@@ -298,7 +306,7 @@ RatSlapGame.prototype.isSlappable = function() {
 		return true;
 	}
 	// Bottoms Up: Top card and the bottom card match rank.
-	if (first === playPile[0].properties.rank && playPile.length > 1) {
+	if (first === this.playPile.cards[0].properties.rank && this.playPile.cards.length > 1) {
 		return true;
 	}
 	// Tens: When consecutive cards (or cards with a face card in between) total 10 (e.g. 4, 6 or 3, K, 7)
