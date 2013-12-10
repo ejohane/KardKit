@@ -485,39 +485,37 @@ socket.on('connection', function (client) {
             var slap = ratSlap.slapAction(lobby.players[client.id].name);
             
         if(slap == false){
-    		//update play pile
-    		var player = lobby.getPlayerByID(client.id);
-    		console.log("PLAYER: " + player);
-    		for (var i in ratSlap.allPlayers){
-    			if(ratSlap.allPlayers[i].name == player.name){
-    				var cards = ratSlap.playerHands[i].cards[0];
-    				break;
-    			}
-    		}	
-    		//update cards
-    		for (var i in ratSlap.allPlayers){
-    			if (ratSlap.allPlayers[i].name == player.name){
-    				var cards = ratSlap.playerHands[i].cards[0];
-    				break;
-    			}
-    		}
+                    //update play pile
+                    var player = lobby.getPlayerByID(client.id);
+                    console.log("PLAYER: " + player);
+                    for (var i in ratSlap.allPlayers){
+                            if(ratSlap.allPlayers[i].name == player.name){
+                                    var cards = ratSlap.playerHands[i].cards[0];
+                                    break;
+                            }
+                    }        
+                    //update cards
+                    for (var i in ratSlap.allPlayers){
+                            if (ratSlap.allPlayers[i].name == player.name){
+                                    var cards = ratSlap.playerHands[i].cards[0];
+                                    break;
+                            }
+                    }
 
-    		serverInterface.updateCardCountFromRatSlap(socket, player.name, ratSlap, cards);
+                    serverInterface.updateCardCountFromRatSlap(socket, player.name, ratSlap, cards);
         }else{
-    		var player = lobby.getPlayerByID(client.id);
+                    var player = lobby.getPlayerByID(client.id);
             serverInterface.updateSlapped(socket, ratSlap);
-    		for (var i in ratSlap.allPlayers){
-    			if(ratSlap.allPlayers[i].name == player.name){
-    				var cards = ratSlap.playerHands[i].cards.length;
-    				break;
-    			}
-    		}
-    		serverInterface.updateCardCountFromRatSlap(socket, player.name, ratSlap, cards);
+                    for (var i in ratSlap.allPlayers){
+                            if(ratSlap.allPlayers[i].name == player.name){
+                                    var cards = ratSlap.playerHands[i].cards.length;
+                                    break;
+                            }
+                    }
+                    serverInterface.updateCardCountFromRatSlap(socket, player.name, ratSlap, cards);
         }
 
         }
     });
 
 });
-
-
