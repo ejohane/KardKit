@@ -227,7 +227,8 @@ RatSlapGame.prototype.advanceCurrentPlayer = function(shouldSkip){
 
 //Called internally. Takes the player index of the burned player.
 RatSlapGame.prototype.burn = function(burntIndex){
-	if (!this.playerHands[burntIndex].isEmpty()){
+	//console.log("BUUUUURN");
+	if (this.playerHands[burntIndex].cards != 0) {
 		this.playerHands[burntIndex].play(0, this.playPile);
 	}
 }
